@@ -1,1 +1,2 @@
-export const USER_CONSTANT = 'someValue';
+export const user_searchable_fields = ['email', 'name', 'phone', 'lastName', 'address']
+export const user_filterable_fields = ['searchTerm', 'role', 'status', 'verified', 'radius', 'latitude', 'longitude']

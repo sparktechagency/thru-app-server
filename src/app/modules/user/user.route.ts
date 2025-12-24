@@ -35,4 +35,18 @@ router.post(
   UserController.uploadImages,
 )
 
+router.get(
+  '/profile',
+  auth(
+
+    USER_ROLES.ADMIN,
+    USER_ROLES.USER,
+
+
+  ),
+  UserController.getUserProfile,
+)
+
+
+router.get("/", auth(USER_ROLES.USER, USER_ROLES.ADMIN), UserController.getUsers)
 export const UserRoutes = router

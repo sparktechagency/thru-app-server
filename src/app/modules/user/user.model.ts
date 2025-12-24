@@ -10,6 +10,14 @@ const userSchema = new Schema<IUser, UserModel>(
       type: String,
       trim: true,
     },
+    lastName: {
+      type: String,
+      trim: true,
+    },
+    bio: {
+      type: String,
+      trim: true,
+    },
     email: {
       type: String,
       trim: true,

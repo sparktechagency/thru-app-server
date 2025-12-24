@@ -16,6 +16,7 @@ export interface IUser {
   _id: Types.ObjectId
   name?: string
   lastName?: string
+  bio: string
   email: string
   profile?: string
   cover?: string
@@ -41,3 +42,15 @@ export type UserModel = {
 } & Model<IUser>
 
 export type UserDocument = HydratedDocument<IUser>
+
+
+export type IUserFilterableFields = {
+  searchTerm?: string
+  role?: string
+  status?: string
+  verified?: boolean
+  radius?: number
+  latitude?: number
+  longitude?: number
+  address?: string
+}

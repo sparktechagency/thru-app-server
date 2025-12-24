@@ -1,6 +1,6 @@
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../../../errors/ApiError'
-import { IUser } from './user.interface'
+import { IUser, IUserFilterableFields } from './user.interface'
 import { User } from './user.model'
 
 import { USER_ROLES, USER_STATUS } from '../../../enum/user'
@@ -10,6 +10,9 @@ import { logger } from '../../../shared/logger'
 import config from '../../../config'
 import { ImageUploadPayload } from '../../../shared/shared'
 import removeFile from '../../../helpers/image/remove'
+import { IPaginationOptions } from '../../../interfaces/pagination'
+import { paginationHelper } from '../../../helpers/paginationHelper'
+import { user_searchable_fields } from './user.constants'
 
 
 
@@ -91,4 +94,93 @@ const uploadImages = async (user: JwtPayload, payload: ImageUploadPayload) => {
   return 'Images uploaded successfully.'
 }
 
-export const UserServices = { updateProfile, createAdmin, uploadImages }
+const getUserProfile = async (user: JwtPayload) => {
+  const isUserExist = await User.findById(user.authId).lean()
+  if (!isUserExist) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'The requested user not found.')
+  }
+  return isUserExist
+}
+
+
+const getUsers = async (
+  user: JwtPayload,
+  filters: IUserFilterableFields,
+  paginationOptions: IPaginationOptions,
+) => {
+  const {
+    searchTerm,
+    latitude,
+    longitude,
+    radius,
+    ...filterData
+  } = filters
+  const { page, limit, skip, sortBy, sortOrder } =
+    paginationHelper.calculatePagination(paginationOptions)
+  const andConditions = []
+
+
+  if (latitude && longitude && radius) {
+    andConditions.push({
+      location: {
+        $near: {
+          $geometry: {
+            type: 'Point',
+            coordinates: [Number(longitude) || 0, Number(latitude) || 0],
+          },
+          $maxDistance: Number(radius) || 10000, //10km max
+        },
+      },
+    })
+  }
+
+  if (searchTerm) {
+    andConditions.push({
+      $or: user_searchable_fields.map(field => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    })
+  }
+  if (Object.keys(filterData).length) {
+    andConditions.push({
+      $and: Object.entries(filterData).map(([field, value]) => ({
+        [field]: value,
+      })),
+    })
+  }
+  andConditions.push({
+    role: USER_ROLES.USER,
+    verified: true
+  })
+  const whereConditions =
+    andConditions.length > 0 ? { $and: andConditions } : {}
+
+  const selectFields =
+    user.role === USER_ROLES.USER ? '-location -verified -role -createdAt -updatedAt' : '';
+
+  const [result, total] = await Promise.all([
+    User.find(whereConditions)
+      .select(selectFields)
+      .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
+      .skip(skip)
+      .limit(limit),
+    User.countDocuments(whereConditions),
+  ])
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  }
+}
+
+
+
+export const UserServices = { updateProfile, createAdmin, uploadImages, getUserProfile, getUsers }
