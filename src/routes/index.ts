@@ -8,6 +8,7 @@ import { ActivityRoutes } from '../app/modules/activity/activity.route'
 import { RequestRoutes } from '../app/modules/request/request.route'
 import { FriendRoutes } from '../app/modules/friend/friend.route'
 import { CommentRoutes } from '../app/modules/comment/comment.route'
+import { MessageRoutes } from '../app/modules/message/message.route'
 
 const router = express.Router()
 
@@ -20,7 +21,8 @@ const apiRoutes: { path: string; route: Router }[] = [
   { path: '/activity', route: ActivityRoutes },
   { path: '/request', route: RequestRoutes },
   { path: '/friend', route: FriendRoutes },
-  { path: '/comments', route: CommentRoutes }
+  { path: '/comments', route: CommentRoutes },
+  { path: '/message', route: MessageRoutes }
 ]
 
 apiRoutes.forEach(route => {
