@@ -11,6 +11,8 @@ import { IUser } from "../user/user.interface";
 import { IPaginationOptions } from "../../../interfaces/pagination";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { Friend } from "../friend/friend.model";
+import { Plan } from "../plan/plan.model";
+import { IPlan } from "../plan/plan.interface";
 
 
 interface FriendRequestPayload {
@@ -97,6 +99,78 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
 
   return {
     message: `Request sent to ${isRequestedPersonExist.name} ${isRequestedPersonExist.lastName}`,
+    requestId: request._id
+  };
+};
+
+
+const sendPlanRequest = async (user: JwtPayload, requestedTo: string, planId: string) => {
+  const requestedToObjectId = new Types.ObjectId(requestedTo);
+  const planObjectId = new Types.ObjectId(planId);
+
+  if (user.authId === requestedTo) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "Cannot send request to yourself");
+  }
+
+  const isRequestedPersonExist = await User.findById(requestedToObjectId).lean();
+  if (!isRequestedPersonExist) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "The requested person cannot be found");
+  }
+
+  const plan = await Plan.findById(planObjectId);
+  if (!plan) {
+    throw new ApiError(StatusCodes.NOT_FOUND, "Plan not found");
+  }
+
+  // Check if already in plan
+  const isAlreadyInPlan = plan.friends.some(friendId => friendId.toString() === user.authId.toString()) ||
+    plan.createdBy.toString() === user.authId.toString();
+
+  if (isAlreadyInPlan && plan.createdBy.equals(new Types.ObjectId(user.authId))) {
+    // If owner is sending, check if requestedTo is already in plan
+    const isTargetAlreadyInPlan = plan.friends.some(friendId => friendId.toString() === requestedToObjectId.toString());
+    if (isTargetAlreadyInPlan) {
+      throw new ApiError(StatusCodes.BAD_REQUEST, "User is already in this plan");
+    }
+  } else if (isAlreadyInPlan) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, "You are already a member of this plan");
+  }
+
+  const existingRequest = await Request.findOne({
+    requestedBy: user.authId,
+    requestedTo: requestedToObjectId,
+    planId: planObjectId,
+    status: REQUEST_STATUS.PENDING
+  });
+
+  if (existingRequest) {
+    throw new ApiError(StatusCodes.CONFLICT, "Plan request already exists");
+  }
+
+  const request = await Request.create({
+    requestedBy: user.authId,
+    requestedTo: requestedToObjectId,
+    planId: planObjectId,
+    type: REQUEST_TYPE.PLAN
+  });
+
+  const isOwnerSending = plan.createdBy.toString() === user.authId.toString();
+  const notificationTitle = isOwnerSending ? "Plan Invitation" : "New Plan Request";
+  const notificationBody = isOwnerSending
+    ? `${user.name} invited you to join the plan: ${plan.title}`
+    : `${user.name} wants to join your plan: ${plan.title}`;
+
+  await sendNotification(
+    { authId: user.authId, name: user.name, profile: user.profile },
+    requestedTo,
+    notificationTitle,
+    notificationBody,
+    undefined,
+    request._id.toString()
+  );
+
+  return {
+    message: isOwnerSending ? "Invitation sent" : "Request sent",
     requestId: request._id
   };
 };
@@ -207,6 +281,83 @@ const acceptOrRejectRequest = async (
   }
 };
 
+
+const acceptOrRejectPlanRequest = async (
+  user: JwtPayload,
+  payload: FriendRequestPayload,
+  requestId: string
+) => {
+  const session: ClientSession = await mongoose.startSession();
+  session.startTransaction();
+
+  try {
+    const requestObjectId = new Types.ObjectId(requestId);
+    const currentUserId = new Types.ObjectId(user.authId);
+
+    const isRequestExist = await Request.findById(requestObjectId).session(session);
+
+    if (!isRequestExist) {
+      throw new ApiError(StatusCodes.NOT_FOUND, "Request not found");
+    }
+
+    if (isRequestExist.requestedTo.toString() !== currentUserId.toString()) {
+      throw new ApiError(StatusCodes.FORBIDDEN, "Not authorized to respond to this request");
+    }
+
+    if (isRequestExist.status !== REQUEST_STATUS.PENDING) {
+      throw new ApiError(StatusCodes.CONFLICT, `Request already ${isRequestExist.status}`);
+    }
+
+    isRequestExist.status = payload.status;
+    await isRequestExist.save({ session });
+
+    if (payload.status === REQUEST_STATUS.ACCEPTED) {
+      const plan = await Plan.findById(isRequestExist.planId).session(session);
+      if (!plan) {
+        throw new ApiError(StatusCodes.NOT_FOUND, "Plan not found");
+      }
+
+      // Determine who to add to the plan friends list
+      // If the owner requested someone, add the requested person.
+      // If someone requested the owner, add the requester.
+      const ownerId = plan.createdBy;
+      const joinerId = isRequestExist.requestedBy.toString() === ownerId.toString()
+        ? isRequestExist.requestedTo
+        : isRequestExist.requestedBy;
+
+      await Plan.findByIdAndUpdate(
+        plan._id,
+        { $addToSet: { friends: joinerId } },
+        { session, new: true }
+      );
+    }
+
+    await session.commitTransaction();
+
+    if (payload.status === REQUEST_STATUS.ACCEPTED) {
+      await sendNotification(
+        { authId: user.authId, name: user.name, profile: user.profile },
+        isRequestExist.requestedBy.toString(),
+        "Plan Request Accepted",
+        `${user.name} accepted the plan request`
+      );
+    }
+
+    return {
+      message: `Plan request ${payload.status.toLowerCase()}`,
+      status: payload.status,
+      requestId: requestId
+    };
+
+  } catch (error) {
+    await session.abortTransaction();
+    if (error instanceof ApiError) throw error;
+    throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Failed to process plan request");
+  } finally {
+    await session.endSession();
+  }
+};
+
 const getMyFriendList = async (user: JwtPayload) => {
   const userId = new Types.ObjectId(user.authId);
 
@@ -273,5 +424,7 @@ export const RequestService = {
   sendFriendRequest,
   acceptOrRejectRequest,
   getMyFriendList,
-  getMyFreindRequestList
+  getMyFreindRequestList,
+  sendPlanRequest,
+  acceptOrRejectPlanRequest
 }

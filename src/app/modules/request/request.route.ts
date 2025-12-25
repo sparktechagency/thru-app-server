@@ -48,5 +48,19 @@ router.patch(
   RequestController.updateRequest
 );
 
+router.post(
+  '/plan',
+  auth(USER_ROLES.USER),
+  validateRequest(RequestValidations.createPlanRequest),
+  RequestController.sendPlanRequest
+);
+
+router.patch(
+  '/plan/:id',
+  auth(USER_ROLES.USER),
+  validateRequest(RequestValidations.update),
+  RequestController.acceptOrRejectPlanRequest
+);
+
 
 export const RequestRoutes = router;

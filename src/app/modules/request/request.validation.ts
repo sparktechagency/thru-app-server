@@ -14,7 +14,14 @@ export const RequestValidations = {
       status: z.nativeEnum(REQUEST_STATUS).optional()
     }),
     params: z.object({
-      id: z.string().refine((value) => Types.ObjectId.isValid(value), 'Invalid requestedTo id')
+      id: z.string().refine((value) => Types.ObjectId.isValid(value), 'Invalid request id')
+    })
+  }),
+
+  createPlanRequest: z.object({
+    body: z.object({
+      requestedTo: z.string(),
+      planId: z.string()
     })
   }),
 };

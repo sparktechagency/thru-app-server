@@ -24,4 +24,11 @@ export const PlanValidations = {
     link: z.string().url().optional(),
 
   }),
+
+  removeFriend: z.object({
+    body: z.object({
+      planId: z.string(),
+      userId: z.string()
+    })
+  }),
 };

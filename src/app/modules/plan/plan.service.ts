@@ -170,10 +170,33 @@ const deletePlan = async (id: string): Promise<IPlan> => {
   return result;
 };
 
+
+const removePlanFriend = async (planId: string, userId: string): Promise<IPlan | null> => {
+  if (!Types.ObjectId.isValid(planId)) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid Plan ID');
+  }
+
+  const result = await Plan.findByIdAndUpdate(
+    planId,
+    { $pull: { friends: userId } },
+    { new: true, runValidators: true }
+  ).populate('activities').populate('friends');
+
+  if (!result) {
+    throw new ApiError(
+      StatusCodes.NOT_FOUND,
+      'Requested plan not found'
+    );
+  }
+
+  return result;
+};
+
 export const PlanServices = {
   createPlan,
   getAllPlans,
   getSinglePlan,
   updatePlan,
   deletePlan,
+  removePlanFriend
 };

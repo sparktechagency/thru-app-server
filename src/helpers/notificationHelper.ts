@@ -24,6 +24,8 @@ export const sendNotification = async (
       to,
       title,
       body,
+      friendRequestId,
+      planJoiningRequestId,
       isRead: false,
     })
 

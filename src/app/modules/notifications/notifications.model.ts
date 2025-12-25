@@ -7,10 +7,10 @@ const notificationSchema = new Schema<INotification, NotificationModel>(
     from: { type: Schema.Types.ObjectId, ref: 'User', populate: 'name profile' },
     title: { type: String },
     friendRequestId: {
-      type: Schema.Types.ObjectId, ref: 'User'
+      type: Schema.Types.ObjectId, ref: 'Request'
     },
     planJoiningRequestId: {
-      type: Schema.Types.ObjectId, ref: 'User'
+      type: Schema.Types.ObjectId, ref: 'Request'
     },
     body: { type: String },
     isRead: { type: Boolean },

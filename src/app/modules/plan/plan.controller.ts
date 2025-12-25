@@ -9,11 +9,11 @@ import { paginationFields } from '../../../interfaces/pagination';
 
 const createPlan = catchAsync(async (req: Request, res: Response) => {
   const { images, media, ...planData } = req.body;
-  
+
   if (images && images.length > 0) {
     planData.images = images;
   }
-  
+
   if (media && media.length > 0) {
     planData.media = media;
   }
@@ -87,10 +87,24 @@ const deletePlan = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+const removePlanFriend = catchAsync(async (req: Request, res: Response) => {
+  const { planId, userId } = req.body;
+  const result = await PlanServices.removePlanFriend(planId, userId);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Friend removed from plan successfully',
+    data: result,
+  });
+});
+
 export const PlanController = {
   createPlan,
   updatePlan,
   getSinglePlan,
   getAllPlans,
   deletePlan,
+  removePlanFriend
 };

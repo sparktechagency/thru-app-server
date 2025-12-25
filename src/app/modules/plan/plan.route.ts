@@ -57,4 +57,11 @@ router.delete(
   PlanController.deletePlan
 );
 
+router.post(
+  '/remove-friend',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  validateRequest(PlanValidations.removeFriend),
+  PlanController.removePlanFriend
+);
+
 export const PlanRoutes = router;

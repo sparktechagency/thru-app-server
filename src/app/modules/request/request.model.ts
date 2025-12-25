@@ -4,6 +4,7 @@ import { IRequest, RequestModel, REQUEST_STATUS, REQUEST_TYPE } from './request.
 const requestSchema = new Schema<IRequest, RequestModel>({
   requestedBy: { type: Schema.Types.ObjectId, ref: 'User' },
   requestedTo: { type: Schema.Types.ObjectId, ref: 'User' },
+  planId: { type: Schema.Types.ObjectId, ref: 'Plan' },
   status: { type: String, enum: Object.values(REQUEST_STATUS), default: REQUEST_STATUS.PENDING },
   type: { type: String, enum: Object.values(REQUEST_TYPE) },
 }, {

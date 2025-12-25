@@ -68,9 +68,44 @@ const getMyFriendList = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const sendPlanRequest = catchAsync(async (req: Request, res: Response) => {
+  const { requestedTo, planId } = req.body;
+
+  const result = await RequestService.sendPlanRequest(
+    req.user!,
+    requestedTo,
+    planId
+  );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: result.message,
+    data: result,
+  });
+});
+
+
+const acceptOrRejectPlanRequest = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const requestData = req.body;
+
+  const result = await RequestService.acceptOrRejectPlanRequest(req.user!, requestData, id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: result.message,
+    data: result,
+  });
+});
+
+
 export const RequestController = {
   createRequest,
   updateRequest,
   getMyFreindRequestList,
-  getMyFriendList
+  getMyFriendList,
+  sendPlanRequest,
+  acceptOrRejectPlanRequest
 };

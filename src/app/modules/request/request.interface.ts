@@ -21,6 +21,7 @@ export interface IRequest {
   _id: Types.ObjectId;
   requestedBy: Types.ObjectId | IUser;
   requestedTo: Types.ObjectId | IUser;
+  planId?: Types.ObjectId;
   status: REQUEST_STATUS;
   type: REQUEST_TYPE;
   createdAt: Date;
