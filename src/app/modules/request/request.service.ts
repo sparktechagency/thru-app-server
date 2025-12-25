@@ -6,18 +6,18 @@ import mongoose, { ClientSession, Types } from "mongoose";
 import { Request } from "./request.model";
 import { User } from "../user/user.model";
 import { USER_STATUS } from "../../../enum/user";
-import { REQUEST_STATUS } from "./request.interface";
+import { REQUEST_STATUS, REQUEST_TYPE } from "./request.interface";
 import { IUser } from "../user/user.interface";
 import { IPaginationOptions } from "../../../interfaces/pagination";
 import { paginationHelper } from "../../../helpers/paginationHelper";
 import { Friend } from "../friend/friend.model";
 
-// Add these interfaces for type safety
+
 interface FriendRequestPayload {
   status: REQUEST_STATUS;
 }
 
-// Helper function to check existing requests
+
 const checkExistingRequest = async (user1: Types.ObjectId, user2: Types.ObjectId) => {
   return await Request.findOne({
     $or: [
@@ -28,16 +28,15 @@ const checkExistingRequest = async (user1: Types.ObjectId, user2: Types.ObjectId
   });
 };
 
-// Updated sendFriendRequest function
+
 const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
   const requestedToObjectId = new Types.ObjectId(requestedTo);
 
-  // Prevent sending request to self
+
   if (user.authId === requestedTo) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "Cannot send friend request to yourself");
   }
 
-  // Check if requested user exists with minimal fields
   const isRequestedPersonExist = await User.findById(requestedToObjectId)
     .select('_id name lastName email status')
     .lean();
@@ -46,12 +45,11 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
     throw new ApiError(StatusCodes.NOT_FOUND, "The requested person cannot be found");
   }
 
-  // Check if user is active
+
   if (isRequestedPersonExist.status !== USER_STATUS.ACTIVE) {
     throw new ApiError(StatusCodes.BAD_REQUEST, "Cannot send request to this user");
   }
 
-  // Check if request already exists
   const existingRequest = await checkExistingRequest(
     new Types.ObjectId(user.authId),
     requestedToObjectId
@@ -61,13 +59,11 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
     throw new ApiError(StatusCodes.CONFLICT, "Friend request already exists");
   }
 
-  // Check if they are already friends (assuming you have a Friends model)
-  // const existingFriendship = await Friendship.findOne({ ... });
 
-  // Create the request
   const requestObject = {
     requestedBy: new Types.ObjectId(user.authId),
-    requestedTo: requestedToObjectId
+    requestedTo: requestedToObjectId,
+    type: REQUEST_TYPE.FRIEND
   };
 
   const request = await Request.create(requestObject);
@@ -76,7 +72,7 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
     throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Failed to send friend request");
   }
 
-  // Prepare and send notification
+
   const notificationPayload = {
     from: {
       authId: user.authId,
@@ -119,7 +115,7 @@ const acceptOrRejectRequest = async (
     const requestObjectId = new Types.ObjectId(requestId);
     const currentUserId = new Types.ObjectId(user.authId);
 
-    // Find request with user details within transaction
+
     const isRequestExist = await Request.findById(requestObjectId)
       .populate('requestedBy', 'name lastName profile')
       .populate('requestedTo', 'name lastName profile')
@@ -129,21 +125,19 @@ const acceptOrRejectRequest = async (
       throw new ApiError(StatusCodes.NOT_FOUND, "Request not found");
     }
 
-    // Verify user is the recipient of the request
     if (!isRequestExist.requestedTo._id.equals(currentUserId)) {
       throw new ApiError(StatusCodes.FORBIDDEN, "Not authorized to respond to this request");
     }
 
-    // Check if request is already processed
     if (isRequestExist.status !== REQUEST_STATUS.PENDING) {
       throw new ApiError(StatusCodes.CONFLICT, `Request already ${isRequestExist.status}`);
     }
 
-    // Update request status within transaction
+
     isRequestExist.status = payload.status;
     await isRequestExist.save({ session });
 
-    // If accepted, create friendship
+
     if (payload.status === REQUEST_STATUS.ACCEPTED) {
       const existingFriendship = await Friend.findOne({
         users: {
@@ -155,28 +149,18 @@ const acceptOrRejectRequest = async (
         throw new ApiError(StatusCodes.CONFLICT, "Friendship already exists");
       }
 
-      // Create friendship within transaction
+
       await Friend.create([{
         users: [isRequestExist.requestedBy._id, isRequestExist.requestedTo._id],
         requestId: isRequestExist._id
       }], { session });
 
-      // Update user friend counts within transaction
-      // await User.updateMany(
-      //   {
-      //     _id: {
-      //       $in: [isRequestExist.requestedBy._id, isRequestExist.requestedTo._id]
-      //     }
-      //   },
-      //   { $inc: { friendCount: 1 } },
-      //   { session }
-      // );
     }
 
-    // Commit the transaction
+
     await session.commitTransaction();
 
-    // Send notification (outside transaction for better performance)
+
     if (payload.status === REQUEST_STATUS.ACCEPTED) {
       const notificationPayload = {
         from: {
@@ -205,10 +189,9 @@ const acceptOrRejectRequest = async (
     };
 
   } catch (error) {
-    // Rollback transaction on error
+
     await session.abortTransaction();
 
-    // Handle specific errors
     if (error instanceof ApiError) {
       throw error;
     }
@@ -219,8 +202,8 @@ const acceptOrRejectRequest = async (
       "Failed to process friend request"
     );
   } finally {
-    // End session
-    session.endSession();
+
+    await session.endSession();
   }
 };
 

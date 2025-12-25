@@ -7,6 +7,11 @@ export enum REQUEST_STATUS {
   REJECTED = 'rejected',
 }
 
+export enum REQUEST_TYPE {
+  PLAN = 'plan',
+  FRIEND = 'friend'
+}
+
 export interface IRequestFilterables {
   searchTerm?: string;
   status?: REQUEST_STATUS;
@@ -17,6 +22,7 @@ export interface IRequest {
   requestedBy: Types.ObjectId | IUser;
   requestedTo: Types.ObjectId | IUser;
   status: REQUEST_STATUS;
+  type: REQUEST_TYPE;
   createdAt: Date;
   updatedAt: Date
 }
