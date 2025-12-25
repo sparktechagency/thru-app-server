@@ -27,6 +27,7 @@ export interface IPlan {
   link: string;
   activities: Types.ObjectId[];
   friends: Types.ObjectId[];
+  commentCount: number;
 }
 
 export type PlanModel = Model<IPlan, {}, {}>;

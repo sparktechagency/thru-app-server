@@ -24,6 +24,7 @@ const planSchema = new Schema<IPlan, PlanModel>({
   link: { type: String },
   activities: { type: [Schema.Types.ObjectId], ref: 'Activity' },
   friends: { type: [Schema.Types.ObjectId], ref: 'User' },
+  commentCount: { type: Number, default: 0 },
 }, {
   timestamps: true
 });
