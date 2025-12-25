@@ -13,10 +13,26 @@ import removeFile from '../../../helpers/image/remove'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { paginationHelper } from '../../../helpers/paginationHelper'
 import { user_searchable_fields } from './user.constants'
+import { Types } from 'mongoose'
+
+type UpdateProfile = IUser & {
+  latitude?: number
+  longitude?: number
+}
 
 
+const updateProfile = async (user: JwtPayload, payload: Partial<UpdateProfile>) => {
 
-const updateProfile = async (user: JwtPayload, payload: Partial<IUser>) => {
+  if (
+    typeof payload.latitude === 'number' &&
+    typeof payload.longitude === 'number'
+  ) {
+    payload.location = {
+      type: 'Point',
+      coordinates: [payload.longitude, payload.latitude], // lng, lat
+    }
+  }
+
   const updatedProfile = await User.findOneAndUpdate(
     { _id: user.authId, status: { $nin: [USER_STATUS.DELETED] } },
     {
@@ -180,6 +196,9 @@ const getUsers = async (
     data: result,
   }
 }
+
+
+
 
 
 

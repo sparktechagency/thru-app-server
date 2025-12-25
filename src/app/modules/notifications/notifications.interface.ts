@@ -5,6 +5,8 @@ export type INotification = {
   to: Types.ObjectId
   from: Types.ObjectId
   title: string
+  friendRequestId?: string
+  planJoiningRequestId?: string
   body: string
   isAdmin?: boolean
   isRead: boolean

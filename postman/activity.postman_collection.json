@@ -1,0 +1,157 @@
+{
+  "info": {
+    "name": "Activity API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Create Activity",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"{{title}}\",\n  \"description\": \"{{description}}\",\n  \"address\": \"{{address}}\",\n  \"date\": \"{{date}}\",\n  \"images\": []\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/activity",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "activity"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.variables.set(\"title\", \"title_\" + Date.now());",
+              "pm.variables.set(\"description\", \"description_\" + Date.now());",
+              "pm.variables.set(\"address\", \"address_\" + Date.now());",
+              "pm.variables.set(\"date\", new Date().toISOString());"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Get All Activitys",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/activity",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "activity"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Get Activity by ID",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/activity/{{activity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "activity",
+            "{{activity_id}}"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Update Activity",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"{{title}}\",\n  \"description\": \"{{description}}\",\n  \"address\": \"{{address}}\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": {
+          "raw": "{{base_url}}/api/v1/activity/{{activity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "activity",
+            "{{activity_id}}"
+          ]
+        }
+      },
+      "event": [
+        {
+          "listen": "prerequest",
+          "script": {
+            "exec": [
+              "pm.variables.set(\"title\", \"title_\" + Date.now());",
+              "pm.variables.set(\"description\", \"description_\" + Date.now());",
+              "pm.variables.set(\"address\", \"address_\" + Date.now());",
+              "pm.variables.set(\"date\", new Date().toISOString());"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Delete Activity",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": {
+          "raw": "{{base_url}}/api/v1/activity/{{activity_id}}",
+          "host": [
+            "{{base_url}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "activity",
+            "{{activity_id}}"
+          ]
+        }
+      }
+    }
+  ]
+}

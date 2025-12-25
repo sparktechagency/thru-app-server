@@ -26,6 +26,8 @@ const updateUserZodSchema = z.object({
     phone: z.string().optional(),
     address: z.string().optional(),
     bio: z.string().optional(),
+    longitude: z.number().optional(),
+    latitude: z.number().optional(),
 
   }),
 })

@@ -222,6 +222,1091 @@
           }
         }
       }
+    },
+    "/plan": {
+      "post": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Create a new Plan",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Plan created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Plan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Get all Plans",
+        "responses": {
+          "200": {
+            "description": "List of Plans retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Plan"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/plan/{id}": {
+      "get": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Get Plan by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Plan ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Plan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plan not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Update Plan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Plan ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PlanUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Plan updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Plan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plan not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Plan"
+        ],
+        "summary": "Delete Plan",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Plan ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Plan deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Plan"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Plan not found"
+          }
+        }
+      }
+    },
+    "/activity": {
+      "post": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "Create a new Activity",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Activity created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Activity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "Get all Activitys",
+        "responses": {
+          "200": {
+            "description": "List of Activitys retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Activity"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/activity/{id}": {
+      "get": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "Get Activity by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Activity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "Update Activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ActivityUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Activity updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Activity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Activity"
+        ],
+        "summary": "Delete Activity",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Activity ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Activity deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Activity"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Activity not found"
+          }
+        }
+      }
+    },
+    "/gallery": {
+      "post": {
+        "tags": [
+          "Gallery"
+        ],
+        "summary": "Create a new Gallery",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GalleryCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Gallery created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Gallery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Gallery"
+        ],
+        "summary": "Get all Gallerys",
+        "responses": {
+          "200": {
+            "description": "List of Gallerys retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Gallery"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/gallery/{id}": {
+      "get": {
+        "tags": [
+          "Gallery"
+        ],
+        "summary": "Get Gallery by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Gallery ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gallery retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Gallery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gallery not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Gallery"
+        ],
+        "summary": "Update Gallery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Gallery ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GalleryUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Gallery updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Gallery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gallery not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Gallery"
+        ],
+        "summary": "Delete Gallery",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Gallery ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Gallery deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Gallery"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Gallery not found"
+          }
+        }
+      }
+    },
+    "/request": {
+      "post": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Create a new Request",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Request created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get all Requests",
+        "responses": {
+          "200": {
+            "description": "List of Requests retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Request"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/request/{id}": {
+      "get": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Get Request by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Request ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Update Request",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Request ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Request updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Request"
+        ],
+        "summary": "Delete Request",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Request ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Request deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Request"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Request not found"
+          }
+        }
+      }
+    },
+    "/friend": {
+      "post": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Create a new Friend",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendCreate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Friend created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Friend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Get all Friends",
+        "responses": {
+          "200": {
+            "description": "List of Friends retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Friend"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/friend/{id}": {
+      "get": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Get Friend by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Friend ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend retrieved successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Friend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Friend not found"
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Update Friend",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Friend ID"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FriendUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Friend updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Friend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Friend not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Friend"
+        ],
+        "summary": "Delete Friend",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "Friend ID"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Friend deleted successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Friend"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Friend not found"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -366,6 +1451,513 @@
             "type": "string",
             "format": "date-time",
             "description": "updatedAt field"
+          }
+        }
+      },
+      "Plan": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB ObjectId"
+          },
+          "title": {
+            "type": "string",
+            "description": "title field"
+          },
+          "description": {
+            "type": "string",
+            "description": "description field"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "location": {
+            "type": "string",
+            "description": "location field"
+          },
+          "address": {
+            "type": "string",
+            "description": "address field"
+          },
+          "link": {
+            "type": "string",
+            "description": "link field"
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of activities references"
+          },
+          "friends": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of friends references"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "_id"
+        ]
+      },
+      "PlanCreate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "title field"
+          },
+          "description": {
+            "type": "string",
+            "description": "description field"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "location": {
+            "type": "string",
+            "description": "location field"
+          },
+          "address": {
+            "type": "string",
+            "description": "address field"
+          },
+          "link": {
+            "type": "string",
+            "description": "link field"
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of activities references"
+          },
+          "friends": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of friends references"
+          }
+        },
+        "required": []
+      },
+      "PlanUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "title field"
+          },
+          "description": {
+            "type": "string",
+            "description": "description field"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "location": {
+            "type": "string",
+            "description": "location field"
+          },
+          "address": {
+            "type": "string",
+            "description": "address field"
+          },
+          "link": {
+            "type": "string",
+            "description": "link field"
+          },
+          "activities": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of activities references"
+          },
+          "friends": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of friends references"
+          }
+        }
+      },
+      "Activity": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB ObjectId"
+          },
+          "title": {
+            "type": "string",
+            "description": "title field"
+          },
+          "description": {
+            "type": "string",
+            "description": "description field"
+          },
+          "address": {
+            "type": "string",
+            "description": "address field"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "_id"
+        ]
+      },
+      "ActivityCreate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "title field"
+          },
+          "description": {
+            "type": "string",
+            "description": "description field"
+          },
+          "address": {
+            "type": "string",
+            "description": "address field"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          }
+        },
+        "required": []
+      },
+      "ActivityUpdate": {
+        "type": "object",
+        "properties": {
+          "title": {
+            "type": "string",
+            "description": "title field"
+          },
+          "description": {
+            "type": "string",
+            "description": "description field"
+          },
+          "address": {
+            "type": "string",
+            "description": "address field"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          }
+        }
+      },
+      "Gallery": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB ObjectId"
+          },
+          "belongsTo": {
+            "type": "string",
+            "description": "belongsTo reference ID"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "_id"
+        ]
+      },
+      "GalleryCreate": {
+        "type": "object",
+        "properties": {
+          "belongsTo": {
+            "type": "string",
+            "description": "belongsTo reference ID"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          }
+        },
+        "required": []
+      },
+      "GalleryUpdate": {
+        "type": "object",
+        "properties": {
+          "belongsTo": {
+            "type": "string",
+            "description": "belongsTo reference ID"
+          },
+          "images": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of images items"
+          },
+          "date": {
+            "type": "string",
+            "format": "date-time",
+            "description": "date field"
+          }
+        }
+      },
+      "Request": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB ObjectId"
+          },
+          "requestedBy": {
+            "type": "string",
+            "description": "requestedBy reference ID"
+          },
+          "requestedTo": {
+            "type": "string",
+            "description": "requestedTo reference ID"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected"
+            ],
+            "description": "status field"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "_id"
+        ]
+      },
+      "RequestCreate": {
+        "type": "object",
+        "properties": {
+          "requestedBy": {
+            "type": "string",
+            "description": "requestedBy reference ID"
+          },
+          "requestedTo": {
+            "type": "string",
+            "description": "requestedTo reference ID"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected"
+            ],
+            "description": "status field"
+          }
+        },
+        "required": []
+      },
+      "RequestUpdate": {
+        "type": "object",
+        "properties": {
+          "requestedBy": {
+            "type": "string",
+            "description": "requestedBy reference ID"
+          },
+          "requestedTo": {
+            "type": "string",
+            "description": "requestedTo reference ID"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "pending",
+              "accepted",
+              "rejected"
+            ],
+            "description": "status field"
+          }
+        }
+      },
+      "Friend": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "MongoDB ObjectId"
+          },
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of users references"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "requestId reference ID"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Creation timestamp"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "Last update timestamp"
+          }
+        },
+        "required": [
+          "_id"
+        ]
+      },
+      "FriendCreate": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of users references"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "requestId reference ID"
+          }
+        },
+        "required": []
+      },
+      "FriendUpdate": {
+        "type": "object",
+        "properties": {
+          "users": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Array of users references"
+          },
+          "requestId": {
+            "type": "string",
+            "description": "requestId reference ID"
           }
         }
       }

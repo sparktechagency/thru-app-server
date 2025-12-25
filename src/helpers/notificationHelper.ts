@@ -11,8 +11,11 @@ export const sendNotification = async (
     name?: string,
   },
   to: string,
+
   title: string,
   body: string,
+  friendRequestId?: string,
+  planJoiningRequestId?: string,
   fcmToken?: string,
 ) => {
   try {
@@ -36,6 +39,8 @@ export const sendNotification = async (
       to,
       title,
       body,
+      friendRequestId: friendRequestId,
+      planJoiningRequestId: planJoiningRequestId,
       isRead: false,
       createdAt: result.createdAt,
       updatedAt: result.updatedAt,
@@ -45,8 +50,8 @@ export const sendNotification = async (
 
     socket.emit('notification', socketResponse)
 
-    if(fcmToken){
-     await sendPushNotification(fcmToken, title, body, { from: from.authId, to })
+    if (fcmToken) {
+      await sendPushNotification(fcmToken, title, body, { from: from.authId, to })
     }
   } catch (err) {
     //@ts-ignore
