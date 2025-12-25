@@ -13,7 +13,7 @@ import removeFile from '../../../helpers/image/remove'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { paginationHelper } from '../../../helpers/paginationHelper'
 import { user_searchable_fields } from './user.constants'
-import { Types } from 'mongoose'
+
 
 type UpdateProfile = IUser & {
   latitude?: number
