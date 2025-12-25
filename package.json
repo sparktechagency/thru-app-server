@@ -41,6 +41,7 @@
     "nodemailer": "^6.9.16",
     "passport-google-oauth20": "^2.0.0",
     "prettier": "^3.4.2",
+    "serpapi": "^2.2.1",
     "sharp": "^0.34.1",
     "socket.io": "^4.8.1",
     "twilio": "^5.4.2",

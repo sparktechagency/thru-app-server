@@ -15,6 +15,7 @@ export default {
     email: process.env.ADMIN_EMAIL,
     password: process.env.ADMIN_PASSWORD
   },
+  serp_api_key: process.env.SERPAPI_KEY,
   google: {
     client_id: process.env.GOOGLE_CLIENT_ID,
     client_secret: process.env.GOOGLE_CLIENT_SECRET,
