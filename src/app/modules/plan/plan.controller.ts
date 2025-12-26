@@ -8,16 +8,7 @@ import { planFilterables } from './plan.constants';
 import { paginationFields } from '../../../interfaces/pagination';
 
 const createPlan = catchAsync(async (req: Request, res: Response) => {
-  const { images, media, ...planData } = req.body;
-
-  if (images && images.length > 0) {
-    planData.images = images;
-  }
-
-  if (media && media.length > 0) {
-    planData.media = media;
-  }
-
+  const planData = req.body;
   const result = await PlanServices.createPlan(
     req.user!,
     planData
@@ -71,7 +62,8 @@ const getAllPlans = catchAsync(async (req: Request, res: Response) => {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Plans retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 

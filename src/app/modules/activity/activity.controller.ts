@@ -9,11 +9,11 @@ import { paginationFields } from '../../../interfaces/pagination';
 
 const createActivity = catchAsync(async (req: Request, res: Response) => {
   const { images, media, ...activityData } = req.body;
-  
+
   if (images && images.length > 0) {
     activityData.images = images;
   }
-  
+
   if (media && media.length > 0) {
     activityData.media = media;
   }
@@ -45,35 +45,8 @@ const updateActivity = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getSingleActivity = catchAsync(async (req: Request, res: Response) => {
-  const { id } = req.params;
-  const result = await ActivityServices.getSingleActivity(id);
 
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Activity retrieved successfully',
-    data: result,
-  });
-});
 
-const getAllActivitys = catchAsync(async (req: Request, res: Response) => {
-  const filterables = pick(req.query, activityFilterables);
-  const pagination = pick(req.query, paginationFields);
-
-  const result = await ActivityServices.getAllActivitys(
-    req.user!,
-    filterables,
-    pagination
-  );
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Activitys retrieved successfully',
-    data: result,
-  });
-});
 
 const deleteActivity = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -90,7 +63,7 @@ const deleteActivity = catchAsync(async (req: Request, res: Response) => {
 export const ActivityController = {
   createActivity,
   updateActivity,
-  getSingleActivity,
-  getAllActivitys,
+
+
   deleteActivity,
 };

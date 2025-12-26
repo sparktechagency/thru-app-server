@@ -19,13 +19,7 @@ router.get(
   RequestController.getMyFreindRequestList
 );
 
-router.get(
-  '/friends',
-  auth(
-    USER_ROLES.USER
-  ),
-  RequestController.getMyFriendList
-);
+
 
 router.post(
   '/',

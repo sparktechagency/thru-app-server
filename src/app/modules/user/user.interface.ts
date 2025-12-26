@@ -26,6 +26,7 @@ export interface IUser {
   address?: string
   location: Point
   password: string
+  totalDays?: string
   role: string
   appId?: string
   fcmToken?: string

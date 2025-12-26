@@ -9,6 +9,7 @@ import { ImageUploadPayload } from '../../../shared/shared'
 import pick from '../../../shared/pick'
 import { user_filterable_fields } from './user.constants'
 import { paginationFields } from '../../../interfaces/pagination'
+import { IUser } from './user.interface'
 
 
 
@@ -17,7 +18,7 @@ import { paginationFields } from '../../../interfaces/pagination'
 const updateProfile = catchAsync(async (req: Request, res: Response) => {
   const { image, ...userData } = req.body
   const result = await UserServices.updateProfile(req.user!, userData)
-  sendResponse<String>(res, {
+  sendResponse<IUser>(res, {
     statusCode: StatusCodes.OK,
     success: true,
     message: 'Profile updated successfully',

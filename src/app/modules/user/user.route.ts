@@ -10,7 +10,7 @@ import {
 
 const router = express.Router()
 
-
+//* for updating user profile
 router.patch(
   '/profile',
   auth(
@@ -22,7 +22,7 @@ router.patch(
   UserController.updateProfile,
 )
 
-
+//* for uploading images for user
 router.post(
   '/upload-images',
   auth(
@@ -35,6 +35,7 @@ router.post(
   UserController.uploadImages,
 )
 
+//* get user profile
 router.get(
   '/profile',
   auth(

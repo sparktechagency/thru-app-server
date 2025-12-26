@@ -51,21 +51,6 @@ const getMyFreindRequestList = catchAsync(async (req: Request, res: Response) =>
   });
 });
 
-const getMyFriendList = catchAsync(async (req: Request, res: Response) => {
-
-  const pagination = pick(req.query, paginationFields);
-
-  const result = await RequestService.getMyFriendList(
-    req.user!
-  );
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'FriendList retrieved successfully.',
-    data: result,
-  });
-});
 
 
 const sendPlanRequest = catchAsync(async (req: Request, res: Response) => {
@@ -105,7 +90,7 @@ export const RequestController = {
   createRequest,
   updateRequest,
   getMyFreindRequestList,
-  getMyFriendList,
+
   sendPlanRequest,
   acceptOrRejectPlanRequest
 };

@@ -84,6 +84,8 @@ const getAllPlans = async (
     });
   }
 
+  andConditions.push({ 'createdBy': user.authId })
+
   const whereConditions = andConditions.length ? { $and: andConditions } : {};
 
   const [result, total] = await Promise.all([
@@ -111,7 +113,7 @@ const getSinglePlan = async (id: string): Promise<IPlan> => {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid Plan ID');
   }
 
-  const result = await Plan.findById(id).populate('activities').populate('friends');
+  const result = await Plan.findById(id).populate('createdBy').populate('activities').populate('friends');
   if (!result) {
     throw new ApiError(
       StatusCodes.NOT_FOUND,

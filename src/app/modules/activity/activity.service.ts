@@ -3,9 +3,6 @@ import ApiError from '../../../errors/ApiError';
 import { IActivityFilterables, IActivity } from './activity.interface';
 import { Activity } from './activity.model';
 import { JwtPayload } from 'jsonwebtoken';
-import { IPaginationOptions } from '../../../interfaces/pagination';
-import { paginationHelper } from '../../../helpers/paginationHelper';
-import { activitySearchableFields } from './activity.constants';
 import mongoose, { Types } from 'mongoose';
 import removeFile from '../../../helpers/image/remove';
 import { Plan } from '../plan/plan.model';
@@ -35,74 +32,9 @@ const createActivity = async (
   }
 };
 
-const getAllActivitys = async (
-  user: JwtPayload,
-  filterables: IActivityFilterables,
-  pagination: IPaginationOptions
-) => {
-  const { searchTerm, ...filterData } = filterables;
-  const { page, skip, limit, sortBy, sortOrder } = paginationHelper.calculatePagination(pagination);
 
-  const andConditions = [];
 
-  // Search functionality
-  if (searchTerm) {
-    andConditions.push({
-      $or: activitySearchableFields.map((field) => ({
-        [field]: {
-          $regex: searchTerm,
-          $options: 'i',
-        },
-      })),
-    });
-  }
 
-  // Filter functionality
-  if (Object.keys(filterData).length) {
-    andConditions.push({
-      $and: Object.entries(filterData).map(([key, value]) => ({
-        [key]: value,
-      })),
-    });
-  }
-
-  const whereConditions = andConditions.length ? { $and: andConditions } : {};
-
-  const [result, total] = await Promise.all([
-    Activity
-      .find(whereConditions)
-      .skip(skip)
-      .limit(limit)
-      .sort({ [sortBy]: sortOrder }),
-    Activity.countDocuments(whereConditions),
-  ]);
-
-  return {
-    meta: {
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-    },
-    data: result,
-  };
-};
-
-const getSingleActivity = async (id: string): Promise<IActivity> => {
-  if (!Types.ObjectId.isValid(id)) {
-    throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid Activity ID');
-  }
-
-  const result = await Activity.findById(id);
-  if (!result) {
-    throw new ApiError(
-      StatusCodes.NOT_FOUND,
-      'Requested activity not found, please try again with valid id'
-    );
-  }
-
-  return result;
-};
 
 const updateActivity = async (
   id: string,
@@ -239,8 +171,6 @@ export const createPlanWithActivity = async (
 
 export const ActivityServices = {
   createActivity,
-  getAllActivitys,
-  getSingleActivity,
   updateActivity,
   deleteActivity,
   addActivityToExistingPlan

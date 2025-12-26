@@ -358,45 +358,7 @@ const acceptOrRejectPlanRequest = async (
   }
 };
 
-const getMyFriendList = async (user: JwtPayload) => {
-  const userId = new Types.ObjectId(user.authId);
 
-  const friendRequests = await Request.find({
-    $or: [
-      { requestedBy: userId },
-      { requestedTo: userId }
-    ],
-    status: REQUEST_STATUS.ACCEPTED
-  })
-    .populate<{ requestedBy: IUser }>('requestedBy', 'name lastName email profile status')
-    .populate<{ requestedTo: IUser }>('requestedTo', 'name lastName email profile status') // Fixed: 'requestedTo'
-    .sort({ updatedAt: -1 });
-
-
-  const friends = friendRequests.map(request => {
-    if (!request.requestedBy || !request.requestedTo) {
-
-      return null;
-    }
-
-    const isRequester = request.requestedBy._id.equals(userId);
-    const friend = isRequester ? request.requestedTo : request.requestedBy;
-
-    return {
-      id: friend._id,
-      name: friend.name,
-      lastName: friend.lastName,
-      email: friend.email,
-      profile: friend.profile,
-      status: friend.status,
-      friendshipDate: request.updatedAt,
-      friendshipId: request._id,
-
-    };
-  }).filter(Boolean); // Remove null entries
-
-  return friends;
-};
 
 const getMyFreindRequestList = async (user: JwtPayload, paginationOptions: IPaginationOptions) => {
   const { page, limit, skip, sortBy, sortOrder } = paginationHelper.calculatePagination(paginationOptions);
@@ -423,7 +385,6 @@ const getMyFreindRequestList = async (user: JwtPayload, paginationOptions: IPagi
 export const RequestService = {
   sendFriendRequest,
   acceptOrRejectRequest,
-  getMyFriendList,
   getMyFreindRequestList,
   sendPlanRequest,
   acceptOrRejectPlanRequest

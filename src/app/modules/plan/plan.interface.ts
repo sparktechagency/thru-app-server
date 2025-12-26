@@ -22,6 +22,7 @@ export interface IPlan {
   description?: string;
   images: string[];
   date: Date;
+  endDate?: Date;
   location: Point;
   address: string;
   link: string;

@@ -21,7 +21,7 @@ type UpdateProfile = IUser & {
 }
 
 
-const updateProfile = async (user: JwtPayload, payload: Partial<UpdateProfile>) => {
+const updateProfile = async (user: JwtPayload, payload: Partial<UpdateProfile>): Promise<IUser> => {
 
   if (
     typeof payload.latitude === 'number' &&
@@ -38,14 +38,14 @@ const updateProfile = async (user: JwtPayload, payload: Partial<UpdateProfile>) 
     {
       $set: payload,
     },
-    { new: false },
+    { new: true },
   )
 
   if (!updatedProfile) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to update profile.')
   }
 
-  return 'Profile updated successfully.'
+  return updatedProfile
 }
 
 const createAdmin = async (): Promise<Partial<IUser> | null> => {

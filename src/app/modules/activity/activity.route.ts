@@ -8,50 +8,37 @@ import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processRe
 
 const router = express.Router();
 
-router.get(
-  '/',
-  auth(
-    USER_ROLES.SUPER_ADMIN,
-    USER_ROLES.ADMIN
-  ),
-  ActivityController.getAllActivitys
-);
 
-router.get(
-  '/:id',
-  auth(
-    USER_ROLES.SUPER_ADMIN,
-    USER_ROLES.ADMIN
-  ),
-  ActivityController.getSingleActivity
-);
 
 router.post(
   '/',
   auth(
-    USER_ROLES.SUPER_ADMIN,
+    USER_ROLES.USER,
+
     USER_ROLES.ADMIN
   ),
   fileAndBodyProcessorUsingDiskStorage(),
-  validateRequest(ActivityValidations.createActivityZodSchema),
+  validateRequest(ActivityValidations.create),
   ActivityController.createActivity
 );
 
 router.patch(
   '/:id',
   auth(
-    USER_ROLES.SUPER_ADMIN,
+    USER_ROLES.USER,
+
     USER_ROLES.ADMIN
   ),
   fileAndBodyProcessorUsingDiskStorage(),
-  validateRequest(ActivityValidations.updateActivityZodSchema),
+  validateRequest(ActivityValidations.update),
   ActivityController.updateActivity
 );
 
 router.delete(
   '/:id',
   auth(
-    USER_ROLES.SUPER_ADMIN,
+    USER_ROLES.USER,
+
     USER_ROLES.ADMIN
   ),
   ActivityController.deleteActivity

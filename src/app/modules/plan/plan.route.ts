@@ -8,20 +8,21 @@ import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processRe
 
 const router = express.Router();
 
+//* get all plans for the requested user
 router.get(
   '/',
   auth(
-
-    USER_ROLES.ADMIN
+    USER_ROLES.USER
   ),
   PlanController.getAllPlans
 );
 
+
+
 router.get(
   '/:id',
   auth(
-
-    USER_ROLES.ADMIN
+    USER_ROLES.USER
   ),
   PlanController.getSinglePlan
 );
@@ -30,7 +31,7 @@ router.post(
   '/',
   auth(
 
-    USER_ROLES.ADMIN
+    USER_ROLES.USER
   ),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(PlanValidations.create),
@@ -41,7 +42,7 @@ router.patch(
   '/:id',
   auth(
 
-    USER_ROLES.ADMIN
+    USER_ROLES.USER
   ),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(PlanValidations.update),
@@ -52,7 +53,7 @@ router.delete(
   '/:id',
   auth(
 
-    USER_ROLES.ADMIN
+    USER_ROLES.USER
   ),
   PlanController.deletePlan
 );
