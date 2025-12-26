@@ -78,14 +78,16 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
   const notificationPayload = {
     from: {
       authId: user.authId,
-      name: user.name,
-      profile: user.profile,
+      name: user.name || "",
+      profile: user.profile || "",
     },
     to: isRequestedPersonExist._id,
     title: "New Friend Request",
     body: `${user.name} ${user.lastName} sent you a friend request`,
     friendRequestId: request._id
   };
+
+  console.log(notificationPayload, "😂😂😂");
 
   await sendNotification(
     notificationPayload.from,

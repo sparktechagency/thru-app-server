@@ -60,10 +60,53 @@ const deleteActivity = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const addActivityToExistingPlan = catchAsync(async (req: Request, res: Response) => {
+  const { planId, ...activityData } = req.body;
+  const result = await ActivityServices.addActivityToExistingPlan(
+    req.user!,
+    activityData,
+    planId
+  );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Activity added to plan successfully',
+    data: result,
+  });
+});
+
+const removeActivityFromPlan = catchAsync(async (req: Request, res: Response) => {
+  const { planId, activityId } = req.body;
+  const result = await ActivityServices.removeActivityFromPlan(planId, activityId);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Activity removed from plan successfully',
+    data: result,
+  });
+});
+
+const createPlanWithActivity = catchAsync(async (req: Request, res: Response) => {
+  const activityData = req.body;
+  const result = await ActivityServices.createPlanWithActivity(req.user!, activityData);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.CREATED,
+    success: true,
+    message: 'Plan created with activity successfully',
+    data: result,
+  });
+});
+
 export const ActivityController = {
   createActivity,
   updateActivity,
 
 
   deleteActivity,
+  addActivityToExistingPlan,
+  removeActivityFromPlan,
+  createPlanWithActivity
 };

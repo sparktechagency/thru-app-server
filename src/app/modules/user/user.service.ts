@@ -2,6 +2,7 @@ import { StatusCodes } from 'http-status-codes'
 import ApiError from '../../../errors/ApiError'
 import { IUser, IUserFilterableFields } from './user.interface'
 import { User } from './user.model'
+import { Plan } from '../plan/plan.model'
 
 import { USER_ROLES, USER_STATUS } from '../../../enum/user'
 
@@ -202,4 +203,44 @@ const getUsers = async (
 
 
 
-export const UserServices = { updateProfile, createAdmin, uploadImages, getUserProfile, getUsers }
+const getUserActivityLog = async (
+  user: JwtPayload,
+  pagination: IPaginationOptions
+) => {
+  const { page, skip, limit, sortBy, sortOrder } = paginationHelper.calculatePagination(pagination);
+
+  const now = new Date();
+  const whereConditions = {
+    $and: [
+      {
+        $or: [
+          { createdBy: user.authId },
+          { friends: user.authId }
+        ]
+      },
+      { date: { $lt: now } }
+    ]
+  };
+
+  const [result, total] = await Promise.all([
+    Plan.find(whereConditions)
+      .skip(skip)
+      .limit(limit)
+      .sort({ [sortBy]: sortOrder })
+      .populate('activities')
+      .populate('friends'),
+    Plan.countDocuments(whereConditions),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  };
+};
+
+export const UserServices = { updateProfile, createAdmin, uploadImages, getUserProfile, getUsers, getUserActivityLog }

@@ -194,11 +194,46 @@ const removePlanFriend = async (planId: string, userId: string): Promise<IPlan |
   return result;
 };
 
+const getPlansByStartTime = async (
+  user: JwtPayload,
+  pagination: IPaginationOptions
+) => {
+  const { page, skip, limit, sortBy, sortOrder } = paginationHelper.calculatePagination(pagination);
+
+  const now = new Date();
+  const whereConditions = {
+    createdBy: user.authId,
+    date: { $lte: now },
+    endDate: { $gte: now }
+  };
+
+  const [result, total] = await Promise.all([
+    Plan.find(whereConditions)
+      .skip(skip)
+      .limit(limit)
+      .sort({ [sortBy]: sortOrder })
+      .populate('activities')
+      .populate('friends'),
+    Plan.countDocuments(whereConditions),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  };
+};
+
 export const PlanServices = {
   createPlan,
   getAllPlans,
   getSinglePlan,
   updatePlan,
   deletePlan,
-  removePlanFriend
+  removePlanFriend,
+  getPlansByStartTime
 };

@@ -4,7 +4,7 @@ import { Types } from 'mongoose';
 
 export const RequestValidations = {
   create: z.object({
-    body: z.object({
+    params: z.object({
       requestedTo: z.string(),
     })
   }),

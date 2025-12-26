@@ -98,24 +98,26 @@ export const addActivityToExistingPlan = async (
   try {
     session.startTransaction();
 
-
-    const plan = await Plan.findById(new Types.ObjectId(planId)).session(session);
+    const plan = await Plan.findById(planId).session(session);
     if (!plan) {
       throw new ApiError(StatusCodes.NOT_FOUND, "The requested plan was not found.");
     }
 
+    // Handle activity from serpApi (externalId)
     let activity = await Activity.findOne({ externalId: payload.externalId }).session(session);
-
 
     if (!activity) {
       const [newActivity] = await Activity.create([payload], { session });
       activity = newActivity;
     }
 
-    // Link the activity to the plan if not already linked
-    if (!plan.activities.includes(activity._id)) {
-      plan.activities.push(activity._id);
-      await plan.save({ session });
+    // Link the activity to the plan if not already linked (push the id)
+    if (!plan.activities.some(id => id.equals(activity._id))) {
+      await Plan.findByIdAndUpdate(
+        planId,
+        { $push: { activities: activity._id } },
+        { session }
+      );
     }
 
     await session.commitTransaction();
@@ -126,6 +128,30 @@ export const addActivityToExistingPlan = async (
   } finally {
     session.endSession();
   }
+};
+
+export const removeActivityFromPlan = async (
+  planId: string,
+  activityId: string
+) => {
+  if (!Types.ObjectId.isValid(planId) || !Types.ObjectId.isValid(activityId)) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid Plan or Activity ID');
+  }
+
+  const result = await Plan.findByIdAndUpdate(
+    planId,
+    { $pull: { activities: activityId } },
+    { new: true, runValidators: true }
+  ).populate('activities').populate('friends');
+
+  if (!result) {
+    throw new ApiError(
+      StatusCodes.NOT_FOUND,
+      'Requested plan not found'
+    );
+  }
+
+  return result;
 };
 
 
@@ -149,7 +175,7 @@ export const createPlanWithActivity = async (
     const [plan] = await Plan.create(
       [
         {
-          createdBy: user.id,
+          createdBy: user.authId,
           title: activity.title,
           description: activity.description,
           date: activity.date || new Date(),
@@ -173,5 +199,7 @@ export const ActivityServices = {
   createActivity,
   updateActivity,
   deleteActivity,
-  addActivityToExistingPlan
+  addActivityToExistingPlan,
+  removeActivityFromPlan,
+  createPlanWithActivity
 };

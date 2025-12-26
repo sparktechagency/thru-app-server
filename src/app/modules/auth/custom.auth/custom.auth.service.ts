@@ -47,15 +47,17 @@ const createUser = async (payload: IUser) => {
       otp,
     })
 
-    await User.create([payload], { session }),
-      await Verification.create([authentication], { session }),
-      await session.commitTransaction()
+    await User.create([payload], { session });
+    await Verification.create([authentication], { session });
+    await session.commitTransaction();
 
-    emailHelper.sendEmail(createAccount)
+    emailHelper.sendEmail(createAccount);
 
-    return `${config.node_env === 'development' ? `${payload.email}, ${otp}` : 'An otp has been sent to your email, please check.'}`
+    return `${config.node_env === 'development' ? `${payload.email}, ${otp}` : 'An otp has been sent to your email, please check.'}`;
   } catch (error: any) {
-    await session.abortTransaction()
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
     if (error.code === 11000) {
       throw new ApiError(
         StatusCodes.BAD_REQUEST,
@@ -318,10 +320,12 @@ const resetPassword = async (
 
     return {
       message: `Password reset successfully. You can now login with your new password.`,
-    }
+    };
   } catch (error) {
-    await session.abortTransaction()
-    throw error
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    throw error;
   } finally {
     await session.endSession()
   }
@@ -462,10 +466,12 @@ const verifyAccount = async (
     throw new ApiError(
       StatusCodes.INTERNAL_SERVER_ERROR,
       'Unknown verification type.',
-    )
+    );
   } catch (error) {
-    await session.abortTransaction()
-    throw error
+    if (session.inTransaction()) {
+      await session.abortTransaction();
+    }
+    throw error;
   } finally {
     await session.endSession()
   }

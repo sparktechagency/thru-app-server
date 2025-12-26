@@ -92,11 +92,26 @@ const removePlanFriend = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getPlansByStartTime = catchAsync(async (req: Request, res: Response) => {
+  const pagination = pick(req.query, paginationFields);
+
+  const result = await PlanServices.getPlansByStartTime(req.user!, pagination);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Upcoming plans retrieved successfully',
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
 export const PlanController = {
   createPlan,
   updatePlan,
   getSinglePlan,
   getAllPlans,
   deletePlan,
-  removePlanFriend
+  removePlanFriend,
+  getPlansByStartTime
 };

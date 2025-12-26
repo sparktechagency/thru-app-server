@@ -19,8 +19,11 @@ export const sendNotification = async (
   fcmToken?: string,
 ) => {
   try {
+
+
+
     const result = await Notification.create({
-      from,
+      from: from.authId,
       to,
       title,
       body,

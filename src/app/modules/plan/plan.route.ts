@@ -17,6 +17,12 @@ router.get(
   PlanController.getAllPlans
 );
 
+router.get(
+  '/happening-now',
+  auth(USER_ROLES.USER),
+  PlanController.getPlansByStartTime
+);
+
 
 
 router.get(

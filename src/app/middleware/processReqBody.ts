@@ -171,7 +171,7 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
   ) => {
     try {
       const allowedTypes = {
-        images: ['image/jpeg', 'image/png', 'image/jpg'],
+        images: ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'],
         media: ['video/mp4', 'audio/mpeg'],
         documents: ['application/pdf'],
       }
@@ -213,6 +213,7 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
         // Parse JSON data if exists
         if (req.body?.data) {
           req.body = JSON.parse(req.body.data)
+
         }
 
         // Process uploaded files

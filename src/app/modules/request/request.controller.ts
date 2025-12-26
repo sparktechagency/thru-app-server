@@ -9,11 +9,12 @@ import { paginationFields } from '../../../interfaces/pagination';
 import { RequestService } from './request.service';
 
 const createRequest = catchAsync(async (req: Request, res: Response) => {
-  const requestData = req.body;
+  const { requestedTo } = req.params;
+  console.log(requestedTo);
 
   const result = await RequestService.sendFriendRequest(
     req.user!,
-    requestData
+    requestedTo
   );
 
   sendResponse(res, {
@@ -55,7 +56,7 @@ const getMyFreindRequestList = catchAsync(async (req: Request, res: Response) =>
 
 const sendPlanRequest = catchAsync(async (req: Request, res: Response) => {
   const { requestedTo, planId } = req.body;
-
+  console.log(req.body, "😒😒😒😒😒😒😒😒😒😒");
   const result = await RequestService.sendPlanRequest(
     req.user!,
     requestedTo,

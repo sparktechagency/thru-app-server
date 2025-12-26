@@ -44,4 +44,25 @@ router.delete(
   ActivityController.deleteActivity
 );
 
+router.post(
+  '/add-to-plan',
+  auth(USER_ROLES.USER),
+  validateRequest(ActivityValidations.addToPlan),
+  ActivityController.addActivityToExistingPlan
+);
+
+router.post(
+  '/remove-from-plan',
+  auth(USER_ROLES.USER),
+  validateRequest(ActivityValidations.removeFromPlan),
+  ActivityController.removeActivityFromPlan
+);
+
+router.post(
+  '/create-with-activity',
+  auth(USER_ROLES.USER),
+  validateRequest(ActivityValidations.createWithActivity),
+  ActivityController.createPlanWithActivity
+);
+
 export const ActivityRoutes = router;

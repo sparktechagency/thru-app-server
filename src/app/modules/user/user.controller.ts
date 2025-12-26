@@ -61,9 +61,22 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const getUserActivityLog = catchAsync(async (req: Request, res: Response) => {
+  const paginationOptions = pick(req.query, paginationFields)
+  const result = await UserServices.getUserActivityLog(req.user!, paginationOptions)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'User activity log retrieved successfully',
+    meta: result.meta,
+    data: result.data,
+  })
+})
+
 export const UserController = {
   uploadImages,
   updateProfile,
   getUserProfile,
-  getUsers
+  getUsers,
+  getUserActivityLog
 }

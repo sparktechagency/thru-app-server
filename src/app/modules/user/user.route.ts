@@ -49,5 +49,11 @@ router.get(
 )
 
 
+router.get(
+  '/activity-log',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  UserController.getUserActivityLog
+);
+
 router.get("/", auth(USER_ROLES.USER, USER_ROLES.ADMIN), UserController.getUsers)
 export const UserRoutes = router
