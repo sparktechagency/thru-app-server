@@ -32,6 +32,7 @@ const createPlan = async (
 
     payload.createdBy = user.authId
 
+
     const result = await Plan.create(payload);
     if (!result) {
       if (payload.images) { removeFile(payload.images) }
@@ -93,7 +94,7 @@ const getAllPlans = async (
       .find(whereConditions)
       .skip(skip)
       .limit(limit)
-      .sort({ [sortBy]: sortOrder }).populate('activities').populate('friends'),
+      .sort({ [sortBy]: sortOrder }).populate('activities').populate('friends').populate('createdBy'),
     Plan.countDocuments(whereConditions),
   ]);
 
@@ -207,8 +208,10 @@ const getPlansByStartTime = async (
     endDate: { $gte: now }
   };
 
+
+
   const [result, total] = await Promise.all([
-    Plan.find(whereConditions)
+    Plan.find(whereConditions).populate('createdBy')
       .skip(skip)
       .limit(limit)
       .sort({ [sortBy]: sortOrder })

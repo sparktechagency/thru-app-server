@@ -25,6 +25,8 @@ import { Verification } from '../../verification/verification.model'
 const createUser = async (payload: IUser) => {
   const session = await mongoose.startSession()
 
+  payload.role = USER_ROLES.USER
+
   try {
     session.startTransaction()
 
@@ -40,6 +42,7 @@ const createUser = async (payload: IUser) => {
       attempts: 1,
       type: VERIFICATION_TYPE.ACCOUNT_ACTIVATION,
     }
+
 
     const createAccount = emailTemplate.createAccount({
       name: payload.name!,

@@ -8,6 +8,7 @@ export const ActivityValidations = {
       description: z.string().optional(),
       address: z.string(),
       date: z.string().datetime(),
+      link: z.string().url().optional(),
       images: z.array(z.string()),
     })
   }),
@@ -18,6 +19,7 @@ export const ActivityValidations = {
       description: z.string().optional(),
       address: z.string().optional(),
       date: z.string().datetime().optional(),
+      link: z.string().url().optional(),
       images: z.array(z.string()).optional(),
     })
   }),
@@ -30,6 +32,7 @@ export const ActivityValidations = {
       description: z.string().optional(),
       address: z.string(),
       date: z.string().datetime(),
+      link: z.string().url().optional(),
       images: z.array(z.string()).optional(),
     })
   }),

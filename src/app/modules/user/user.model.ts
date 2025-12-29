@@ -38,6 +38,7 @@ const userSchema = new Schema<IUser, UserModel>(
     },
     profile: {
       type: String,
+      default: ""
     },
     password: {
       type: String,
@@ -50,6 +51,10 @@ const userSchema = new Schema<IUser, UserModel>(
     },
     address: {
       type: String,
+    },
+    totalDays: {
+      type: String,
+      default: "3 days 4 hours"
     },
     location: {
       type: {

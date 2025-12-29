@@ -115,18 +115,8 @@ const createUserZodSchema = z.object({
         }),
       name: z.string({ required_error: 'Name is required' }),
       phone: z.string({ required_error: 'Phone is required' }).optional(),
-      address: z.string().optional(),
-      role: z.enum(
-        [
-          USER_ROLES.ADMIN,
-          USER_ROLES.USER,
-          USER_ROLES.GUEST,
-          USER_ROLES.CUSTOMER,
-        ],
-        {
-          message: 'Role must be one of admin, user, guest',
-        },
-      ),
+
+
     })
     .strict(),
 })

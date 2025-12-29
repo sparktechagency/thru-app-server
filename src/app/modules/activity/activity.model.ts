@@ -7,6 +7,7 @@ const activitySchema = new Schema<IActivity, ActivityModel>({
   description: { type: String },
   address: { type: String },
   date: { type: Date },
+  link: { type: String },
   images: { type: [String] },
 }, {
   timestamps: true

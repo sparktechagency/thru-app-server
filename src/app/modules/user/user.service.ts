@@ -112,7 +112,7 @@ const uploadImages = async (user: JwtPayload, payload: ImageUploadPayload) => {
 }
 
 const getUserProfile = async (user: JwtPayload) => {
-  const isUserExist = await User.findById(user.authId).lean()
+  const isUserExist = await User.findById(user.authId)
   if (!isUserExist) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'The requested user not found.')
   }
