@@ -3,8 +3,8 @@ import { INotification, NotificationModel } from './notifications.interface'
 
 const notificationSchema = new Schema<INotification, NotificationModel>(
   {
-    to: { type: Schema.Types.ObjectId, ref: 'User', populate: 'name profile' },
-    from: { type: Schema.Types.ObjectId, ref: 'User', populate: 'name profile' },
+    to: { type: Schema.Types.ObjectId, ref: 'User', populate: { path: 'to', select: 'name lastName fullName profile' } },
+    from: { type: Schema.Types.ObjectId, ref: 'User', populate: { path: 'to', select: 'name lastName fullName profile' } },
     title: { type: String },
     friendRequestId: {
       type: Schema.Types.ObjectId, ref: 'Request'

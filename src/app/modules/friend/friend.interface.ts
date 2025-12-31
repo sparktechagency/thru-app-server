@@ -4,6 +4,7 @@ export interface IFriend {
   _id: Types.ObjectId;
   users: Types.ObjectId[];
   requestId: Types.ObjectId;
+  isInPlan?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }

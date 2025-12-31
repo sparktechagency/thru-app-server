@@ -27,7 +27,9 @@ export interface IUser {
   location: Point
   password: string
   totalDays?: string
+
   role: string
+  isFriend?: boolean
   appId?: string
   fcmToken?: string
   authentication: IAuthentication

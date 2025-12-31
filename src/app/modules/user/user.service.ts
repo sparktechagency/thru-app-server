@@ -14,6 +14,8 @@ import removeFile from '../../../helpers/image/remove'
 import { IPaginationOptions } from '../../../interfaces/pagination'
 import { paginationHelper } from '../../../helpers/paginationHelper'
 import { user_searchable_fields } from './user.constants'
+import { Friend } from '../friend/friend.model'
+import { FriendServices } from '../friend/friend.service'
 
 
 type UpdateProfile = IUser & {
@@ -178,15 +180,29 @@ const getUsers = async (
   const selectFields =
     user.role === USER_ROLES.USER ? '-location -verified -role -createdAt -updatedAt' : '';
 
-  const [result, total] = await Promise.all([
+  const [result, total, friendList] = await Promise.all([
     User.find(whereConditions)
       .select(selectFields)
       .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
       .skip(skip)
       .limit(limit),
     User.countDocuments(whereConditions),
+    FriendServices.getMyFriendList(user, { planId: null }),
   ])
 
+  //before sending the response also check whether the friend is already in the requested user friend list or not if exist add a flag to the response to indicate that the user is already a friend
+  const friendIdSet = new Set(
+    friendList.map(friend => friend?._id)
+  )
+
+  const usersWithFriendFlag = result.map(userDoc => {
+    const userObj = userDoc.toObject ? userDoc.toObject() : userDoc;
+
+    return {
+      ...userObj,
+      isFriend: friendIdSet.has(userObj._id.toString()),
+    };
+  });
   return {
     meta: {
       page,
@@ -194,7 +210,7 @@ const getUsers = async (
       total,
       totalPages: Math.ceil(total / limit),
     },
-    data: result,
+    data: usersWithFriendFlag,
   }
 }
 
