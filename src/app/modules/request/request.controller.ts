@@ -56,7 +56,7 @@ const getMyFreindRequestList = catchAsync(async (req: Request, res: Response) =>
 
 const sendPlanRequest = catchAsync(async (req: Request, res: Response) => {
   const { requestedTo, planId } = req.body;
-  console.log(req.body, "😒😒😒😒😒😒😒😒😒😒");
+
   const result = await RequestService.sendPlanRequest(
     req.user!,
     requestedTo,

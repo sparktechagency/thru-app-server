@@ -3,6 +3,8 @@ import { StatusCodes } from 'http-status-codes';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { MessageServices } from './message.service';
+import { paginationFields } from '../../../interfaces/pagination';
+import pick from '../../../shared/pick';
 
 const sendMessage = catchAsync(async (req: Request, res: Response) => {
     const { friendId } = req.params;
@@ -18,13 +20,15 @@ const sendMessage = catchAsync(async (req: Request, res: Response) => {
 
 const getMessagesByFriend = catchAsync(async (req: Request, res: Response) => {
     const { friendId } = req.params;
-    const result = await MessageServices.getMessagesByFriend(req.user!, friendId);
+    const pagination = pick(req.query, paginationFields);
+    const result = await MessageServices.getMessagesByFriend(req.user!, friendId, pagination);
 
     sendResponse(res, {
         statusCode: StatusCodes.OK,
         success: true,
         message: 'Messages retrieved successfully',
-        data: result,
+        meta: result.meta,
+        data: result.data,
     });
 });
 

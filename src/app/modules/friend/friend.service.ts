@@ -66,6 +66,8 @@ const getMyFriendList = async (user: JwtPayload, filters: any) => {
       friendshipId: friendship._id.toString(),
       isInPlan,
       isPlanRequestSent,
+      lastMessage: friendship.lastMessage || "Hello",
+      isLastMessageRead: friendship.isLastMessageRead || false,
       createdAt: friendship.createdAt,
       updatedAt: friendship.updatedAt
     };

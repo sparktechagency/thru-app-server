@@ -8,6 +8,8 @@ import { paginationHelper } from '../../../helpers/paginationHelper';
 import { planSearchableFields } from './plan.constants';
 import { Types } from 'mongoose';
 import removeFile from '../../../helpers/image/remove';
+import { Request } from '../request/request.model';
+import { REQUEST_STATUS } from '../request/request.interface';
 
 type createPlan = IPlan & {
   latitude?: number
@@ -178,12 +180,19 @@ const removePlanFriend = async (planId: string, userId: string): Promise<IPlan |
   if (!Types.ObjectId.isValid(planId)) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Invalid Plan ID');
   }
-
+  console.log(planId, userId, "planId, userId");
   const result = await Plan.findByIdAndUpdate(
     planId,
     { $pull: { friends: userId } },
     { new: true, runValidators: true }
   ).populate('activities').populate('friends');
+
+  await Request.updateOne({
+    planId: new Types.ObjectId(planId),
+    requestedTo: new Types.ObjectId(userId),
+    status: REQUEST_STATUS.PENDING
+  }, { status: REQUEST_STATUS.REJECTED }, { new: true, runValidators: true });
+
 
   if (!result) {
     throw new ApiError(

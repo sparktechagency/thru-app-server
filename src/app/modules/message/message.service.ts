@@ -4,15 +4,17 @@ import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
 import { Friend } from '../friend/friend.model';
 import { Message } from './message.model';
-import { ISendMessage, IReturnableMessage } from './message.interface';
+import { ISendMessage, IReturnableMessage, IMessageData } from './message.interface';
 import { IUser } from '../user/user.interface';
 import { emitEvent } from '../../../helpers/socketInstances';
+import { IPaginationOptions } from '../../../interfaces/pagination';
+import { paginationHelper } from '../../../helpers/paginationHelper';
 
 const sendMessage = async (
     user: JwtPayload,
     friendId: string,
     payload: ISendMessage
-): Promise<IReturnableMessage> => {
+): Promise<IMessageData> => {
     const userId = new Types.ObjectId(user.authId);
     const friendObjectId = new Types.ObjectId(friendId);
 
@@ -49,7 +51,7 @@ const sendMessage = async (
     const sender = friendship.users.find((u: IUser) => u._id.equals(userId));
 
     // Return formatted message
-    const returnableMessage: IReturnableMessage = {
+    const returnableMessage: IMessageData = {
         _id: message._id,
         friend: message.friend,
         message: message.message,
@@ -68,7 +70,7 @@ const sendMessage = async (
         updatedAt: message.updatedAt,
     };
 
-    emitEvent(`message::${receiver._id}`, returnableMessage);
+    emitEvent(`message::${message.friend}`, returnableMessage);
 
 
     return returnableMessage;
@@ -76,8 +78,10 @@ const sendMessage = async (
 
 const getMessagesByFriend = async (
     user: JwtPayload,
-    friendId: string
-): Promise<IReturnableMessage[]> => {
+    friendId: string,
+    pagination: IPaginationOptions
+): Promise<IReturnableMessage> => {
+    const { page, limit, skip, sortBy, sortOrder } = paginationHelper.calculatePagination(pagination);
     const userId = new Types.ObjectId(user.authId);
     const friendObjectId = new Types.ObjectId(friendId);
 
@@ -95,33 +99,28 @@ const getMessagesByFriend = async (
     }
 
     // Fetch all messages for this friendship
-    const messages = await Message.find({ friend: friendObjectId })
-        .populate<{ sender: IUser }>('sender', 'name profile')
-        .populate<{ receiver: IUser }>('receiver', 'name profile')
-        .sort({ createdAt: 1 }) // Oldest first (chronological order)
-        .lean();
+    const [messages, total] = await Promise.all([
+        Message.find({ friend: friendObjectId })
+            .populate<{ sender: IUser }>('sender', 'name profile')
+            .populate<{ receiver: IUser }>('receiver', 'name profile')
+            .sort({ [sortBy]: sortOrder })
+            .skip(skip)
+            .limit(limit)
+            .lean(),
+        Message.countDocuments({ friend: friendObjectId })
+    ]);
 
-    // Format messages
-    const returnableMessages: IReturnableMessage[] = messages.map((msg: any) => ({
-        _id: msg._id,
-        friend: msg.friend,
-        message: msg.message,
-        isRead: msg.isRead,
-        sender: {
-            _id: msg.sender._id,
-            name: msg.sender.name,
-            profile: msg.sender.profile,
-        },
-        receiver: {
-            _id: msg.receiver._id,
-            name: msg.receiver.name,
-            profile: msg.receiver.profile,
-        },
-        createdAt: msg.createdAt,
-        updatedAt: msg.updatedAt,
-    }));
 
-    return returnableMessages;
+
+    return {
+        meta: {
+            page,
+            limit,
+            total,
+            totalPages: Math.ceil(total / limit),
+        },
+        data: messages,
+    };
 };
 
 export const MessageServices = {

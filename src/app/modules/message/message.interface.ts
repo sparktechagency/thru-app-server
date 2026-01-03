@@ -17,7 +17,7 @@ export interface ISendMessage {
     message: string;
 }
 
-export interface IReturnableMessage {
+export interface IMessageData {
     _id: Types.ObjectId;
     friend: Types.ObjectId;
     message: string;
@@ -34,4 +34,14 @@ export interface IReturnableMessage {
     };
     createdAt: Date;
     updatedAt: Date;
+}
+
+export interface IReturnableMessage {
+    meta: {
+        page: number;
+        limit: number;
+        total: number;
+        totalPages: number;
+    },
+    data: IMessageData[];
 }

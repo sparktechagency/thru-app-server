@@ -3,6 +3,7 @@ import { Notification } from '../app/modules/notifications/notifications.model'
 import { logger } from '../shared/logger'
 import { socket } from '../utils/socket'
 import { sendPushNotification } from './pushnotificationHelper'
+import { emitEvent } from './socketInstances'
 
 export const sendNotification = async (
   from: {
@@ -53,7 +54,7 @@ export const sendNotification = async (
     }
 
 
-    socket.emit('notification', socketResponse)
+    emitEvent(`notification::${to}`, socketResponse)
 
     if (fcmToken) {
       await sendPushNotification(fcmToken, title, body, { from: from.authId, to })

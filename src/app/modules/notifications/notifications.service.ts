@@ -35,12 +35,12 @@ const getNotifications = async (user: JwtPayload, paginationOptions: IPagination
 
 const readNotification = async (id: string) => {
   try {
-    await Notification.findByIdAndUpdate(
+    const result = await Notification.findByIdAndUpdate(
       new Types.ObjectId(id),
       { isRead: true },
       { new: true },
     )
-    return 'Notification read successfully'
+    return result
   } catch (error) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to mark notification as read')
   }

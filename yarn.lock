@@ -2,6 +2,14 @@
 # yarn lockfile v1
 
 
+"@asad_dev/leo-generator@^1.7.1":
+  version "1.7.1"
+  resolved "https://registry.npmjs.org/@asad_dev/leo-generator/-/leo-generator-1.7.1.tgz"
+  integrity sha512-5nTWS6MDnspFg/8fR/gmCXDIB5lBC3WfYGkY0x6XvDXqqojTL4XtXO/LCcQPcYKOTUIkZSXtJcof2fWcLz9jng==
+  dependencies:
+    commander "^11.1.0"
+    handlebars "^4.7.8"
+
 "@aws-crypto/crc32@5.2.0":
   version "5.2.0"
   resolved "https://registry.npmjs.org/@aws-crypto/crc32/-/crc32-5.2.0.tgz"
@@ -1822,14 +1830,6 @@
   dependencies:
     "@typescript-eslint/types" "8.19.1"
     eslint-visitor-keys "^4.2.0"
-
-"@unknow69/leo-generator@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.npmjs.org/@unknow69/leo-generator/-/leo-generator-1.4.1.tgz"
-  integrity sha512-rh5u1z7iokrkZKCKNtSYyyIErwO/MU0GI/TDa+zEh2Oiv3DjOTwrYCYTIgMzQHknVEsCzG9wxXrqrlKfaSCnQQ==
-  dependencies:
-    commander "^11.1.0"
-    handlebars "^4.7.8"
 
 abbrev@1:
   version "1.1.1"

@@ -1,5 +1,6 @@
 import { JwtPayload } from "jsonwebtoken";
 import { sendNotification } from "../../../helpers/notificationHelper";
+import { emitEvent } from '../../../helpers/socketInstances';
 import { StatusCodes } from "http-status-codes";
 import ApiError from "../../../errors/ApiError";
 import mongoose, { ClientSession, Types } from "mongoose";
@@ -87,7 +88,7 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
     friendRequestId: request._id
   };
 
-  console.log(notificationPayload, "😂😂😂");
+
 
   await sendNotification(
     notificationPayload.from,
@@ -226,11 +227,46 @@ const acceptOrRejectRequest = async (
       }
 
 
-      await Friend.create([{
+      const newFriendship = await Friend.create([{
         users: [isRequestExist.requestedBy._id, isRequestExist.requestedTo._id],
         requestId: isRequestExist._id
       }], { session });
 
+      // Prepare friend data for requestedBy (they see requestedTo as their friend)
+      const requestedBy = isRequestExist.requestedBy as unknown as IUser;
+      const requestedTo = isRequestExist.requestedTo as unknown as IUser;
+
+      const friendDataForRequestedBy = {
+        _id: requestedTo._id.toString(),
+        name: requestedTo.name,
+        lastName: requestedTo.lastName,
+        profile: requestedTo.profile,
+        friendshipId: newFriendship[0]._id.toString(),
+        isInPlan: false,
+        isPlanRequestSent: false,
+        lastMessage: "Hello",
+        isLastMessageRead: false,
+        createdAt: newFriendship[0].createdAt,
+        updatedAt: newFriendship[0].updatedAt
+      };
+
+      const friendDataForRequestedTo = {
+        _id: requestedBy._id.toString(),
+        name: requestedBy.name,
+        lastName: requestedBy.lastName,
+        profile: requestedBy.profile,
+        friendshipId: newFriendship[0]._id.toString(),
+        isInPlan: false,
+        isPlanRequestSent: false,
+        lastMessage: "Hello",
+        isLastMessageRead: false,
+        createdAt: newFriendship[0].createdAt,
+        updatedAt: newFriendship[0].updatedAt
+      };
+
+      // Emit newChat event to both users
+      emitEvent(`newChat::${requestedBy._id}`, friendDataForRequestedBy);
+      emitEvent(`newChat::${requestedTo._id}`, friendDataForRequestedTo);
     }
 
 
@@ -309,8 +345,8 @@ const acceptOrRejectPlanRequest = async (
     if (isRequestExist.status !== REQUEST_STATUS.PENDING) {
       throw new ApiError(StatusCodes.CONFLICT, `Request already ${isRequestExist.status}`);
     }
-
-    isRequestExist.status = payload.status;
+    console.log(isRequestExist, "isRequestExist", payload);
+    // isRequestExist.status = payload.status;
     await isRequestExist.save({ session });
 
     if (payload.status === REQUEST_STATUS.ACCEPTED) {
@@ -353,6 +389,7 @@ const acceptOrRejectPlanRequest = async (
 
   } catch (error) {
     await session.abortTransaction();
+    // console.error('Error in acceptOrRejectPlanRequest:', error);
     if (error instanceof ApiError) throw error;
     throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, "Failed to process plan request");
   } finally {

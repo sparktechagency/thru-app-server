@@ -5,6 +5,8 @@ export interface IFriend {
   users: Types.ObjectId[];
   requestId: Types.ObjectId;
   isInPlan?: boolean;
+  lastMessage?: string;
+  isLastMessageRead?: boolean;
   createdAt: Date;
   updatedAt: Date;
 }
