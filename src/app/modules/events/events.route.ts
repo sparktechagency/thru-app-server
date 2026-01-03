@@ -22,4 +22,10 @@ router.get(
     EventsController.getAllEventsFromDB
 );
 
+// Test endpoint
+router.get(
+    '/test',
+    EventsController.testEvents
+);
+
 export const EventsRoutes = router;

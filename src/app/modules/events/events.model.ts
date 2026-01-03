@@ -21,7 +21,9 @@ const eventSchema = new Schema<IEvent, EventModel>({
     }],
     description: { type: String },
     location: { type: String, required: true }, // City/location
-    eventType: { type: String, enum: ['virtual', 'in-person'] },
+    eventType: { type: String },
+    rating: { type: Number },
+    reviewsCount: { type: Number },
     serpApiId: { type: String }, // To avoid duplicates from SerpAPI
 }, {
     timestamps: true

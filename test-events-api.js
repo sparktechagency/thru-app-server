@@ -58,11 +58,17 @@ const testEndpoint = (path, description) => {
         // Test 1: Basic events query (will fail without auth, but shows endpoint is working)
         await testEndpoint('/api/events?location=Austin, TX', 'Test 1: Basic Events Query');
 
-        // Test 2: With date filter
-        await testEndpoint('/api/events?location=New York&dateFilter=today', 'Test 2: Events with Date Filter');
+        // Test 2: With category (eventType)
+        await testEndpoint('/api/events?location=New York&eventType=Music', 'Test 2: Events with Category (Music)');
 
-        // Test 3: Database only endpoint
-        await testEndpoint('/api/events/db?location=Austin', 'Test 3: Database Only Query');
+        // Test 3: With date range
+        await testEndpoint('/api/events?location=Austin&dateFilter=range&startDate=2026-01-01&endDate=2026-01-31', 'Test 3: Events with Date Range');
+
+        // Test 4: With rating filter
+        await testEndpoint('/api/events?location=Austin&rating=4', 'Test 4: Events with Minimum Rating (4)');
+
+        // Test 5: Database only endpoint with filters
+        await testEndpoint('/api/events/db?location=Austin&eventType=Music', 'Test 5: Database Only Query with Category');
 
         console.log('\n✅ Tests completed!');
         console.log('\n📝 Note: You need to provide a valid JWT token in the Authorization header to access these endpoints.');

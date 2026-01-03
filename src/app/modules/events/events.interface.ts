@@ -27,7 +27,9 @@ export interface IEvent {
     ticketInfo?: IEventTicketInfo[];
     description?: string;
     location: string; // City/location where event is happening
-    eventType?: string; // virtual, in-person
+    eventType?: string; // virtual, in-person, or any category
+    rating?: number;
+    reviewsCount?: number;
     serpApiId?: string; // Original ID from SerpAPI if available
     createdAt: Date;
     updatedAt: Date;
@@ -37,8 +39,12 @@ export type EventModel = Model<IEvent, {}, {}>;
 
 export interface IEventQuery {
     location: string;
-    dateFilter?: 'today' | 'tomorrow' | 'week' | 'weekend' | 'next_week' | 'month' | 'next_month';
-    eventType?: 'virtual' | 'in-person';
+    dateFilter?: 'today' | 'tomorrow' | 'week' | 'weekend' | 'next_week' | 'month' | 'next_month' | 'range';
+    startDate?: string;
+    endDate?: string;
+    eventType?: string;
+    proximity?: string;
+    rating?: number;
     start?: number;
 }
 
