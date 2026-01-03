@@ -11,7 +11,8 @@ const router = express.Router();
 router.get(
   '/',
   auth(
-    USER_ROLES.GUEST
+    USER_ROLES.GUEST,
+    USER_ROLES.USER
   ),
   CategoryController.getAllCategorys
 );
