@@ -19,6 +19,7 @@ export interface IPlan {
   _id: Types.ObjectId;
   createdBy: Types.ObjectId
   title: string;
+  category: string;
   description?: string;
   images: string[];
   date: Date;

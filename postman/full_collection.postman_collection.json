@@ -1,0 +1,2702 @@
+{
+  "collection": {
+    "info": {
+      "_postman_id": "8d75b0c0-7135-4012-b3e6-f13ed0f5aa80",
+      "name": "Thru App API **********",
+      "description": "API documentation for Thru App (excluding Auth module).",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+      "createdAt": "2025-12-26T10:37:34.000Z",
+      "updatedAt": "2026-01-03T04:11:05.000Z",
+      "lastUpdatedBy": "40962788",
+      "uid": "40962788-8d75b0c0-7135-4012-b3e6-f13ed0f5aa80"
+    },
+    "item": [
+      {
+        "name": "User",
+        "item": [
+          {
+            "name": "Update Profile",
+            "id": "667643bf-41aa-44dc-85bb-b686b159550c",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "PATCH",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"name\": \"John\",\n    \"lastName\": \"Doe\",\n    \"phone\": \"123456789\",\n    \"address\": \"123 Main St\",\n    \"bio\": \"Hello world\",\n    \"longitude\": 22.43,\n    \"latitude\": 24.50\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/user/profile",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "user",
+                  "profile"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T10:54:00.000Z",
+            "uid": "40962788-667643bf-41aa-44dc-85bb-b686b159550c"
+          },
+          {
+            "name": "Get User Profile",
+            "id": "bb438578-29a1-48f2-b712-962584f4c237",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{user2Token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/user/profile",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "user",
+                  "profile"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:27:13.000Z",
+            "uid": "40962788-bb438578-29a1-48f2-b712-962584f4c237"
+          },
+          {
+            "name": "Get Users",
+            "id": "bddf6d3d-3f58-4b9b-b25b-613578c0cb1b",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/user?searchTerm=",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "user"
+                ],
+                "query": [
+                  {
+                    "key": "searchTerm",
+                    "value": ""
+                  },
+                  {
+                    "key": "page",
+                    "value": "1",
+                    "disabled": true
+                  },
+                  {
+                    "key": "limit",
+                    "value": "10",
+                    "disabled": true
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:06:44.000Z",
+            "uid": "40962788-bddf6d3d-3f58-4b9b-b25b-613578c0cb1b"
+          },
+          {
+            "name": "Get Activity Log",
+            "id": "ebe88faf-54ec-422a-b09a-8bba929eec94",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/user/activity-log",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "user",
+                  "activity-log"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-30T03:58:46.000Z",
+            "uid": "40962788-ebe88faf-54ec-422a-b09a-8bba929eec94"
+          }
+        ],
+        "id": "b11f72db-3d24-40b3-8aa1-b2f550a9fcab",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{toke",
+              "type": "string"
+            }
+          ]
+        },
+        "event": [
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "4eb50042-aa1f-42dc-b755-4da455616292",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          },
+          {
+            "listen": "test",
+            "script": {
+              "id": "a0d3bd3d-831f-4cb3-8618-f89d36f1f339",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          }
+        ],
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T10:54:16.000Z",
+        "uid": "40962788-b11f72db-3d24-40b3-8aa1-b2f550a9fcab"
+      },
+      {
+        "name": "Plan",
+        "item": [
+          {
+            "name": "Get users plans",
+            "id": "9740d50d-f641-434f-9d57-1c4485275402",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/plan",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T10:55:58.000Z",
+            "uid": "40962788-9740d50d-f641-434f-9d57-1c4485275402"
+          },
+          {
+            "name": "get happening plans",
+            "id": "8bc151ad-038c-4fca-a294-3a7bddac06ec",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/plan/happening-now",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan",
+                  "happening-now"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-29T04:04:20.000Z",
+            "uid": "40962788-8bc151ad-038c-4fca-a294-3a7bddac06ec"
+          },
+          {
+            "name": "Get Single Plan",
+            "id": "f985ab8c-e9da-456b-ac7d-8a66a2dbe00a",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/plan/{{id}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan",
+                  "{{id}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T10:56:58.000Z",
+            "uid": "40962788-f985ab8c-e9da-456b-ac7d-8a66a2dbe00a"
+          },
+          {
+            "name": "Create Plan",
+            "id": "333741b7-1bb2-477f-b283-27cf037c04d4",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "data",
+                    "value": "{\n    \"title\": \"Example Plan\",\n    \"description\": \"Description\",\n    \"date\": \"2025-12-28T18:00:00.000Z\",\n    \"endDate\": \"2025-12-31T20:00:00.000Z\",\n    \"address\": \"Example Address\",\n    \"link\": \"https://example.com\",\n    \"latitude\": 0,\n    \"longitude\": 0\n}",
+                    "type": "text",
+                    "uuid": "40659403-3903-4620-a7c2-af177e3f5ba0"
+                  },
+                  {
+                    "key": "images",
+                    "type": "file",
+                    "uuid": "6b787ee6-3c87-4c3b-a9aa-4ae56451f8b0",
+                    "src": "/C:/Users/Kakashi/Downloads/images.jpg"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "{{base_url}}/plan",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-30T03:58:47.000Z",
+            "uid": "40962788-333741b7-1bb2-477f-b283-27cf037c04d4"
+          },
+          {
+            "name": "Update Plan",
+            "id": "27944443-9bf0-4e48-939e-2652df3d4520",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PATCH",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "data",
+                    "value": "{\n    \"title\": \"Example Plan reloaded\",\n    \"description\": \"Description reloaded\",\n    \"date\": \"2025-12-26T18:00:00.000Z\",\n    \"endTime\": \"2025-12-26T20:00:00.000Z\",\n    \"address\": \"Example Address\",\n    \"link\": \"https://example.com\",\n    \"latitude\": 0,\n    \"longitude\": 0\n}",
+                    "type": "text",
+                    "uuid": "985bc89b-f8e4-4895-afe8-2cc02e610e5a"
+                  },
+                  {
+                    "key": "images",
+                    "type": "file",
+                    "uuid": "cbe8f32b-60e8-45b3-b120-7f20135ad905",
+                    "src": [
+                      "/C:/Users/Kakashi/Downloads/naruto-phone-1080-x-1920-background-v88y6lmxq4zcit68.jpg",
+                      "/C:/Users/Kakashi/Downloads/images.jpg"
+                    ]
+                  }
+                ]
+              },
+              "url": {
+                "raw": "{{base_url}}/plan/{{id}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan",
+                  "{{id}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:27:15.000Z",
+            "uid": "40962788-27944443-9bf0-4e48-939e-2652df3d4520"
+          },
+          {
+            "name": "Delete Plan optional😒",
+            "id": "2c2024b1-cb8b-48ae-90e1-4aabaecf2089",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/plan/{{id}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan",
+                  "{{id}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:34:21.000Z",
+            "uid": "40962788-2c2024b1-cb8b-48ae-90e1-4aabaecf2089"
+          },
+          {
+            "name": "Remove Plan Friend",
+            "id": "2c3c8ab9-8f48-4b75-bcac-18f81303a4f1",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"planId\": \"694e716bd12681c5faa7733e\",\n    \"userId\": \"694e79dbd12681c5faa77348\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/plan/remove-friend",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "plan",
+                  "remove-friend"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:31:28.000Z",
+            "uid": "40962788-2c3c8ab9-8f48-4b75-bcac-18f81303a4f1"
+          }
+        ],
+        "id": "297b8ade-7a3d-4a28-b86c-ff73303c77b4",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{userToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "event": [
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "ccef92e4-b556-418c-aa84-2f2120ddef49",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          },
+          {
+            "listen": "test",
+            "script": {
+              "id": "c1da8efc-3fea-42f3-bc55-f94878e0adeb",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          }
+        ],
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T10:56:43.000Z",
+        "uid": "40962788-297b8ade-7a3d-4a28-b86c-ff73303c77b4"
+      },
+      {
+        "name": "Activity",
+        "item": [
+          {
+            "name": "Create Activity optional😒",
+            "id": "7b4dcb6c-e447-41b9-8a37-d53c54ca7f8e",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Activity Title\",\n  \"externalId\": \"ext_id\",\n  \"description\": \"Desc\",\n  \"address\": \"Addr\",\n  \"date\": \"2025-12-26T18:00:00.000Z\",\n  \"images\": []\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": ""
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:10:46.000Z",
+            "uid": "40962788-7b4dcb6c-e447-41b9-8a37-d53c54ca7f8e"
+          },
+          {
+            "name": "Update Activity optional😒",
+            "id": "68cde4dc-df69-45b2-a0bb-571b26abbac5",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "PATCH",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"New Title\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "",
+                "variable": [
+                  {
+                    "id": "3a689e9c-7a47-4e36-a3c1-29f1435fe223",
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:10:55.000Z",
+            "uid": "40962788-68cde4dc-df69-45b2-a0bb-571b26abbac5"
+          },
+          {
+            "name": "Delete Activity optional😒",
+            "id": "de15c110-ee2a-4a23-819f-f2fc07a9bd57",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "DELETE",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "",
+                "variable": [
+                  {
+                    "id": "1571db79-eec0-4e92-91d6-47d912f22496",
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:11:00.000Z",
+            "uid": "40962788-de15c110-ee2a-4a23-819f-f2fc07a9bd57"
+          },
+          {
+            "name": "Add Activity To Plan",
+            "id": "257e717b-2ad1-4e72-82ea-919e00b45b3a",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"planId\": \"694e6ce509b01f2447a7bc54\",\n    \"title\": \"The Marketing Magician Batch 02\",\n    \"externalId\": \"694e6dbbd12681c5faa772f8\",\n    \"address\": \"Holiday Inn Dhaka City Centre by IHG, 23 Shahid Tajuddin Ahmed Sharani\",\n    \"link\": \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxlZtbbfcyU4kURvX4LW72X4n9ococ72eJxQNHtl_x_yzVdqCurWfepPk&s\",\n    \"date\": \"2025-12-28T12:00:00.000Z\",\n    \"images\": [\n        \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRxlZtbbfcyU4kURvX4LW72X4n9ococ72eJxQNHtl_x_yzVdqCurWfepPk&s\"\n    ]\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/activity/add-to-plan",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "activity",
+                  "add-to-plan"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-29T11:01:20.000Z",
+            "uid": "40962788-257e717b-2ad1-4e72-82ea-919e00b45b3a"
+          },
+          {
+            "name": "Remove Activity From Plan",
+            "id": "dbbd6a23-dd28-4a46-a8d6-cc532c9d1bba",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"planId\": \"694e6ce509b01f2447a7bc54\",\n  \"activityId\": \"694e702fd12681c5faa7732a\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/activity/remove-from-plan",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "activity",
+                  "remove-from-plan"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:24:41.000Z",
+            "uid": "40962788-dbbd6a23-dd28-4a46-a8d6-cc532c9d1bba"
+          },
+          {
+            "name": "Create Plan With Activity",
+            "id": "892a7c39-ad7a-4dc0-a8c9-041d1d7c012c",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"title\": \"Dhaka Bike Show Dhaka\",\n    \"externalId\": \"694e6dbbd12681c5faa772fb\",\n    \"description\": \"GEAR UP for the Dhaka Motor Show and witness the most anticipated show in Bangladesh! Visit the 19th Dhaka Motor Show 2026 and explore the latest cars and SUVs from the world's largest brands...\",\n    \"address\": \"International Convention City Bashundhara (ICCB), International Convention City Bashundhara, Purbachal Expy\",\n    \"date\": \"2025-12-26T18:00:00.000Z\",\n    \"images\": [\n        \"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwsJNVze99uP9IlBDGVVGM4hBFn5Tkbb814sLU2iM&s\"\n    ]\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/activity/create-with-activity",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "activity",
+                  "create-with-activity"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:28:34.000Z",
+            "uid": "40962788-892a7c39-ad7a-4dc0-a8c9-041d1d7c012c"
+          }
+        ],
+        "id": "b13c8591-2e9e-4455-b892-b259d5f53629",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{userToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "event": [
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "d583ed87-f7a5-4cd2-b93a-644465825d11",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          },
+          {
+            "listen": "test",
+            "script": {
+              "id": "70519d6f-c91a-4aa5-893f-f82ad1017504",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          }
+        ],
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T11:20:18.000Z",
+        "uid": "40962788-b13c8591-2e9e-4455-b892-b259d5f53629"
+      },
+      {
+        "name": "Category API",
+        "item": [
+          {
+            "name": "Create Category",
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "549d8146-4a14-414e-b258-a91d8c1c6bdf",
+                  "exec": [
+                    "function randomCategory() {",
+                    "  const categories = [",
+                    "    \"Adventure\",",
+                    "    \"Beach\",",
+                    "    \"Mountain\",",
+                    "    \"Nature\",",
+                    "    \"City Tours\",",
+                    "    \"Historical\",",
+                    "    \"Cultural\",",
+                    "    \"Luxury\",",
+                    "    \"Budget Travel\",",
+                    "    \"Honeymoon\",",
+                    "    \"Family Trip\",",
+                    "    \"Backpacking\",",
+                    "    \"Wildlife\",",
+                    "    \"Eco Tourism\",",
+                    "    \"Food & Cuisine\",",
+                    "    \"Road Trip\",",
+                    "    \"Island\",",
+                    "    \"Camping\",",
+                    "    \"Trekking\",",
+                    "    \"Religious\"",
+                    "  ];",
+                    "",
+                    "  return categories[Math.floor(Math.random() * categories.length)];",
+                    "}",
+                    "",
+                    "const categoryDataRaw = {",
+                    "  title: randomCategory()",
+                    "};",
+                    "pm.environment.set(\"categoryData\", JSON.stringify(categoryDataRaw));",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {},
+                  "requests": {}
+                }
+              }
+            ],
+            "id": "b6f5572a-a223-4f67-bc55-0e2d8adb9049",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "data",
+                    "value": "{{categoryData}}",
+                    "type": "text",
+                    "uuid": "83213263-1065-4dfa-a2a9-6f90b69f0987"
+                  },
+                  {
+                    "key": "images",
+                    "type": "file",
+                    "uuid": "7a98801c-c83c-44f8-a378-9db1c343f5b5",
+                    "src": "/C:/Users/Kakashi/Downloads/uwp4794009.jpeg"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "{{base_url}}/category",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "category"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-03T04:10:30.000Z",
+            "updatedAt": "2026-01-03T04:22:19.000Z",
+            "uid": "40962788-b6f5572a-a223-4f67-bc55-0e2d8adb9049"
+          },
+          {
+            "name": "Get All Categorys",
+            "id": "54321db7-4003-4be1-ba72-c9cb0d91de80",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/category",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "category"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-03T04:10:30.000Z",
+            "updatedAt": "2026-01-03T04:22:38.000Z",
+            "uid": "40962788-54321db7-4003-4be1-ba72-c9cb0d91de80"
+          },
+          {
+            "name": "Update Category",
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "8d9bacc4-24f7-41dc-a568-8023766d3e18",
+                  "exec": [
+                    "function randomCategory() {",
+                    "  const categories = [",
+                    "    \"Adventure\",",
+                    "    \"Beach\",",
+                    "    \"Mountain\",",
+                    "    \"Nature\",",
+                    "    \"City Tours\",",
+                    "    \"Historical\",",
+                    "    \"Cultural\",",
+                    "    \"Luxury\",",
+                    "    \"Budget Travel\",",
+                    "    \"Honeymoon\",",
+                    "    \"Family Trip\",",
+                    "    \"Backpacking\",",
+                    "    \"Wildlife\",",
+                    "    \"Eco Tourism\",",
+                    "    \"Food & Cuisine\",",
+                    "    \"Road Trip\",",
+                    "    \"Island\",",
+                    "    \"Camping\",",
+                    "    \"Trekking\",",
+                    "    \"Religious\"",
+                    "  ];",
+                    "",
+                    "  return categories[Math.floor(Math.random() * categories.length)];",
+                    "}",
+                    "",
+                    "const categoryDataRaw = {",
+                    "  title: randomCategory(),",
+                    "};",
+                    "pm.environment.set(\"categoryData\", JSON.stringify(categoryDataRaw));",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {},
+                  "requests": {}
+                }
+              }
+            ],
+            "id": "e9cb699c-571c-4521-960d-0f2c5a4ab103",
+            "request": {
+              "method": "PATCH",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": {
+                "mode": "formdata",
+                "formdata": [
+                  {
+                    "key": "data",
+                    "value": "{{categoryData}}",
+                    "type": "text",
+                    "uuid": "4da24a2d-f4c3-4009-b6a4-e4bb64eb3923",
+                    "disabled": true
+                  },
+                  {
+                    "key": "images",
+                    "type": "file",
+                    "uuid": "e67cb1b3-c25b-4e4a-98cc-cf8ab5dc65d9",
+                    "src": "/C:/Users/Kakashi/Downloads/images.jpg"
+                  }
+                ]
+              },
+              "url": {
+                "raw": "{{base_url}}/category/{{category_id}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "category",
+                  "{{category_id}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-03T04:10:30.000Z",
+            "updatedAt": "2026-01-03T04:24:49.000Z",
+            "uid": "40962788-e9cb699c-571c-4521-960d-0f2c5a4ab103"
+          },
+          {
+            "name": "Delete Category",
+            "id": "b0073ce2-e22c-4d27-aa0e-073771f32720",
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/api/v1/category/{{category_id}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "api",
+                  "v1",
+                  "category",
+                  "{{category_id}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2026-01-03T04:10:30.000Z",
+            "updatedAt": "2026-01-03T04:11:05.000Z",
+            "uid": "40962788-b0073ce2-e22c-4d27-aa0e-073771f32720"
+          }
+        ],
+        "id": "154eed9b-feb2-4311-b10b-b6cf5e1fbf0f",
+        "createdAt": "2026-01-03T04:10:30.000Z",
+        "updatedAt": "2026-01-03T04:22:49.000Z",
+        "uid": "40962788-154eed9b-feb2-4311-b10b-b6cf5e1fbf0f"
+      },
+      {
+        "name": "Notifications",
+        "item": [
+          {
+            "name": "Get My Notifications",
+            "id": "8d9eb309-ded0-4c99-a5d0-12d0569f5495",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/notifications",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "notifications"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-30T05:55:35.000Z",
+            "uid": "40962788-8d9eb309-ded0-4c99-a5d0-12d0569f5495"
+          },
+          {
+            "name": "Update Notification",
+            "id": "6adf45b7-903c-4f29-be40-b01cfd660ac4",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "",
+                "variable": [
+                  {
+                    "id": "e7b195a9-0910-423a-9357-b0fbf0670f5d",
+                    "key": "id",
+                    "value": ""
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T10:37:34.000Z",
+            "uid": "40962788-6adf45b7-903c-4f29-be40-b01cfd660ac4"
+          },
+          {
+            "name": "Update All Notifications",
+            "id": "912d2952-5076-45f5-812d-6742d1990f8d",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": ""
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T10:37:34.000Z",
+            "uid": "40962788-912d2952-5076-45f5-812d-6742d1990f8d"
+          }
+        ],
+        "id": "f062a3fb-eaaa-43f6-aae1-8eeed70a826f",
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T10:37:34.000Z",
+        "uid": "40962788-f062a3fb-eaaa-43f6-aae1-8eeed70a826f"
+      },
+      {
+        "name": "Request",
+        "item": [
+          {
+            "name": "Get My Friend Request List",
+            "id": "3e4891a3-45bd-4298-b693-d2406f1765cc",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{user2Token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/request",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "request"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:27:14.000Z",
+            "uid": "40962788-3e4891a3-45bd-4298-b693-d2406f1765cc"
+          },
+          {
+            "name": "Create Friend Request",
+            "id": "08eb809c-c181-4650-a1fa-1980eb2f2a16",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/request/{{requestedTo}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "request",
+                  "{{requestedTo}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:27:13.000Z",
+            "uid": "40962788-08eb809c-c181-4650-a1fa-1980eb2f2a16"
+          },
+          {
+            "name": "Accept/Reject Friend Request",
+            "id": "21a9be13-b7c2-4d5f-985f-f7d305a61dba",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{user2Token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "PATCH",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"status\": \"accepted\"\n}\n\n//accepted or rejected",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/request/{{requestId}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "request",
+                  "{{requestId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:27:12.000Z",
+            "uid": "40962788-21a9be13-b7c2-4d5f-985f-f7d305a61dba"
+          },
+          {
+            "name": "Send Plan Request",
+            "id": "0caf7095-0e5b-4a44-b2b5-3e7b7f6c39f5",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n    \"requestedTo\": \"694e79dbd12681c5faa77348\",\n    \"planId\": \"694e716bd12681c5faa7733e\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/request/plan-add",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "request",
+                  "plan-add"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:23:19.000Z",
+            "uid": "40962788-0caf7095-0e5b-4a44-b2b5-3e7b7f6c39f5"
+          },
+          {
+            "name": "Accept/Reject Plan Request",
+            "id": "fc817bc7-ccc1-42cf-b6c7-f5a0f1bfea3d",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{user2Token}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "PATCH",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"status\": \"accepted\"\n}\n\n//   PENDING = 'pending',\n//   ACCEPTED = 'accepted',\n//   REJECTED = 'rejected',",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/request/plan/{{requestId}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "request",
+                  "plan",
+                  "{{requestId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:25:04.000Z",
+            "uid": "40962788-fc817bc7-ccc1-42cf-b6c7-f5a0f1bfea3d"
+          }
+        ],
+        "id": "b00c2ce1-760d-470d-8065-8f799cfe0523",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{userToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "event": [
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "b4a58590-2dd7-488b-b0de-a7b6f9ceaefe",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          },
+          {
+            "listen": "test",
+            "script": {
+              "id": "332c96ae-db7b-4ab2-a3b1-d636ff1e0d17",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          }
+        ],
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T12:03:58.000Z",
+        "uid": "40962788-b00c2ce1-760d-470d-8065-8f799cfe0523"
+      },
+      {
+        "name": "Friend",
+        "item": [
+          {
+            "name": "Get My Friend List",
+            "id": "aee7a08e-3dde-411d-803a-cb9b791d6370",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/friend?planId=6951fdab7436160133846e5b",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "friend"
+                ],
+                "query": [
+                  {
+                    "key": "planId",
+                    "value": "6951fdab7436160133846e5b"
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-30T04:47:54.000Z",
+            "uid": "40962788-aee7a08e-3dde-411d-803a-cb9b791d6370"
+          }
+        ],
+        "id": "a396ca3b-654b-4559-a743-db2bba386d7c",
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T10:37:34.000Z",
+        "uid": "40962788-a396ca3b-654b-4559-a743-db2bba386d7c"
+      },
+      {
+        "name": "Comments",
+        "item": [
+          {
+            "name": "Add Comment",
+            "id": "40873cf7-58ea-4c51-8eca-1f7893f732a1",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"planId\": \"694e716bd12681c5faa7733e\",\n  \"content\": \"Great plan!\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/comments/",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "comments",
+                  ""
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:33:07.000Z",
+            "uid": "40962788-40873cf7-58ea-4c51-8eca-1f7893f732a1"
+          },
+          {
+            "name": "Get Comments By Plan Id",
+            "id": "0ab6a357-c47a-4f0e-86bb-80a4641b9096",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/comments/plan/{{planId}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "comments",
+                  "plan",
+                  "{{planId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:34:40.000Z",
+            "uid": "40962788-0ab6a357-c47a-4f0e-86bb-80a4641b9096"
+          }
+        ],
+        "id": "237b8822-65df-4826-8954-3246f7b0358e",
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T10:37:34.000Z",
+        "uid": "40962788-237b8822-65df-4826-8954-3246f7b0358e"
+      },
+      {
+        "name": "Message",
+        "item": [
+          {
+            "name": "Send Message",
+            "id": "85295293-eb0c-4373-ae94-47876c4a87fc",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"message\": \"Hello!\"\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/message/{{friendshipId}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "message",
+                  "{{friendshipId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:34:43.000Z",
+            "uid": "40962788-85295293-eb0c-4373-ae94-47876c4a87fc"
+          },
+          {
+            "name": "Get Messages By Friend",
+            "id": "3f13f0b4-beb5-464d-973a-06af136bf5ea",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "{{userToken}}",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/message/{{friendshipId}}",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "message",
+                  "{{friendshipId}}"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:29:24.000Z",
+            "uid": "40962788-3f13f0b4-beb5-464d-973a-06af136bf5ea"
+          }
+        ],
+        "id": "da258e63-1885-43c9-9986-8fd7fb23ec85",
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T10:37:34.000Z",
+        "uid": "40962788-da258e63-1885-43c9-9986-8fd7fb23ec85"
+      },
+      {
+        "name": "Events",
+        "item": [
+          {
+            "name": "Get Events",
+            "id": "e92c1f6d-8b2a-47d1-9af9-1e7a7d7a510d",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "?location=New York&dateFilter=today",
+                "query": [
+                  {
+                    "key": "location",
+                    "value": "New York"
+                  },
+                  {
+                    "key": "dateFilter",
+                    "value": "today"
+                  },
+                  {
+                    "key": "dont call this api unless it's necessary 3rd party",
+                    "value": null,
+                    "type": "text",
+                    "disabled": true
+                  }
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T12:27:14.000Z",
+            "uid": "40962788-e92c1f6d-8b2a-47d1-9af9-1e7a7d7a510d"
+          },
+          {
+            "name": "Get All Events From DB",
+            "id": "8ec519f2-37ab-4546-a444-18ff50d1639f",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{base_url}}/events/db",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "events",
+                  "db"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-26T10:37:34.000Z",
+            "updatedAt": "2025-12-26T11:15:33.000Z",
+            "uid": "40962788-8ec519f2-37ab-4546-a444-18ff50d1639f"
+          }
+        ],
+        "id": "8dfcac28-5646-4465-bdbc-0c596fedbe54",
+        "auth": {
+          "type": "bearer",
+          "bearer": [
+            {
+              "key": "token",
+              "value": "{{userToken}}",
+              "type": "string"
+            }
+          ]
+        },
+        "event": [
+          {
+            "listen": "prerequest",
+            "script": {
+              "id": "d002cd4b-30c7-4c26-90b0-838270700c2e",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          },
+          {
+            "listen": "test",
+            "script": {
+              "id": "6c9d93c5-2cb6-49a7-8968-323be9a25b1c",
+              "type": "text/javascript",
+              "packages": {},
+              "requests": {},
+              "exec": [
+                ""
+              ]
+            }
+          }
+        ],
+        "createdAt": "2025-12-26T10:37:34.000Z",
+        "updatedAt": "2025-12-26T11:15:47.000Z",
+        "uid": "40962788-8dfcac28-5646-4465-bdbc-0c596fedbe54"
+      },
+      {
+        "name": "auth",
+        "item": [
+          {
+            "name": "create-user",
+            "event": [
+              {
+                "listen": "prerequest",
+                "script": {
+                  "id": "a859bd1a-a9ac-42fe-a203-c4d3a083836d",
+                  "exec": [
+                    "// Function to generate a random email\r",
+                    "function generateRandomEmail() {\r",
+                    "    const randomString = Math.random().toString(36).substring(2, 12);\r",
+                    "    return `${randomString}@example.com`;\r",
+                    "}\r",
+                    "\r",
+                    "// Function to generate a random password (must contain at least one letter and one number)\r",
+                    "function generateRandomPassword() {\r",
+                    "    const letters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';\r",
+                    "    const numbers = '0123456789';\r",
+                    "    let password = '';\r",
+                    "    for (let i = 0; i < 6; i++) {\r",
+                    "        password += letters.charAt(Math.floor(Math.random() * letters.length));\r",
+                    "    }\r",
+                    "    password += numbers.charAt(Math.floor(Math.random() * numbers.length));\r",
+                    "    return password; // This is a basic password generator that will always be valid\r",
+                    "}\r",
+                    "\r",
+                    "// Function to generate a random name\r",
+                    "function generateRandomName() {\r",
+                    "    const names = ['John', 'Alice', 'Bob', 'Eve', 'Tom', 'Emily'];\r",
+                    "    return names[Math.floor(Math.random() * names.length)];\r",
+                    "}\r",
+                    "\r",
+                    "// Function to generate a random phone number\r",
+                    "function generateRandomPhone() {\r",
+                    "    return `+1-800-${Math.floor(Math.random() * 1000000)}`;\r",
+                    "}\r",
+                    "\r",
+                    "// Function to generate a random address\r",
+                    "function generateRandomAddress() {\r",
+                    "    const streets = ['Main St', '2nd Ave', 'Park Rd', 'Oak Dr', 'Maple Blvd'];\r",
+                    "    const cities = ['New York', 'Los Angeles', 'Chicago', 'Houston', 'Phoenix'];\r",
+                    "    return `${Math.floor(Math.random() * 9999)} ${streets[Math.floor(Math.random() * streets.length)]}, ${cities[Math.floor(Math.random() * cities.length)]}`;\r",
+                    "}\r",
+                    "\r",
+                    "// Function to generate a random role\r",
+                    "function generateRandomRole() {\r",
+                    "    const roles = ['user'];\r",
+                    "    return roles[Math.floor(Math.random() * roles.length)];\r",
+                    "}\r",
+                    "const email = generateRandomEmail();\r",
+                    "const password = generateRandomPassword();\r",
+                    "// Setting random values to environment variables\r",
+                    "pm.environment.set('email', email);\r",
+                    "pm.environment.set('password', password);\r",
+                    "pm.environment.set('name', generateRandomName());\r",
+                    "pm.environment.set('phone', generateRandomPhone());\r",
+                    "pm.environment.set('address', generateRandomAddress());\r",
+                    "pm.environment.set('role', generateRandomRole());\r",
+                    "\r",
+                    "pm.collectionVariables.set(\"last_created_email\", email);\r",
+                    "pm.collectionVariables.set(\"last_created_password\", password);"
+                  ],
+                  "type": "text/javascript",
+                  "packages": {},
+                  "requests": {}
+                }
+              },
+              {
+                "listen": "test",
+                "script": {
+                  "id": "1c4a0300-afd0-4b49-8a81-77067ec8aa2c",
+                  "exec": [
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {},
+                  "requests": {}
+                }
+              }
+            ],
+            "id": "a42552b5-48b1-4006-bae5-454827c626f9",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"email\": \"{{email}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"name\": \"{{name}}\",\r\n    \"phone\": \"{{phone}}\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/signup",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "signup"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-28T10:36:12.000Z",
+            "uid": "40962788-a42552b5-48b1-4006-bae5-454827c626f9"
+          },
+          {
+            "name": "login",
+            "event": [
+              {
+                "listen": "test",
+                "script": {
+                  "id": "8fc61d6d-bf2b-404a-937c-090cd351541f",
+                  "exec": [
+                    "// Get the response JSON\r",
+                    "const response = pm.response.json();\r",
+                    "\r",
+                    "// Check if data exists\r",
+                    "if (response && response.data && response.data.accessToken && response.data.role) {\r",
+                    "  const { role, accessToken } = response.data;\r",
+                    "\r",
+                    "  // Combine role and accessToken as a single string\r",
+                    "\r",
+                    "\r",
+                    "  // Set collectionVariables variable based on role\r",
+                    "  if (role === 'user') {\r",
+                    "    pm.collectionVariables.set('userToken', accessToken);\r",
+                    "    console.log('Worker token set:', accessToken); \r",
+                    "  }  else if (role === 'admin') {\r",
+                    "    pm.collectionVariables.set('adminToken', accessToken);\r",
+                    "    console.log('Admin token set:', accessToken);\r",
+                    "  } else {\r",
+                    "    console.log('Unknown role:', role);\r",
+                    "  }\r",
+                    "} else {\r",
+                    "  console.log('Login response missing data:', response);\r",
+                    "}\r",
+                    ""
+                  ],
+                  "type": "text/javascript",
+                  "packages": {},
+                  "requests": {}
+                }
+              }
+            ],
+            "id": "129f1eff-7378-4e84-bbd2-df571673ebe2",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"email\": \"{{last_created_email}}\",\r\n    \"password\": \"{{last_created_password}}\"\r\n    // \"password\": \"123654789\"\r\n    // \"email\":\"mahmoodsabbir3087@gmail.com\",\r\n    // \"password\":\"12345678\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/login",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "login"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:54:02.000Z",
+            "uid": "40962788-129f1eff-7378-4e84-bbd2-df571673ebe2"
+          },
+          {
+            "name": "reset-password",
+            "id": "14c781b3-fdcd-4b3f-a003-0c0e07e25ed1",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "noauth"
+              },
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "281b4b2562dc3dfa035fc9b040b8dfcfea87df1fc8228c4de0cac48ba3b043f4",
+                  "type": "text"
+                }
+              ],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"newPassword\": \"123654789\",\r\n    \"confirmPassword\": \"123654789\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/reset-password",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "reset-password"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:04.000Z",
+            "uid": "40962788-14c781b3-fdcd-4b3f-a003-0c0e07e25ed1"
+          },
+          {
+            "name": "verify account",
+            "id": "62a94825-580a-4f44-9f91-99673a452d6e",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"email\": \"{{last_created_email}}\",\r\n    \"type\": \"account_activation\",\r\n    \"oneTimeCode\": \"162449\"\r\n}\r\n//   ACCOUNT_ACTIVATION = 'account_activation',\r\n//   RESET_PASSWORD = 'reset_password',",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/verify-account/",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "verify-account",
+                  ""
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T12:27:14.000Z",
+            "uid": "40962788-62a94825-580a-4f44-9f91-99673a452d6e"
+          },
+          {
+            "name": "forget password",
+            "id": "2a52efae-0890-4d02-b83a-bd1b883d3b23",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    // \"phone\": \"+8801889126591\",\r\n    \"email\": \"{{last_created_email}}\"\r\n    // \"oneTimeCode\":\"281063\"\r\n\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/forget-password",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "forget-password"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:04.000Z",
+            "uid": "40962788-2a52efae-0890-4d02-b83a-bd1b883d3b23"
+          },
+          {
+            "name": "change password",
+            "id": "14fde957-9211-4c75-ba6d-ee26762ddb0c",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "auth": {
+                "type": "bearer",
+                "bearer": [
+                  {
+                    "key": "token",
+                    "value": "9ba4af4bd610e78788429fc14a24af2b007f1d7755343dc5cfbbd44797026090",
+                    "type": "string"
+                  }
+                ]
+              },
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"currentPassword\": \"ashdiash\",\r\n    \"newPassword\": \"ahsd\",\r\n    \"confirmPassword\": \"asdasd\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/change-password",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "change-password"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:04.000Z",
+            "uid": "40962788-14fde957-9211-4c75-ba6d-ee26762ddb0c"
+          },
+          {
+            "name": "resend otp",
+            "id": "df39b123-176a-47bf-8e82-aa2a3d2149e9",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"email\": \"{{last_created_email}}\",\r\n    \"type\": \"account_activation\"\r\n}\r\n//   ACCOUNT_ACTIVATION = 'account_activation',\r\n//   RESET_PASSWORD = 'reset_password',",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/auth/resend-otp",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "resend-otp"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:54:01.000Z",
+            "uid": "40962788-df39b123-176a-47bf-8e82-aa2a3d2149e9"
+          },
+          {
+            "name": "refresh-token",
+            "id": "9bfb4c51-deba-4456-bad4-69d9ca761fee",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "POST",
+              "header": [],
+              "url": {
+                "raw": "{{base_url}}/auth/refresh-token",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "auth",
+                  "refresh-token"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:04.000Z",
+            "uid": "40962788-9bfb4c51-deba-4456-bad4-69d9ca761fee"
+          },
+          {
+            "name": "delete-account",
+            "id": "0057cc43-c923-45bd-bc59-d7f5cdd5efcd",
+            "protocolProfileBehavior": {
+              "disableBodyPruning": true
+            },
+            "request": {
+              "method": "DELETE",
+              "header": [],
+              "body": {
+                "mode": "raw",
+                "raw": "{\r\n    \"password\": \"asds\"\r\n}",
+                "options": {
+                  "raw": {
+                    "language": "json"
+                  }
+                }
+              },
+              "url": {
+                "raw": "{{base_url}}/api/v1/auth/delete-account",
+                "host": [
+                  "{{base_url}}"
+                ],
+                "path": [
+                  "api",
+                  "v1",
+                  "auth",
+                  "delete-account"
+                ]
+              }
+            },
+            "response": [],
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:04.000Z",
+            "uid": "40962788-0057cc43-c923-45bd-bc59-d7f5cdd5efcd"
+          }
+        ],
+        "id": "c4b2a11a-be5e-4325-88d7-898de443e24b",
+        "createdAt": "2025-12-24T05:13:29.000Z",
+        "updatedAt": "2025-12-26T10:38:04.000Z",
+        "uid": "40962788-c4b2a11a-be5e-4325-88d7-898de443e24b"
+      },
+      {
+        "name": "public",
+        "item": [
+          {
+            "name": "faq",
+            "item": [
+              {
+                "name": "create faq",
+                "id": "1627eabe-fff8-4336-af35-82378f8bbd36",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{adminToken}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"question\": \" 2222\",\r\n    \"answer\": \"2sfasdcvasdv\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}/faq",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "faq"
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-1627eabe-fff8-4336-af35-82378f8bbd36"
+              },
+              {
+                "name": "update faq",
+                "id": "404fff76-effd-4409-92d0-d1d3f600ef69",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{adminToken}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "PATCH",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n    \"question\": \" 2222\",\r\n    \"answer\": \"2sfasdcvasdv\"\r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}/faq/:id",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "faq",
+                      ":id"
+                    ],
+                    "variable": [
+                      {
+                        "id": "5cb733ca-73ca-4c5e-88a7-fcf3a9e81469",
+                        "key": "id",
+                        "value": ""
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-404fff76-effd-4409-92d0-d1d3f600ef69"
+              },
+              {
+                "name": "get faqs",
+                "id": "18637134-25d5-4a39-ad03-a02943f77cb0",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{base_url}}/public/faq",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public",
+                      "faq"
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-18637134-25d5-4a39-ad03-a02943f77cb0"
+              },
+              {
+                "name": "single faq",
+                "id": "ce4e5251-a354-40f5-9645-6c386a924717",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "GET",
+                  "header": [],
+                  "url": {
+                    "raw": "{{base_url}}/public/faq/:id",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public",
+                      "faq",
+                      ":id"
+                    ],
+                    "variable": [
+                      {
+                        "id": "12c9dce4-f0c1-44b7-b260-fc423470f395",
+                        "key": "id",
+                        "value": ""
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-ce4e5251-a354-40f5-9645-6c386a924717"
+              },
+              {
+                "name": "delete faq",
+                "id": "5d7d2381-eee2-46a1-9211-c6c30c4a7bf1",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "method": "DELETE",
+                  "header": [],
+                  "url": {
+                    "raw": "{{base_url}}/public/faq/:id",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public",
+                      "faq",
+                      ":id"
+                    ],
+                    "variable": [
+                      {
+                        "id": "4b88b9e6-8798-449c-b109-c66dd0772079",
+                        "key": "id",
+                        "value": ""
+                      }
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-5d7d2381-eee2-46a1-9211-c6c30c4a7bf1"
+              }
+            ],
+            "id": "5f7ed2f1-0463-4d26-83bc-138637ea606b",
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:43.000Z",
+            "uid": "40962788-5f7ed2f1-0463-4d26-83bc-138637ea606b"
+          },
+          {
+            "name": "privacyPolicy",
+            "item": [
+              {
+                "name": "get privacy",
+                "id": "cb702d41-9f5d-4058-874f-68f9eb742016",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{adminToken}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}/public/privacy-policy",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public",
+                      "privacy-policy"
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-cb702d41-9f5d-4058-874f-68f9eb742016"
+              },
+              {
+                "name": "create/update",
+                "id": "8a42bad5-c88e-4e42-97fb-93b8f6b063ac",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{adminToken}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n\"content\":\"ASDasdcascdascdasd\",\r\n\"type\":\"pricay-policy\" \r\n// \"type\":\"terms-and-condition\" \r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}/public",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public"
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-8a42bad5-c88e-4e42-97fb-93b8f6b063ac"
+              }
+            ],
+            "id": "2af152f6-26ef-4498-a5e0-3a7dc7d127bc",
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:43.000Z",
+            "uid": "40962788-2af152f6-26ef-4498-a5e0-3a7dc7d127bc"
+          },
+          {
+            "name": "terms & conditions",
+            "item": [
+              {
+                "name": "get terms",
+                "id": "6b991acc-7819-4a77-bc9a-bae3ad877b7f",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{adminToken}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "GET",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}/public/terms-and-condition",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public",
+                      "terms-and-condition"
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-6b991acc-7819-4a77-bc9a-bae3ad877b7f"
+              },
+              {
+                "name": "create/update",
+                "id": "b65ff18b-ab35-43d3-a739-252a9e4561f7",
+                "protocolProfileBehavior": {
+                  "disableBodyPruning": true
+                },
+                "request": {
+                  "auth": {
+                    "type": "bearer",
+                    "bearer": [
+                      {
+                        "key": "token",
+                        "value": "{{adminToken}}",
+                        "type": "string"
+                      }
+                    ]
+                  },
+                  "method": "POST",
+                  "header": [],
+                  "body": {
+                    "mode": "raw",
+                    "raw": "{\r\n\"content\":\"ASDasdcascdascdasd\",\r\n\"type\":\"pricay-policy\" \r\n// \"type\":\"terms-and-condition\" \r\n}",
+                    "options": {
+                      "raw": {
+                        "language": "json"
+                      }
+                    }
+                  },
+                  "url": {
+                    "raw": "{{base_url}}/public/",
+                    "host": [
+                      "{{base_url}}"
+                    ],
+                    "path": [
+                      "public",
+                      ""
+                    ]
+                  }
+                },
+                "response": [],
+                "createdAt": "2025-12-24T05:13:29.000Z",
+                "updatedAt": "2025-12-26T10:38:43.000Z",
+                "uid": "40962788-b65ff18b-ab35-43d3-a739-252a9e4561f7"
+              }
+            ],
+            "id": "1d667e30-3cc3-40a6-b42b-299d5b60e1b3",
+            "createdAt": "2025-12-24T05:13:29.000Z",
+            "updatedAt": "2025-12-26T10:38:43.000Z",
+            "uid": "40962788-1d667e30-3cc3-40a6-b42b-299d5b60e1b3"
+          }
+        ],
+        "id": "3b33f5b4-4b84-4dac-8b49-c9370a09e141",
+        "createdAt": "2025-12-24T05:13:29.000Z",
+        "updatedAt": "2025-12-26T10:38:43.000Z",
+        "uid": "40962788-3b33f5b4-4b84-4dac-8b49-c9370a09e141"
+      },
+      {
+        "name": "upload images",
+        "id": "23873f8a-8d0e-4bc9-9dec-0ddfcb09850b",
+        "protocolProfileBehavior": {
+          "disableBodyPruning": true
+        },
+        "request": {
+          "auth": {
+            "type": "bearer",
+            "bearer": [
+              {
+                "key": "token",
+                "value": "{{userToken}}",
+                "type": "string"
+              }
+            ]
+          },
+          "method": "POST",
+          "header": [],
+          "body": {
+            "mode": "formdata",
+            "formdata": [
+              {
+                "key": "data",
+                "value": "{\n    \"type\": \"profile\"\n}",
+                "type": "text",
+                "uuid": "0e72873b-0a77-4c5c-b005-e8e7730f3cc0"
+              },
+              {
+                "key": "images",
+                "type": "file",
+                "uuid": "19e6f497-0262-4f60-9afa-8d06551262aa",
+                "src": "/C:/Users/Kakashi/Downloads/naruto-phone-1080-x-1920-background-v88y6lmxq4zcit68.jpg"
+              }
+            ]
+          },
+          "url": {
+            "raw": "{{base_url}}/user/upload-images",
+            "host": [
+              "{{base_url}}"
+            ],
+            "path": [
+              "user",
+              "upload-images"
+            ]
+          }
+        },
+        "response": [],
+        "createdAt": "2025-12-24T08:47:50.000Z",
+        "updatedAt": "2025-12-26T11:06:45.000Z",
+        "uid": "40962788-23873f8a-8d0e-4bc9-9dec-0ddfcb09850b"
+      }
+    ],
+    "event": [
+      {
+        "listen": "prerequest",
+        "script": {
+          "id": "b2bc2964-f2f1-4b58-9f03-9e318d377479",
+          "type": "text/javascript",
+          "packages": {},
+          "requests": {},
+          "exec": [
+            ""
+          ]
+        }
+      },
+      {
+        "listen": "test",
+        "script": {
+          "id": "84fdd42c-c793-40bc-b559-b9b65917657a",
+          "type": "text/javascript",
+          "packages": {},
+          "requests": {},
+          "exec": [
+            ""
+          ]
+        }
+      }
+    ],
+    "variable": [
+      {
+        "key": "base_url",
+        "value": "http://localhost:5000/api/v1"
+      },
+      {
+        "key": "userToken",
+        "value": "your_jwt_token_here"
+      },
+      {
+        "key": "last_created_email",
+        "value": ""
+      },
+      {
+        "key": "last_created_password",
+        "value": ""
+      },
+      {
+        "key": "user2Token",
+        "value": "",
+        "type": "default"
+      }
+    ]
+  }
+}

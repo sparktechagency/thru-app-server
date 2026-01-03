@@ -6,6 +6,7 @@ const planSchema = new Schema<IPlan, PlanModel>({
     type: Schema.Types.ObjectId, ref: 'User', populate: { path: 'createdBy', select: 'name lastName fullName profile' }
   },
   title: { type: String },
+  category: { type: String, default: '' },
   description: { type: String },
   images: { type: [String] },
   date: { type: Date },
