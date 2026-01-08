@@ -16,6 +16,8 @@ import { paginationHelper } from '../../../helpers/paginationHelper'
 import { user_searchable_fields } from './user.constants'
 import { Friend } from '../friend/friend.model'
 import { FriendServices } from '../friend/friend.service'
+import { Request } from '../request/request.model'
+import { REQUEST_TYPE, REQUEST_STATUS } from '../request/request.interface'
 
 
 type UpdateProfile = IUser & {
@@ -180,7 +182,7 @@ const getUsers = async (
   const selectFields =
     user.role === USER_ROLES.USER ? '-location -verified -role -createdAt -updatedAt' : '';
 
-  const [result, total, friendList] = await Promise.all([
+  const [result, total, friendList, friendRequests] = await Promise.all([
     User.find(whereConditions)
       .select(selectFields)
       .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
@@ -188,6 +190,14 @@ const getUsers = async (
       .limit(limit),
     User.countDocuments(whereConditions),
     FriendServices.getMyFriendList(user, { planId: null }),
+    Request.find({
+      $or: [
+        { requestedBy: user.authId },
+        { requestedTo: user.authId }
+      ],
+      type: REQUEST_TYPE.FRIEND,
+      status: REQUEST_STATUS.PENDING
+    })
   ])
 
   //before sending the response also check whether the friend is already in the requested user friend list or not if exist add a flag to the response to indicate that the user is already a friend
@@ -195,12 +205,36 @@ const getUsers = async (
     friendList.map(friend => friend?._id)
   )
 
+  // Create sets for friend request tracking
+  const sentRequestsSet = new Set(
+    friendRequests
+      .filter(req => req.requestedBy.toString() === user.authId)
+      .map(req => req.requestedTo.toString())
+  )
+
+  const receivedRequestsSet = new Set(
+    friendRequests
+      .filter(req => req.requestedTo.toString() === user.authId)
+      .map(req => req.requestedBy.toString())
+  )
+
   const usersWithFriendFlag = result.map(userDoc => {
     const userObj = userDoc.toObject ? userDoc.toObject() : userDoc;
+    const userId = userObj._id.toString();
+
+    // Determine friend status
+    let friendStatus = 'none';
+    if (friendIdSet.has(userId)) {
+      friendStatus = 'friend';
+    } else if (sentRequestsSet.has(userId)) {
+      friendStatus = 'request_sent';
+    } else if (receivedRequestsSet.has(userId)) {
+      friendStatus = 'request_received';
+    }
 
     return {
       ...userObj,
-      isFriend: friendIdSet.has(userObj._id.toString()),
+      friendStatus,
     };
   });
   return {
