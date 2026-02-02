@@ -106,6 +106,18 @@ const getPlansByStartTime = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const searchPlaces = catchAsync(async (req: Request, res: Response) => {
+  const query = pick(req.query, ['searchTerm', 'location', 'address', 'category', 'dateFilter', 'startDate', 'endDate']);
+  const result = await PlanServices.searchPlaces(query as any);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Places searched successfully',
+    data: result,
+  });
+});
+
 export const PlanController = {
   createPlan,
   updatePlan,
@@ -113,5 +125,6 @@ export const PlanController = {
   getAllPlans,
   deletePlan,
   removePlanFriend,
-  getPlansByStartTime
+  getPlansByStartTime,
+  searchPlaces
 };

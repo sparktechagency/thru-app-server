@@ -1,0 +1,71 @@
+{
+  "search_metadata": {
+    "id": "698087bc28c7fb22b2cd2e5d",
+    "status": "Success",
+    "json_endpoint": "https://serpapi.com/searches/eb0a908c674540ba/698087bc28c7fb22b2cd2e5d.json",
+    "created_at": "2026-02-02 11:17:16 UTC",
+    "processed_at": "2026-02-02 11:17:16 UTC",
+    "google_events_url": "https://www.google.com/search?q=Jazz&ibp=htl;events&uule=w+CAIQICIdQXVzdGluLFRYLFRleGFzLFVuaXRlZCBTdGF0ZXM",
+    "raw_html_file": "https://serpapi.com/searches/eb0a908c674540ba/698087bc28c7fb22b2cd2e5d.html",
+    "total_time_taken": 1.6
+  },
+  "search_parameters": {
+    "q": "Jazz",
+    "engine": "google_events",
+    "location_requested": "Austin, TX",
+    "location_used": "Austin,TX,Texas,United States"
+  },
+  "search_information": {
+    "events_results_state": "Results for exact spelling"
+  },
+  "events_results": [
+    {
+      "title": "Aubrey Johnson",
+      "date": {
+        "start_date": "Apr 25",
+        "when": "Sat, Apr 25, 7 – 11 PM"
+      },
+      "address": [
+        "Tarleton State University, 1333 W Washington St",
+        "Stephenville, TX"
+      ],
+      "link": "https://open.spotify.com/concert/2GdWY7F16PoFUY0YlOjxRI",
+      "event_location_map": {
+        "image": "https://www.google.com/maps/vt/data=5F2s-Q-b-l2D9FWCWHVJAlKYNAsvmHhY4Q2rXcbQ5WgmO-Mmqi-oLaYT5cw48z-2wc3KqUSzuUGmFqCdhaO098ODcJDBw9BqxxnXm3A0t-9xVSToNyM",
+        "link": "https://www.google.com/maps/place//data=!4m2!3m1!1s0x8651b6d37480660f:0x26bfdf650afcc3e1?sa=X&ved=2ahUKEwjfroe617qSAxUvElkFHRkZNJUQ9eIBegQIAxAA",
+        "serpapi_link": "https://serpapi.com/search.json?data=%214m2%213m1%211s0x8651b6d37480660f%3A0x26bfdf650afcc3e1&engine=google_maps&google_domain=google.com&hl=en&location=Austin%2C+TX&q=Jazz&type=place"
+      },
+      "description": "Find tickets for Aubrey Johnson at Tarleton State University in Stephenville on 4/25/2026 at 7:00 PM",
+      "ticket_info": [
+        {
+          "source": "Spotify.com",
+          "link": "https://open.spotify.com/concert/2GdWY7F16PoFUY0YlOjxRI",
+          "link_type": "tickets"
+        },
+        {
+          "source": "The Comanche Chief",
+          "link": "https://www.thecomanchechief.com/local-events/?_evDiscoveryPath=/event/107719303n-aubrey-johnson-tarleton-jazz-festival",
+          "link_type": "more info"
+        },
+        {
+          "source": "88.1 The One",
+          "link": "https://881theone.com/local-events?_evDiscoveryPath=/event/107719303n-aubrey-johnson-tarleton-jazz-festival",
+          "link_type": "more info"
+        },
+        {
+          "source": "Envisionwise",
+          "link": "https://envisionwise.com/local-events?_evDiscoveryPath=/event/107719303n-aubrey-johnson-tarleton-jazz-festival",
+          "link_type": "more info"
+        }
+      ],
+      "venue": {
+        "name": "Tarleton State University",
+        "rating": 3.7,
+        "reviews": 116,
+        "link": "https://www.google.com/search?sca_esv=0cd8ea032a50c393&q=Tarleton+State+University&ludocid=2792195919062025185&ibp=gwp%3B0,7"
+      },
+      "thumbnail": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS8G1Ur-I82MZZBXbCcSY5ZXcpX2xUtvW6AaQjm9tTLI3_huttqOUv0yyQ&s",
+      "image": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQcYv9dBy1mQJePxKs8c4FurBG30lfoq30ts2VtFtjtUJeKuPkak2hb1LLg4D6b&s"
+    }
+  ]
+}

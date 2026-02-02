@@ -1,6 +1,7 @@
+import { getJson } from 'serpapi';
 import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
-import { IPlanFilterables, IPlan } from './plan.interface';
+import { IPlanFilterables, IPlan, ISearchQuery, ISearchResult } from './plan.interface';
 import { Plan } from './plan.model';
 import { JwtPayload } from 'jsonwebtoken';
 import { IPaginationOptions } from '../../../interfaces/pagination';
@@ -10,6 +11,7 @@ import { Types } from 'mongoose';
 import removeFile from '../../../helpers/image/remove';
 import { Request } from '../request/request.model';
 import { REQUEST_STATUS } from '../request/request.interface';
+import config from '../../../config';
 
 type createPlan = IPlan & {
   latitude?: number
@@ -240,6 +242,87 @@ const getPlansByStartTime = async (
   };
 };
 
+const searchPlaces = async (query: ISearchQuery): Promise<ISearchResult[]> => {
+  const { searchTerm, location, address, category, dateFilter, startDate, endDate } = query;
+
+  if (!config.serp_api_key) {
+    throw new ApiError(StatusCodes.INTERNAL_SERVER_ERROR, 'SerpAPI key is not configured');
+  }
+
+  try {
+    // Build the query string - combine available information
+    const queryParts = [];
+    if (searchTerm) queryParts.push(searchTerm);
+    if (category) queryParts.push(category);
+    if (address) queryParts.push(address);
+    if (location && !address) queryParts.push(location);
+
+    const searchQuery = queryParts.length > 0 ? queryParts.join(' ') : 'Events';
+
+    const params: any = {
+      engine: 'google_events',
+      q: searchQuery,
+      api_key: config.serp_api_key,
+    };
+
+    if (location) {
+      params.location = location;
+    }
+
+    // Add filters for SerpAPI using htichips (Google Events specific)
+    const filters: string[] = [];
+    if (dateFilter && dateFilter !== 'range') {
+      filters.push(`date:${dateFilter}`);
+    } else if (dateFilter === 'range' && startDate && endDate) {
+      filters.push(`date:range:${startDate},${endDate}`);
+    }
+
+    if (filters.length > 0) {
+      params.htichips = filters.join(',');
+    }
+
+    const response: any = await getJson(params);
+
+    if (!response.events_results || response.events_results.length === 0) {
+      return [];
+    }
+
+    const searchResults: ISearchResult[] = response.events_results.map((event: any) => {
+      // Logic for extracting rating and reviews more robustly
+      const rating = event.rating?.rating || event.rating || event.event_rating?.rating || event.event_rating;
+      const reviews = event.rating?.reviews || event.reviews || event.event_rating?.reviews || event.user_ratings_total;
+
+      return {
+        title: event.title,
+        address: event.address?.join(', ') || event.address,
+        latitude: undefined,
+        longitude: undefined,
+        thumbnail: event.thumbnail,
+        link: event.link,
+        rating: typeof rating === 'number' ? rating : (rating ? parseFloat(rating) : undefined),
+        reviews: typeof reviews === 'number' ? reviews : (reviews ? parseInt(reviews) : undefined),
+        category: category || (event.title?.toLowerCase().includes('food') ? 'Food and Coffee' : undefined),
+        date: {
+          start: event.date?.start_date,
+          when: event.date?.when,
+        },
+        venue: event.venue ? {
+          name: event.venue.name,
+          link: event.venue.link,
+        } : undefined,
+      };
+    });
+
+    return searchResults;
+  } catch (error: any) {
+    console.error('SerpAPI Error:', error);
+    throw new ApiError(
+      StatusCodes.INTERNAL_SERVER_ERROR,
+      `Failed to search events: ${error.message || 'Unknown error'}`
+    );
+  }
+};
+
 export const PlanServices = {
   createPlan,
   getAllPlans,
@@ -247,5 +330,6 @@ export const PlanServices = {
   updatePlan,
   deletePlan,
   removePlanFriend,
-  getPlansByStartTime
+  getPlansByStartTime,
+  searchPlaces
 };

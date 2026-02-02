@@ -38,4 +38,16 @@ export const PlanValidations = {
       userId: z.string()
     }).strict(),
   }),
+
+  search: z.object({
+    query: z.object({
+      searchTerm: z.string().optional(),
+      location: z.string().optional(),
+      address: z.string().optional(),
+      category: z.string().optional(),
+      dateFilter: z.enum(['today', 'tomorrow', 'week', 'weekend', 'next_week', 'month', 'next_month', 'range']).optional(),
+      startDate: z.string().optional(),
+      endDate: z.string().optional(),
+    }),
+  }),
 };

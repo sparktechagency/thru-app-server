@@ -23,7 +23,12 @@ router.get(
   PlanController.getPlansByStartTime
 );
 
-
+router.get(
+  '/search',
+  // auth(USER_ROLES.USER),
+  validateRequest(PlanValidations.search),
+  PlanController.searchPlaces
+);
 
 router.get(
   '/:id',

@@ -33,3 +33,33 @@ export interface IPlan {
 }
 
 export type PlanModel = Model<IPlan, {}, {}>;
+
+export interface ISearchResult {
+  title: string;
+  address?: string;
+  latitude?: number;
+  longitude?: number;
+  thumbnail?: string;
+  link?: string;
+  rating?: number;
+  reviews?: number;
+  category?: string;
+  date?: {
+    start?: string;
+    when?: string;
+  };
+  venue?: {
+    name?: string;
+    link?: string;
+  };
+}
+
+export interface ISearchQuery {
+  searchTerm?: string;
+  location?: string;
+  address?: string;
+  category?: string;
+  dateFilter?: 'today' | 'tomorrow' | 'week' | 'weekend' | 'next_week' | 'month' | 'next_month' | 'range';
+  startDate?: string;
+  endDate?: string;
+}

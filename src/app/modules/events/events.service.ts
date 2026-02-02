@@ -6,7 +6,7 @@ import { IEventQuery, IEventsResponse, IEvent } from './events.interface';
 import config from '../../../config';
 
 const getEvents = async (query: IEventQuery, forceRefresh: boolean = false): Promise<IEventsResponse> => {
-    const { location, dateFilter, eventType, startDate, endDate, rating, proximity, start = 0 } = query;
+    const { location, searchTerm, dateFilter, eventType, startDate, endDate, rating, proximity, start = 0 } = query;
 
     // Check if we have cached events in database (unless force refresh)
     if (!forceRefresh) {
@@ -49,11 +49,18 @@ const getEvents = async (query: IEventQuery, forceRefresh: boolean = false): Pro
     }
 
     try {
-        // Build SerpAPI query - combine location and eventType for better search
-        let searchQuery = `Events in ${location}`;
-        if (eventType && eventType !== 'virtual' && eventType !== 'in-person') {
-            searchQuery = `${eventType} ${searchQuery}`;
+        // Build SerpAPI query - combine location, searchTerm and eventType for better search
+        let searchQuery = '';
+
+        if (searchTerm) {
+            searchQuery = searchTerm;
+        } else if (eventType && eventType !== 'virtual' && eventType !== 'in-person') {
+            searchQuery = `${eventType} Events`;
+        } else {
+            searchQuery = 'Events';
         }
+
+        searchQuery = `${searchQuery} in ${location}`;
 
         const params: any = {
             engine: 'google_events',
@@ -99,27 +106,32 @@ const getEvents = async (query: IEventQuery, forceRefresh: boolean = false): Pro
         }
 
         // Transform and save events to database
-        const eventsToSave = response.events_results.map((event: any) => ({
-            title: event.title,
-            date: {
-                start: event.date?.start_date,
-                when: event.date?.when,
-            },
-            address: event.address,
-            link: event.link,
-            venue: event.venue ? {
-                name: event.venue.name,
-                link: event.venue.link,
-            } : undefined,
-            thumbnail: event.thumbnail,
-            ticketInfo: event.ticket_info,
-            description: event.description,
-            location: location,
-            eventType: eventType || (event.title?.toLowerCase().includes('virtual') || event.title?.toLowerCase().includes('online') ? 'virtual' : 'in-person'),
-            rating: event.rating?.rating,
-            reviewsCount: event.rating?.reviews,
-            serpApiId: event.event_id || `${event.title}_${event.date?.start_date}`,
-        }));
+        const eventsToSave = response.events_results.map((event: any) => {
+            const rating = event.rating?.rating || event.rating || event.event_rating?.rating || event.event_rating;
+            const reviewsCount = event.rating?.reviews || event.reviews || event.event_rating?.reviews || event.user_ratings_total;
+
+            return {
+                title: event.title,
+                date: {
+                    start: event.date?.start_date,
+                    when: event.date?.when,
+                },
+                address: event.address,
+                link: event.link,
+                venue: event.venue ? {
+                    name: event.venue.name,
+                    link: event.venue.link,
+                } : undefined,
+                thumbnail: event.thumbnail,
+                ticketInfo: event.ticket_info,
+                description: event.description,
+                location: location,
+                eventType: eventType || (event.title?.toLowerCase().includes('virtual') || event.title?.toLowerCase().includes('online') ? 'virtual' : 'in-person'),
+                rating: typeof rating === 'number' ? rating : (rating ? parseFloat(rating) : undefined),
+                reviewsCount: typeof reviewsCount === 'number' ? reviewsCount : (reviewsCount ? parseInt(reviewsCount) : undefined),
+                serpApiId: event.event_id || `${event.title}_${event.date?.start_date}`,
+            };
+        });
 
         // Save to database (ignore duplicates)
         const savedEvents: IEvent[] = [];

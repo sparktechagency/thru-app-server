@@ -5,11 +5,12 @@ import sendResponse from '../../../shared/sendResponse';
 import { EventsServices } from './events.service';
 
 const getEvents = catchAsync(async (req: Request, res: Response) => {
-    const { location, dateFilter, eventType, startDate, endDate, rating, proximity, start, refresh } = req.query;
+    const { location, searchTerm, dateFilter, eventType, startDate, endDate, rating, proximity, start, refresh } = req.query;
 
     const result = await EventsServices.getEvents(
         {
             location: location as string,
+            searchTerm: searchTerm as string,
             dateFilter: dateFilter as any,
             eventType: eventType as string,
             startDate: startDate as string,

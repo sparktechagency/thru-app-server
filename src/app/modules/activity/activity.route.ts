@@ -14,7 +14,6 @@ router.post(
   '/',
   auth(
     USER_ROLES.USER,
-
     USER_ROLES.ADMIN
   ),
   fileAndBodyProcessorUsingDiskStorage(),
@@ -26,7 +25,6 @@ router.patch(
   '/:id',
   auth(
     USER_ROLES.USER,
-
     USER_ROLES.ADMIN
   ),
   fileAndBodyProcessorUsingDiskStorage(),
@@ -38,7 +36,6 @@ router.delete(
   '/:id',
   auth(
     USER_ROLES.USER,
-
     USER_ROLES.ADMIN
   ),
   ActivityController.deleteActivity

@@ -39,6 +39,7 @@ export type EventModel = Model<IEvent, {}, {}>;
 
 export interface IEventQuery {
     location: string;
+    searchTerm?: string;
     dateFilter?: 'today' | 'tomorrow' | 'week' | 'weekend' | 'next_week' | 'month' | 'next_month' | 'range';
     startDate?: string;
     endDate?: string;
