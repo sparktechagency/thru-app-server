@@ -44,6 +44,7 @@ router.delete(
 router.post(
   '/add-to-plan',
   auth(USER_ROLES.USER),
+  fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(ActivityValidations.addToPlan),
   ActivityController.addActivityToExistingPlan
 );
