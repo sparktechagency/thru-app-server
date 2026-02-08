@@ -24,15 +24,15 @@ const createPlan = async (
 ): Promise<IPlan> => {
   try {
 
-    if (
-      typeof payload.latitude === 'number' &&
-      typeof payload.longitude === 'number'
-    ) {
-      payload.location = {
-        type: 'Point',
-        coordinates: [payload.longitude, payload.latitude],
-      }
-    }
+    // if (
+    //   typeof payload.latitude === 'number' &&
+    //   typeof payload.longitude === 'number'
+    // ) {
+    //   payload.location = {
+    //     type: 'Point',
+    //     coordinates: [payload.longitude, payload.latitude],
+    //   }
+    // }
 
     payload.createdBy = user.authId
 
@@ -56,6 +56,58 @@ const createPlan = async (
     }
     throw error;
   }
+};
+
+const getAllPlansFromDb = async (
+  filterables: IPlanFilterables,
+  pagination: IPaginationOptions
+) => {
+  const { searchTerm, ...filterData } = filterables;
+  const { page, skip, limit, sortBy, sortOrder } = paginationHelper.calculatePagination(pagination);
+
+  const andConditions = [];
+
+  // Search functionality
+  if (searchTerm) {
+    andConditions.push({
+      $or: planSearchableFields.map((field) => ({
+        [field]: {
+          $regex: searchTerm,
+          $options: 'i',
+        },
+      })),
+    });
+  }
+
+  // Filter functionality
+  if (Object.keys(filterData).length) {
+    andConditions.push({
+      $and: Object.entries(filterData).map(([key, value]) => ({
+        [key]: value,
+      })),
+    });
+  }
+
+  const whereConditions = andConditions.length ? { $and: andConditions } : {};
+
+  const [result, total] = await Promise.all([
+    Plan
+      .find(whereConditions)
+      .skip(skip)
+      .limit(limit)
+      .sort({ [sortBy]: sortOrder }).populate('activities').populate('friends').populate('createdBy'),
+    Plan.countDocuments(whereConditions),
+  ]);
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  };
 };
 
 const getAllPlans = async (
@@ -331,5 +383,6 @@ export const PlanServices = {
   deletePlan,
   removePlanFriend,
   getPlansByStartTime,
-  searchPlaces
+  searchPlaces,
+  getAllPlansFromDb
 };

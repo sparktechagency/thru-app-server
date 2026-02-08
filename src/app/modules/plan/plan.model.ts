@@ -11,17 +11,17 @@ const planSchema = new Schema<IPlan, PlanModel>({
   images: { type: [String] },
   date: { type: Date },
   endDate: { type: Date },
-  location: {
-    type: {
-      type: String,
-      default: 'Point',
-      enum: ['Point'],
-    },
-    coordinates: {
-      type: [Number],
-      default: [0.0, 0.0], // [longitude, latitude]
-    },
-  },
+  // location: {
+  //   type: {
+  //     type: String,
+  //     default: 'Point',
+  //     enum: ['Point'],
+  //   },
+  //   coordinates: {
+  //     type: [Number],
+  //     default: [0.0, 0.0], // [longitude, latitude]
+  //   },
+  // },
   address: { type: String },
   link: { type: String },
   activities: { type: [Schema.Types.ObjectId], ref: 'Activity' },

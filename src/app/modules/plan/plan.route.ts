@@ -8,9 +8,20 @@ import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processRe
 
 const router = express.Router();
 
-//* get all plans for the requested user
+// get all plans
 router.get(
   '/',
+   auth(
+    USER_ROLES.USER
+  ),
+  PlanController.getAllPlansFromDb
+)
+
+
+
+//* get all plans for the requested user
+router.get(
+  '/userPlans',
   auth(
     USER_ROLES.USER
   ),

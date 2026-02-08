@@ -24,7 +24,7 @@ export interface IPlan {
   images: string[];
   date: Date;
   endDate?: Date;
-  location: Point;
+  // location: Point;
   address: string;
   link: string;
   activities: Types.ObjectId[];

@@ -48,6 +48,26 @@ const getSinglePlan = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+const getAllPlansFromDb = catchAsync(async (req: Request, res: Response) => {
+  const filterables = pick(req.query, planFilterables);
+  const pagination = pick(req.query, paginationFields);
+
+  const result = await PlanServices.getAllPlansFromDb(
+    filterables,
+    pagination
+  );
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Plans retrieved successfully',
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
+
 const getAllPlans = catchAsync(async (req: Request, res: Response) => {
   const filterables = pick(req.query, planFilterables);
   const pagination = pick(req.query, paginationFields);
@@ -126,5 +146,6 @@ export const PlanController = {
   deletePlan,
   removePlanFriend,
   getPlansByStartTime,
-  searchPlaces
+  searchPlaces,
+  getAllPlansFromDb
 };
