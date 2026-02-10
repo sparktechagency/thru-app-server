@@ -2,9 +2,10 @@ import { Model, Types } from 'mongoose';
 
 export interface IMessage {
     _id: Types.ObjectId;
-    friend: Types.ObjectId;
+    friend?: Types.ObjectId;
+    plan?: Types.ObjectId;
     sender: Types.ObjectId;
-    receiver: Types.ObjectId;
+    receiver?: Types.ObjectId;
     message: string;
     isRead: boolean;
     createdAt: Date;
@@ -19,7 +20,8 @@ export interface ISendMessage {
 
 export interface IMessageData {
     _id: Types.ObjectId;
-    friend: Types.ObjectId;
+    friend?: Types.ObjectId;
+    plan?: Types.ObjectId;
     message: string;
     isRead: boolean;
     sender: {
@@ -27,7 +29,7 @@ export interface IMessageData {
         name?: string;
         profile?: string;
     };
-    receiver: {
+    receiver?: {
         _id: Types.ObjectId;
         name?: string;
         profile?: string;
@@ -41,7 +43,7 @@ export interface IReturnableMessage {
         page: number;
         limit: number;
         total: number;
-        totalPages: number;
+        totalPage: number;
     },
     data: IMessageData[];
 }

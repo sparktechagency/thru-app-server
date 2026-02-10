@@ -15,9 +15,9 @@ const getMyFriendList = async (user: JwtPayload, filters: any) => {
   let planRequestSentToIds: string[] = [];
 
   if (planId) {
-    const plan = await Plan.findById(planId).select('friends').lean();
-    if (plan && plan.friends) {
-      planFriendIds = plan.friends.map((id: Types.ObjectId) => id.toString());
+    const plan = await Plan.findById(planId).select('collaborators').lean();
+    if (plan && plan.collaborators) {
+      planFriendIds = plan.collaborators.map((id: Types.ObjectId) => id.toString());
     }
 
     // Fetch pending plan requests sent by the current user for this plan

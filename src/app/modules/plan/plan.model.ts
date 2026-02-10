@@ -6,27 +6,17 @@ const planSchema = new Schema<IPlan, PlanModel>({
     type: Schema.Types.ObjectId, ref: 'User', populate: { path: 'createdBy', select: 'name lastName fullName profile' }
   },
   title: { type: String },
-  category: { type: String, default: '' },
   description: { type: String },
   images: { type: [String] },
   date: { type: Date },
   endDate: { type: Date },
-  // location: {
-  //   type: {
-  //     type: String,
-  //     default: 'Point',
-  //     enum: ['Point'],
-  //   },
-  //   coordinates: {
-  //     type: [Number],
-  //     default: [0.0, 0.0], // [longitude, latitude]
-  //   },
-  // },
   address: { type: String },
-  link: { type: String },
+  eatAndDrink: { type: [Schema.Types.ObjectId], ref: 'Activity' },
+  stays: { type: [Schema.Types.ObjectId], ref: 'Activity' },
+  transportation: { type: [Schema.Types.ObjectId], ref: 'Activity' },
+  custom: { type: [Schema.Types.ObjectId], ref: 'Activity' },
   activities: { type: [Schema.Types.ObjectId], ref: 'Activity' },
-  friends: { type: [Schema.Types.ObjectId], ref: 'User', populate: { path: 'friends', select: 'name lastName fullName profile' } },
-  commentCount: { type: Number, default: 0 },
+  collaborators: { type: [Schema.Types.ObjectId], ref: 'User', populate: { path: 'collaborators', select: 'name lastName fullName profile' } }, 
 }, {
   timestamps: true
 });

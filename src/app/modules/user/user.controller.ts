@@ -16,7 +16,14 @@ import { IUser } from './user.interface'
 
 
 const updateProfile = catchAsync(async (req: Request, res: Response) => {
-  const { image, ...userData } = req.body
+  const { profilePicture, image, ...userData } = req.body
+
+  if (profilePicture) {
+    userData.profile = profilePicture
+  } else if (image) {
+    userData.profile = image
+  }
+
   const result = await UserServices.updateProfile(req.user!, userData)
   sendResponse<IUser>(res, {
     statusCode: StatusCodes.OK,
@@ -49,15 +56,12 @@ const getUserProfile = catchAsync(async (req: Request, res: Response) => {
 
 
 const getUsers = catchAsync(async (req: Request, res: Response) => {
-  const paginationOptions = pick(req.query, paginationFields)
-  const filterOptions = pick(req.query, user_filterable_fields)
-  const { user } = req
-  const result = await UserServices.getUsers(user!, filterOptions, paginationOptions)
+  const result = await UserServices.getUsers(req.user!, req.query)
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Workers retrieved successfully',
-    data: result,
+    message: 'Users retrieved successfully',
+    data: result.data,
   })
 })
 

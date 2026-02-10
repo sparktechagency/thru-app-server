@@ -8,19 +8,9 @@ import { activityFilterables } from './activity.constants';
 import { paginationFields } from '../../../interfaces/pagination';
 
 const createActivity = catchAsync(async (req: Request, res: Response) => {
-  const { images, media, ...activityData } = req.body;
-
-  if (images && images.length > 0) {
-    activityData.images = images;
-  }
-
-  if (media && media.length > 0) {
-    activityData.media = media;
-  }
-
   const result = await ActivityServices.createActivity(
     req.user!,
-    activityData
+    req.body
   );
 
   sendResponse(res, {
@@ -31,11 +21,32 @@ const createActivity = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllActivities = catchAsync(async (req: Request, res: Response) => {
+  const result = await ActivityServices.getAllActivities(req.user!, req.query);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Activities retrieved successfully',
+    data: result.data,
+  });
+});
+
+const getSingleActivity = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await ActivityServices.getSingleActivity(id);
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Activity retrieved successfully',
+    data: result,
+  });
+});
+
 const updateActivity = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const activityData = req.body;
-
-  const result = await ActivityServices.updateActivity(id, activityData);
+  const result = await ActivityServices.updateActivity(id, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -44,9 +55,6 @@ const updateActivity = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-
-
-
 
 const deleteActivity = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
@@ -60,53 +68,10 @@ const deleteActivity = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const addActivityToExistingPlan = catchAsync(async (req: Request, res: Response) => {
-  const { planId, ...activityData } = req.body;
-  const result = await ActivityServices.addActivityToExistingPlan(
-    req.user!,
-    activityData,
-    planId
-  );
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Activity added to plan successfully',
-    data: result,
-  });
-});
-
-const removeActivityFromPlan = catchAsync(async (req: Request, res: Response) => {
-  const { planId, activityId } = req.body;
-  const result = await ActivityServices.removeActivityFromPlan(planId, activityId);
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Activity removed from plan successfully',
-    data: result,
-  });
-});
-
-const createPlanWithActivity = catchAsync(async (req: Request, res: Response) => {
-  const activityData = req.body;
-  const result = await ActivityServices.createPlanWithActivity(req.user!, activityData);
-
-  sendResponse(res, {
-    statusCode: StatusCodes.CREATED,
-    success: true,
-    message: 'Plan created with activity successfully',
-    data: result,
-  });
-});
-
 export const ActivityController = {
   createActivity,
+  getAllActivities,
+  getSingleActivity,
   updateActivity,
-
-
   deleteActivity,
-  addActivityToExistingPlan,
-  removeActivityFromPlan,
-  createPlanWithActivity
 };

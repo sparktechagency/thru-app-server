@@ -15,9 +15,9 @@ const addComment = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-const getCommentsByPlanId = catchAsync(async (req: Request, res: Response) => {
-    const { planId } = req.params;
-    const result = await CommentService.getCommentsByPlanId(planId);
+const getCommentsByPostId = catchAsync(async (req: Request, res: Response) => {
+    const { postId } = req.params;
+    const result = await CommentService.getCommentsByPostId(postId);
 
     sendResponse(res, {
         statusCode: StatusCodes.OK,
@@ -29,5 +29,5 @@ const getCommentsByPlanId = catchAsync(async (req: Request, res: Response) => {
 
 export const CommentController = {
     addComment,
-    getCommentsByPlanId,
+    getCommentsByPostId,
 };

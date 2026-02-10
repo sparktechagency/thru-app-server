@@ -9,8 +9,7 @@ import { RequestRoutes } from '../app/modules/request/request.route'
 import { FriendRoutes } from '../app/modules/friend/friend.route'
 import { CommentRoutes } from '../app/modules/comment/comment.route'
 import { MessageRoutes } from '../app/modules/message/message.route'
-import { EventsRoutes } from '../app/modules/events/events.route'
-import { CategoryRoutes } from '../app/modules/category/category.route'
+import { PostRoutes } from '../app/modules/post/post.route'
 
 const router = express.Router()
 
@@ -25,9 +24,8 @@ const apiRoutes: { path: string; route: Router }[] = [
   { path: '/friend', route: FriendRoutes },
   { path: '/comments', route: CommentRoutes },
   { path: '/message', route: MessageRoutes },
-  { path: '/events', route: EventsRoutes }
-,
-  { path: '/category', route: CategoryRoutes }]
+  { path: '/post', route: PostRoutes }
+]
 
 apiRoutes.forEach(route => {
   router.use(route.path, route.route)

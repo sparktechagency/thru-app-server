@@ -1,0 +1,37 @@
+{
+    "info": {
+        "name": "Friend Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get My Friend List",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/friend?planId=optional-plan-id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "friend"
+                    ],
+                    "query": [
+                        {
+                            "key": "planId",
+                            "value": "optional-plan-id"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

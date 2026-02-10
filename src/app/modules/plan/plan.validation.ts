@@ -3,51 +3,65 @@ import { z } from 'zod';
 export const PlanValidations = {
   create: z.object({
     body: z.object({
-      title: z.string(),
-      category: z.string(),
+      title: z.string({
+        required_error: 'Title is required',
+      }),
       description: z.string().optional(),
-      images: z.array(z.string()),
-      date: z.string().datetime(),
-      endDate: z.string().datetime(),
-      // longitude: z.number().optional(),
-      // latitude: z.number().optional(),
-      address: z.string(),
-      // link: z.string().url(),
+      images: z.array(z.string()).optional(),
+      date: z.string({
+        required_error: 'Date is required',
+      }).datetime(),
+      endDate: z.string().optional().refine(val => !val || !isNaN(Date.parse(val)), {
+        message: 'Invalid endDate'
+      }),
+      address: z.string({
+        required_error: 'Address is required',
+      }),
+      eatAndDrink: z.array(z.string()).optional(),
+      stays: z.array(z.string()).optional(),
+      transportation: z.array(z.string()).optional(),
+      custom: z.array(z.string()).optional(),
+      activities: z.array(z.string()).optional(),
+      collaborators: z.array(z.string()).optional(),
     }).strict(),
   }),
 
   update: z.object({
     body: z.object({
       title: z.string().optional(),
-      category: z.string().optional(),
       description: z.string().optional(),
       images: z.array(z.string()).optional(),
       date: z.string().datetime().optional(),
       endDate: z.string().datetime().optional(),
-      location: z.string().optional(),
       address: z.string().optional(),
-      // longitude: z.number(),
-      // latitude: z.number(),
-      // link: z.string().url().optional(),
+      eatAndDrink: z.array(z.string()).optional(),
+      stays: z.array(z.string()).optional(),
+      transportation: z.array(z.string()).optional(),
+      custom: z.array(z.string()).optional(),
+      activities: z.array(z.string()).optional(),
+      collaborators: z.array(z.string()).optional(),
     }).strict(),
   }),
 
-  removeFriend: z.object({
+  addCollaborator: z.object({
     body: z.object({
-      planId: z.string(),
-      userId: z.string()
+      planId: z.string({
+        required_error: 'Plan ID is required'
+      }),
+      userId: z.string({
+        required_error: 'User ID is required'
+      })
     }).strict(),
   }),
 
-  search: z.object({
-    query: z.object({
-      searchTerm: z.string().optional(),
-      location: z.string().optional(),
-      address: z.string().optional(),
-      category: z.string().optional(),
-      dateFilter: z.enum(['today', 'tomorrow', 'week', 'weekend', 'next_week', 'month', 'next_month', 'range']).optional(),
-      startDate: z.string().optional(),
-      endDate: z.string().optional(),
-    }),
+  removeCollaborator: z.object({
+    body: z.object({
+      planId: z.string({
+        required_error: 'Plan ID is required'
+      }),
+      userId: z.string({
+        required_error: 'User ID is required'
+      })
+    }).strict(),
   }),
 };

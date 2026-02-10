@@ -23,10 +23,6 @@ const userSchema = new Schema<IUser, UserModel>(
       trim: true,
       unique: true,
     },
-    phone: {
-      type: String,
-      trim: true,
-    },
     status: {
       type: String,
       enum: [USER_STATUS.ACTIVE, USER_STATUS.RESTRICTED, USER_STATUS.DELETED],

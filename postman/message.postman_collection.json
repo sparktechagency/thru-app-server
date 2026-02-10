@@ -1,0 +1,241 @@
+{
+    "info": {
+        "name": "Message Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Send Message",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message\": \"Hello friend!\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/message/:friendId",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        ":friendId"
+                    ],
+                    "variable": [
+                        {
+                            "key": "friendId",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Conversation List",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/message/friend-list",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        "friend-list"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single User Conversation",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/message/:friendId",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        ":friendId"
+                    ],
+                    "variable": [
+                        {
+                            "key": "friendId",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Send Group Message",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message\": \"Hey group!\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/message/group/:planId",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        "group",
+                        ":planId"
+                    ],
+                    "variable": [
+                        {
+                            "key": "planId",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Group Messages",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/message/group/:planId",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        "group",
+                        ":planId"
+                    ],
+                    "variable": [
+                        {
+                            "key": "planId",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Message",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"message\": \"Updated message content\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/message/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Message",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/message/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "message",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

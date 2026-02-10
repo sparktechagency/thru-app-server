@@ -1,0 +1,173 @@
+{
+    "info": {
+        "name": "Request Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get My Friend Requests",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/request",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "request"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Send Plan Request",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"requestedTo\": \"target-user-id\",\n  \"planId\": \"plan-id\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/request/plan-add",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "request",
+                        "plan-add"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Accept Or Reject Plan Request",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"status\": \"ACCEPTED\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/request/plan/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "request",
+                        "plan",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Friend Request",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/request/:requestedTo",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "request",
+                        ":requestedTo"
+                    ],
+                    "variable": [
+                        {
+                            "key": "requestedTo",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Friend Request",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"status\": \"ACCEPTED\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/request/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "request",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

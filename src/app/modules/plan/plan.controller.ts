@@ -8,11 +8,7 @@ import { planFilterables } from './plan.constants';
 import { paginationFields } from '../../../interfaces/pagination';
 
 const createPlan = catchAsync(async (req: Request, res: Response) => {
-  const planData = req.body;
-  const result = await PlanServices.createPlan(
-    req.user!,
-    planData
-  );
+  const result = await PlanServices.createPlan(req.user!, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.CREATED,
@@ -24,9 +20,7 @@ const createPlan = catchAsync(async (req: Request, res: Response) => {
 
 const updatePlan = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
-  const planData = req.body;
-
-  const result = await PlanServices.updatePlan(id, planData);
+  const result = await PlanServices.updatePlan(id, req.body);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -48,35 +42,8 @@ const getSinglePlan = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
-const getAllPlansFromDb = catchAsync(async (req: Request, res: Response) => {
-  const filterables = pick(req.query, planFilterables);
-  const pagination = pick(req.query, paginationFields);
-
-  const result = await PlanServices.getAllPlansFromDb(
-    filterables,
-    pagination
-  );
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Plans retrieved successfully',
-    meta: result.meta,
-    data: result.data,
-  });
-});
-
-
 const getAllPlans = catchAsync(async (req: Request, res: Response) => {
-  const filterables = pick(req.query, planFilterables);
-  const pagination = pick(req.query, paginationFields);
-
-  const result = await PlanServices.getAllPlans(
-    req.user!,
-    filterables,
-    pagination
-  );
+  const result = await PlanServices.getAllPlans(req.user!, req.query);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -99,41 +66,26 @@ const deletePlan = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-
-const removePlanFriend = catchAsync(async (req: Request, res: Response) => {
+const addPlanCollaborator = catchAsync(async (req: Request, res: Response) => {
   const { planId, userId } = req.body;
-  const result = await PlanServices.removePlanFriend(planId, userId);
+  const result = await PlanServices.addPlanCollaborator(planId, userId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Friend removed from plan successfully',
+    message: 'Collaborator added to plan successfully',
     data: result,
   });
 });
 
-const getPlansByStartTime = catchAsync(async (req: Request, res: Response) => {
-  const pagination = pick(req.query, paginationFields);
-
-  const result = await PlanServices.getPlansByStartTime(req.user!, pagination);
-
-  sendResponse(res, {
-    statusCode: StatusCodes.OK,
-    success: true,
-    message: 'Upcoming plans retrieved successfully',
-    meta: result.meta,
-    data: result.data,
-  });
-});
-
-const searchPlaces = catchAsync(async (req: Request, res: Response) => {
-  const query = pick(req.query, ['searchTerm', 'location', 'address', 'category', 'dateFilter', 'startDate', 'endDate']);
-  const result = await PlanServices.searchPlaces(query as any);
+const removePlanCollaborator = catchAsync(async (req: Request, res: Response) => {
+  const { planId, userId } = req.body;
+  const result = await PlanServices.removePlanCollaborator(planId, userId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Places searched successfully',
+    message: 'Collaborator removed from plan successfully',
     data: result,
   });
 });
@@ -144,8 +96,6 @@ export const PlanController = {
   getSinglePlan,
   getAllPlans,
   deletePlan,
-  removePlanFriend,
-  getPlansByStartTime,
-  searchPlaces,
-  getAllPlansFromDb
+  addPlanCollaborator,
+  removePlanCollaborator,
 };

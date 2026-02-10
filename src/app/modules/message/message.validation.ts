@@ -4,8 +4,16 @@ export const MessageValidations = {
     sendMessage: z.object({
         body: z.object({
             message: z.string({
-                required_error: 'Message is required',
-            }).min(1, 'Message cannot be empty'),
-        }),
+                required_error: 'Message content is required',
+            }),
+        }).strict(),
+    }),
+
+    updateMessage: z.object({
+        body: z.object({
+            message: z.string({
+                required_error: 'Message content is required',
+            }),
+        }).strict(),
     }),
 };

@@ -13,11 +13,11 @@ const getMyFriendList = catchAsync(async (req: Request, res: Response) => {
   sendResponse(res, {
     statusCode: StatusCodes.OK,
     success: true,
-    message: 'Booking retrieved successfully',
+    message: 'Friend list retrieved successfully',
     data: result,
   });
 });
 
-export const FreindController = {
+export const FriendController = {
   getMyFriendList
 }

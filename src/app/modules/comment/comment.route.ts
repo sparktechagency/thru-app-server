@@ -9,15 +9,11 @@ const router = express.Router();
 
 router.post(
     '/',
-    auth(USER_ROLES.USER),
+    auth(USER_ROLES.USER, USER_ROLES.ADMIN),
     validateRequest(CommentValidations.create),
     CommentController.addComment
 );
 
-router.get(
-    '/plan/:planId',
-    auth(USER_ROLES.USER, USER_ROLES.ADMIN),
-    CommentController.getCommentsByPlanId
-);
+router.get('/:postId', CommentController.getCommentsByPostId);
 
 export const CommentRoutes = router;

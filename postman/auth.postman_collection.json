@@ -1,0 +1,323 @@
+{
+    "info": {
+        "name": "Auth Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Signup",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123\",\n  \"phone\": \"+1234567890\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/signup",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "signup"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Login",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"john@example.com\",\n  \"password\": \"Password123\",\n  \"fcmToken\": \"optional-fcm-token\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "login"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Admin Login",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"AdminPassword123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/admin-login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "admin-login"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Verify Account",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"john@example.com\",\n  \"type\": \"ACTIVATE_ACCOUNT\",\n  \"oneTimeCode\": \"123456\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/verify-account",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "verify-account"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Forget Password",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"john@example.com\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/forget-password",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "forget-password"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Reset Password",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"newPassword\": \"NewPassword123\",\n  \"confirmPassword\": \"NewPassword123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/reset-password",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "reset-password"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Resend OTP",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"email\": \"john@example.com\",\n  \"type\": \"FORGET_PASSWORD\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/resend-otp",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "resend-otp"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Change Password",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"currentPassword\": \"OldPassword123\",\n  \"newPassword\": \"NewPassword123\",\n  \"confirmPassword\": \"NewPassword123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/change-password",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "change-password"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Refresh Token",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"refreshToken\": \"your-refresh-token\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/refresh-token",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "refresh-token"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Social Login",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"appId\": \"social-app-id\",\n  \"fcmToken\": \"device-fcm-token\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/social-login",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "social-login"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Account",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"password\": \"Password123\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/auth/delete-account",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "auth",
+                        "delete-account"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

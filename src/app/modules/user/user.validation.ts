@@ -28,7 +28,8 @@ const updateUserZodSchema = z.object({
     bio: z.string().optional(),
     longitude: z.number().optional(),
     latitude: z.number().optional(),
-
+    profilePicture: z.string().optional(),
+    image: z.string().optional(),
   }),
 })
 

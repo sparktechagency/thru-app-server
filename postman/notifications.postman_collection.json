@@ -1,0 +1,85 @@
+{
+    "info": {
+        "name": "Notification Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get My Notifications",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/notifications",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "notifications"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Notification",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/notifications/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "notifications",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update All Notifications",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/notifications/all",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "notifications",
+                        "all"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

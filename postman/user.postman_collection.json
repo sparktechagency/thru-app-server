@@ -1,0 +1,165 @@
+{
+    "info": {
+        "name": "User Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Get Profile",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/user/profile",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "user",
+                        "profile"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Profile",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"John\",\n  \"lastName\": \"Doe\",\n  \"address\": \"123 Main St\",\n  \"bio\": \"Hello world\",\n  \"longitude\": -73.935242,\n  \"latitude\": 40.730610\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/user/profile",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "user",
+                        "profile"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Upload Images",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "formdata",
+                    "formdata": [
+                        {
+                            "key": "images",
+                            "type": "file",
+                            "src": ""
+                        },
+                        {
+                            "key": "type",
+                            "value": "profile",
+                            "type": "text"
+                        }
+                    ]
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/user/upload-images",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "user",
+                        "upload-images"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Activity Log",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/user/activity-log",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "user",
+                        "activity-log"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Users",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/user?searchTerm=john&longitude=-73.935242&latitude=40.730610",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "user"
+                    ],
+                    "query": [
+                        {
+                            "key": "searchTerm",
+                            "value": "john"
+                        },
+                        {
+                            "key": "longitude",
+                            "value": "-73.935242"
+                        },
+                        {
+                            "key": "latitude",
+                            "value": "40.730610"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

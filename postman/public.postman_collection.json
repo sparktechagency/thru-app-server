@@ -1,0 +1,270 @@
+{
+    "info": {
+        "name": "Public Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Public Content",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"content\": \"<h1>Privacy Policy</h1>\",\n  \"type\": \"privacy-policy\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/public",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Publics By Type",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/public/:type",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        ":type"
+                    ],
+                    "variable": [
+                        {
+                            "key": "type",
+                            "value": "privacy-policy"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Public Content",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/public/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create Contact Request",
+            "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"+1987654321\",\n  \"country\": \"USA\",\n  \"message\": \"I have a question.\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/public/contact",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        "contact"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Create FAQ",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"question\": \"How do I reset my password?\",\n  \"answer\": \"Go to login page and click forget password.\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/public/faq",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        "faq"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update FAQ",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"question\": \"Updated Question?\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/public/faq/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        "faq",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single FAQ",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/public/faq/single/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        "faq",
+                        "single",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All FAQs",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/public/faq/all",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        "faq",
+                        "all"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete FAQ",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/public/faq/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "public",
+                        "faq",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

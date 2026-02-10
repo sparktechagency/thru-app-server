@@ -3,55 +3,33 @@ import { z } from 'zod';
 export const ActivityValidations = {
   create: z.object({
     body: z.object({
-      title: z.string(),
-      externalId: z.string(),
+      title: z.string({
+        required_error: 'Title is required',
+      }),
+      category: z.enum(["eat&drink", "stays", "transportation", "custom", "activity"], {
+        required_error: 'Category is required',
+      }),
       description: z.string().optional(),
-      address: z.string(),
-      date: z.string().datetime(),
-      link: z.string().url().optional(),
-      images: z.array(z.string()),
-    })
+      address: z.string({
+        required_error: 'Address is required',
+      }),
+      date: z.string({
+        required_error: 'Date is required',
+      }).datetime(),
+      link: z.string().optional(),
+      images: z.array(z.string()).optional(),
+    }).strict(),
   }),
 
   update: z.object({
     body: z.object({
       title: z.string().optional(),
+      category: z.enum(["eat&drink", "stays", "transportation", "custom", "activity"]).optional(),
       description: z.string().optional(),
       address: z.string().optional(),
       date: z.string().datetime().optional(),
-      link: z.string().url().optional(),
+      link: z.string().optional(),
       images: z.array(z.string()).optional(),
-    })
+    }).strict(),
   }),
-
-  addToPlan: z.object({
-    body: z.object({
-      planId: z.string(),
-      title: z.string(),
-      externalId: z.string(),
-      description: z.string().optional(),
-      address: z.string(),
-      date: z.string().datetime(),
-      link: z.string().url().optional(),
-      images: z.array(z.string()).optional(),
-    })
-  }),
-
-  removeFromPlan: z.object({
-    body: z.object({
-      planId: z.string(),
-      activityId: z.string()
-    })
-  }),
-
-  createWithActivity: z.object({
-    body: z.object({
-      title: z.string(),
-      externalId: z.string(),
-      description: z.string().optional(),
-      address: z.string(),
-      date: z.string().datetime(),
-      images: z.array(z.string()).optional(),
-    })
-  })
 };

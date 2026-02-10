@@ -124,71 +124,49 @@ const getUserProfile = async (user: JwtPayload) => {
 }
 
 
+import QueryBuilder from '../../builder/QueryBuilder';
+
 const getUsers = async (
   user: JwtPayload,
-  filters: IUserFilterableFields,
-  paginationOptions: IPaginationOptions,
+  query: Record<string, unknown>
 ) => {
-  const {
-    searchTerm,
-    latitude,
-    longitude,
-    radius,
-    ...filterData
-  } = filters
-  const { page, limit, skip, sortBy, sortOrder } =
-    paginationHelper.calculatePagination(paginationOptions)
-  const andConditions = []
+  const { latitude, longitude, radius } = query;
 
+  // Base query with mandatory conditions
+  let baseQuery = User.find({
+    role: USER_ROLES.USER,
+    verified: true
+  });
 
+  // Handle geospatial search if coordinates are provided
   if (latitude && longitude && radius) {
-    andConditions.push({
+    baseQuery = baseQuery.find({
       location: {
         $near: {
           $geometry: {
             type: 'Point',
             coordinates: [Number(longitude) || 0, Number(latitude) || 0],
           },
-          $maxDistance: Number(radius) || 10000, //10km max
+          $maxDistance: Number(radius) || 10000,
         },
       },
-    })
+    });
   }
-
-  if (searchTerm) {
-    andConditions.push({
-      $or: user_searchable_fields.map(field => ({
-        [field]: {
-          $regex: searchTerm,
-          $options: 'i',
-        },
-      })),
-    })
-  }
-  if (Object.keys(filterData).length) {
-    andConditions.push({
-      $and: Object.entries(filterData).map(([field, value]) => ({
-        [field]: value,
-      })),
-    })
-  }
-  andConditions.push({
-    role: USER_ROLES.USER,
-    verified: true
-  })
-  const whereConditions =
-    andConditions.length > 0 ? { $and: andConditions } : {}
 
   const selectFields =
     user.role === USER_ROLES.USER ? '-location -verified -role -createdAt -updatedAt' : '';
 
-  const [result, total, friendList, friendRequests] = await Promise.all([
-    User.find(whereConditions)
-      .select(selectFields)
-      .sort({ [sortBy]: sortOrder === 'desc' ? -1 : 1 })
-      .skip(skip)
-      .limit(limit),
-    User.countDocuments(whereConditions),
+  const userQuery = new QueryBuilder(baseQuery, query)
+    .search(user_searchable_fields)
+    .filter()
+    .sort();
+
+  if (selectFields) {
+    userQuery.modelQuery = userQuery.modelQuery.select(selectFields);
+  }
+
+  const [result, friendList, friendRequests] = await Promise.all([
+    userQuery.modelQuery,
     FriendServices.getMyFriendList(user, { planId: null }),
     Request.find({
       $or: [
@@ -198,31 +176,26 @@ const getUsers = async (
       type: REQUEST_TYPE.FRIEND,
       status: REQUEST_STATUS.PENDING
     })
-  ])
+  ]);
 
-  //before sending the response also check whether the friend is already in the requested user friend list or not if exist add a flag to the response to indicate that the user is already a friend
-  const friendIdSet = new Set(
-    friendList.map(friend => friend?._id)
-  )
+  const friendIdSet = new Set(friendList.map(friend => friend?._id.toString()));
 
-  // Create sets for friend request tracking
   const sentRequestsSet = new Set(
     friendRequests
       .filter(req => req.requestedBy.toString() === user.authId)
       .map(req => req.requestedTo.toString())
-  )
+  );
 
   const receivedRequestsSet = new Set(
     friendRequests
       .filter(req => req.requestedTo.toString() === user.authId)
       .map(req => req.requestedBy.toString())
-  )
+  );
 
   const usersWithFriendFlag = result.map(userDoc => {
     const userObj = userDoc.toObject ? userDoc.toObject() : userDoc;
     const userId = userObj._id.toString();
 
-    // Determine friend status
     let friendStatus = 'none';
     if (friendIdSet.has(userId)) {
       friendStatus = 'friend';
@@ -237,16 +210,11 @@ const getUsers = async (
       friendStatus,
     };
   });
+
   return {
-    meta: {
-      page,
-      limit,
-      total,
-      totalPages: Math.ceil(total / limit),
-    },
     data: usersWithFriendFlag,
-  }
-}
+  };
+};
 
 
 

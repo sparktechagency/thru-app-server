@@ -20,7 +20,6 @@ export interface IUser {
   email: string
   profile?: string
   cover?: string
-  phone?: string
   status: string
   verified: boolean
   address?: string

@@ -1,0 +1,64 @@
+{
+    "info": {
+        "name": "Comment Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Add Comment",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"postId\": \"post-id\",\n  \"content\": \"Great post!\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/comments",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "comments"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Comments By Post Id",
+            "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                    "raw": "{{baseUrl}}/comments/:postId",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "comments",
+                        ":postId"
+                    ],
+                    "variable": [
+                        {
+                            "key": "postId",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

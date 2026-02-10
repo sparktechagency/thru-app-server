@@ -126,12 +126,12 @@ const sendPlanRequest = async (user: JwtPayload, requestedTo: string, planId: st
   }
 
   // Check if already in plan
-  const isAlreadyInPlan = plan.friends.some(friendId => friendId.toString() === user.authId.toString()) ||
+  const isAlreadyInPlan = plan.collaborators.some(collaboratorId => collaboratorId.toString() === user.authId.toString()) ||
     plan.createdBy.toString() === user.authId.toString();
 
   if (isAlreadyInPlan && plan.createdBy.equals(new Types.ObjectId(user.authId))) {
     // If owner is sending, check if requestedTo is already in plan
-    const isTargetAlreadyInPlan = plan.friends.some(friendId => friendId.toString() === requestedToObjectId.toString());
+    const isTargetAlreadyInPlan = plan.collaborators.some(collaboratorId => collaboratorId.toString() === requestedToObjectId.toString());
     if (isTargetAlreadyInPlan) {
       throw new ApiError(StatusCodes.BAD_REQUEST, "User is already in this plan");
     }
@@ -365,7 +365,7 @@ const acceptOrRejectPlanRequest = async (
 
       await Plan.findByIdAndUpdate(
         plan._id,
-        { $addToSet: { friends: joinerId } },
+        { $addToSet: { collaborators: joinerId } },
         { session, new: true }
       );
     }

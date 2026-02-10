@@ -1,0 +1,172 @@
+{
+    "info": {
+        "name": "Activity Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Activity",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Coffee at Starbucks\",\n  \"category\": \"eat&drink\",\n  \"description\": \"Quick coffee break\",\n  \"address\": \"Times Square, NY\",\n  \"date\": \"2024-06-15T09:00:00Z\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/activity",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "activity"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Activities",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/activity?category=eat&drink&searchTerm=coffee",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "activity"
+                    ],
+                    "query": [
+                        {
+                            "key": "category",
+                            "value": "eat&drink"
+                        },
+                        {
+                            "key": "searchTerm",
+                            "value": "coffee"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single Activity",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/activity/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "activity",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Activity",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Updated Coffee Spot\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/activity/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "activity",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Activity",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/activity/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "activity",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

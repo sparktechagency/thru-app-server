@@ -1,11 +1,11 @@
 import { Model, Types } from 'mongoose';
 import { IUser } from '../user/user.interface';
-import { IPlan } from '../plan/plan.interface';
+import { IPost } from '../post/post.interface';
 
 export interface IComment {
     _id: Types.ObjectId;
     commentedBy: Types.ObjectId | IUser;
-    planId: Types.ObjectId | IPlan;
+    postId: Types.ObjectId | IPost;
     content: string;
     createdAt: Date;
     updatedAt: Date;

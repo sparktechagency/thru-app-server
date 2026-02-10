@@ -1,0 +1,242 @@
+{
+    "info": {
+        "name": "Plan Module",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Create Plan",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Summer Trip\",\n  \"description\": \"Awesome trip plan\",\n  \"date\": \"2024-07-01T10:00:00Z\",\n  \"address\": \"Paris, France\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/plan",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get All Plans",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/plan?page=1&limit=10&searchTerm=summer",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan"
+                    ],
+                    "query": [
+                        {
+                            "key": "page",
+                            "value": "1"
+                        },
+                        {
+                            "key": "limit",
+                            "value": "10"
+                        },
+                        {
+                            "key": "searchTerm",
+                            "value": "summer"
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Get Single Plan",
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/plan/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Update Plan",
+            "request": {
+                "method": "PATCH",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"title\": \"Updated Trip Name\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/plan/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Delete Plan",
+            "request": {
+                "method": "DELETE",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "url": {
+                    "raw": "{{baseUrl}}/plan/:id",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan",
+                        ":id"
+                    ],
+                    "variable": [
+                        {
+                            "key": "id",
+                            "value": ""
+                        }
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Add Collaborator",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"planId\": \"plan-id\",\n  \"userId\": \"user-id\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/plan/add-collaborator",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan",
+                        "add-collaborator"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "Remove Collaborator",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Authorization",
+                        "value": "Bearer {{token}}",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n  \"planId\": \"plan-id\",\n  \"userId\": \"user-id\"\n}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
+                },
+                "url": {
+                    "raw": "{{baseUrl}}/plan/remove-collaborator",
+                    "host": [
+                        "{{baseUrl}}"
+                    ],
+                    "path": [
+                        "plan",
+                        "remove-collaborator"
+                    ]
+                }
+            },
+            "response": []
+        }
+    ]
+}

@@ -8,14 +8,20 @@ import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processRe
 
 const router = express.Router();
 
+router.get(
+  '/',
+  auth(USER_ROLES.USER),
+  ActivityController.getAllActivities
+);
 
+router.get(
+  '/:id',
+  ActivityController.getSingleActivity
+);
 
 router.post(
   '/',
-  auth(
-    USER_ROLES.USER,
-    USER_ROLES.ADMIN
-  ),
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(ActivityValidations.create),
   ActivityController.createActivity
@@ -23,10 +29,7 @@ router.post(
 
 router.patch(
   '/:id',
-  auth(
-    USER_ROLES.USER,
-    USER_ROLES.ADMIN
-  ),
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
   fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(ActivityValidations.update),
   ActivityController.updateActivity
@@ -34,33 +37,8 @@ router.patch(
 
 router.delete(
   '/:id',
-  auth(
-    USER_ROLES.USER,
-    USER_ROLES.ADMIN
-  ),
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
   ActivityController.deleteActivity
-);
-
-router.post(
-  '/add-to-plan',
-  auth(USER_ROLES.USER),
-  fileAndBodyProcessorUsingDiskStorage(),
-  validateRequest(ActivityValidations.addToPlan),
-  ActivityController.addActivityToExistingPlan
-);
-
-router.post(
-  '/remove-from-plan',
-  auth(USER_ROLES.USER),
-  validateRequest(ActivityValidations.removeFromPlan),
-  ActivityController.removeActivityFromPlan
-);
-
-router.post(
-  '/create-with-activity',
-  auth(USER_ROLES.USER),
-  validateRequest(ActivityValidations.createWithActivity),
-  ActivityController.createPlanWithActivity
 );
 
 export const ActivityRoutes = router;
