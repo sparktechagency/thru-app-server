@@ -6,7 +6,8 @@ export interface IMessage {
     plan?: Types.ObjectId;
     sender: Types.ObjectId;
     receiver?: Types.ObjectId;
-    message: string;
+    message?: string;
+    images?: string[];
     isRead: boolean;
     createdAt: Date;
     updatedAt: Date;
@@ -16,6 +17,7 @@ export type MessageModel = Model<IMessage, {}, {}>;
 
 export interface ISendMessage {
     message: string;
+    images?: string[];
 }
 
 export interface IMessageData {

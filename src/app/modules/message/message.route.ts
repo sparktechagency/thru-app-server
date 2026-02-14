@@ -4,6 +4,7 @@ import { MessageValidations } from './message.validation';
 import validateRequest from '../../middleware/validateRequest';
 import auth from '../../middleware/auth';
 import { USER_ROLES } from '../../../enum/user';
+import { fileAndBodyProcessorUsingDiskStorage } from '../../middleware/processReqBody';
 
 const router = express.Router();
 
@@ -11,6 +12,7 @@ const router = express.Router();
 router.post(
     '/:friendId',
     auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+    fileAndBodyProcessorUsingDiskStorage(),
     validateRequest(MessageValidations.sendMessage),
     MessageController.sendMessage
 );
@@ -25,6 +27,7 @@ router.get(
 router.post(
     '/group/:planId',
     auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+    fileAndBodyProcessorUsingDiskStorage(),
     validateRequest(MessageValidations.sendMessage),
     MessageController.sendGroupMessage
 );

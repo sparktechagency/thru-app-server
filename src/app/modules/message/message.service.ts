@@ -15,7 +15,10 @@ const sendMessage = async (
     user: JwtPayload,
     friendId: string,
     payload: ISendMessage
-): Promise<IMessageData> => {
+) => {
+    if (!payload.message && (!payload.images || payload.images.length === 0)) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Message content or at least one image is required');
+    }
     const userId = new Types.ObjectId(user.authId);
     const friendObjectId = new Types.ObjectId(friendId);
 
@@ -40,16 +43,18 @@ const sendMessage = async (
         friend: friendObjectId,
         sender: userId,
         receiver: receiver._id,
-        message: payload.message,
+     ...(payload.message && { message: payload.message }),
+     ...(payload.images && {images: payload.images}),
         isRead: false,
     });
 
     const sender = friendship.users.find((u: IUser) => u._id.equals(userId));
 
-    const returnableMessage: IMessageData = {
+    const returnableMessage = {
         _id: message._id,
         friend: message.friend,
-        message: message.message,
+    ...(message.message && { message: message.message }),
+    ...(message.images && { images: message.images }),
         isRead: message.isRead,
         sender: {
             _id: userId,
@@ -115,7 +120,10 @@ const sendGroupMessage = async (
     user: JwtPayload,
     planId: string,
     payload: ISendMessage
-): Promise<IMessageData> => {
+) => {
+    if (!payload.message && (!payload.images || payload.images.length === 0)) {
+        throw new ApiError(StatusCodes.BAD_REQUEST, 'Message content or at least one image is required');
+    }
     const userId = new Types.ObjectId(user.authId);
     const planObjectId = new Types.ObjectId(planId);
 
@@ -135,17 +143,19 @@ const sendGroupMessage = async (
     const message = await Message.create({
         plan: planObjectId,
         sender: userId,
-        message: payload.message,
+    ...(payload.message && { message: payload.message }),
+     ...(payload.images && {images: payload.images}),
     });
 
     const populatedMessage = await Message.findById(message._id)
         .populate<{ sender: IUser }>('sender', 'name profile')
         .lean();
 
-    const returnableMessage: IMessageData = {
+    const returnableMessage = {
         _id: message._id,
         plan: message.plan,
-        message: message.message,
+    ...(message.message && { message: message.message }),
+    ...(message.images && { images: message.images }),
         isRead: message.isRead,
         sender: {
             _id: userId,

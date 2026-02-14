@@ -6,7 +6,8 @@ export const ActivityValidations = {
       title: z.string({
         required_error: 'Title is required',
       }),
-      category: z.enum(["eat&drink", "stays", "transportation", "custom", "activity"], {
+      planId:z.string(),
+      category: z.enum(["eatAndDrink", "stays", "transportation", "custom", "activity"], {
         required_error: 'Category is required',
       }),
       description: z.string().optional(),
@@ -24,7 +25,7 @@ export const ActivityValidations = {
   update: z.object({
     body: z.object({
       title: z.string().optional(),
-      category: z.enum(["eat&drink", "stays", "transportation", "custom", "activity"]).optional(),
+      category: z.enum(["eatAndDrink", "stays", "transportation", "custom", "activity"]).optional(),
       description: z.string().optional(),
       address: z.string().optional(),
       date: z.string().datetime().optional(),

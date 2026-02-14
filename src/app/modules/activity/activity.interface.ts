@@ -6,11 +6,13 @@ export interface IActivityFilterables {
   category?: string;
   description?: string;
   address?: string;
+  planId?: string;
 }
 
 export interface IActivity {
   _id: Types.ObjectId;
-  category: "eat&drink" | "stays" | "transportation" | "custom" | "activity";
+  category: "eatAndDrink" | "stays" | "transportation" | "custom" | "activity";
+  planId: Types.ObjectId;
   createdBy: Types.ObjectId;
   title: string;
   description?: string;

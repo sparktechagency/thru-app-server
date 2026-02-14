@@ -19,6 +19,7 @@ import { FriendServices } from '../friend/friend.service'
 import { Request } from '../request/request.model'
 import { REQUEST_TYPE, REQUEST_STATUS } from '../request/request.interface'
 
+import QueryBuilder from '../../builder/QueryBuilder';
 
 type UpdateProfile = IUser & {
   latitude?: number
@@ -124,7 +125,6 @@ const getUserProfile = async (user: JwtPayload) => {
 }
 
 
-import QueryBuilder from '../../builder/QueryBuilder';
 
 const getUsers = async (
   user: JwtPayload,
@@ -159,7 +159,8 @@ const getUsers = async (
   const userQuery = new QueryBuilder(baseQuery, query)
     .search(user_searchable_fields)
     .filter()
-    .sort();
+    .sort()
+    .paginate();
 
   if (selectFields) {
     userQuery.modelQuery = userQuery.modelQuery.select(selectFields);
@@ -211,8 +212,11 @@ const getUsers = async (
     };
   });
 
+  const meta = await userQuery.getPaginationInfo();
+
   return {
     data: usersWithFriendFlag,
+    meta,
   };
 };
 

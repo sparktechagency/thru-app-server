@@ -16,11 +16,6 @@ export interface IPlan {
   date: Date;
   endDate?: Date;
   address: string;
-  eatAndDrink: Types.ObjectId[];
-  stays: Types.ObjectId[];
-  transportation: Types.ObjectId[];
-  custom: Types.ObjectId[];
-  activities: Types.ObjectId[];
   collaborators: Types.ObjectId[];
   createdAt: Date;
   updatedAt: Date;

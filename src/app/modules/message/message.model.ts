@@ -6,7 +6,8 @@ const messageSchema = new Schema<IMessage, MessageModel>({
     plan: { type: Schema.Types.ObjectId, ref: 'Plan' },
     sender: { type: Schema.Types.ObjectId, ref: 'User', required: true },
     receiver: { type: Schema.Types.ObjectId, ref: 'User' },
-    message: { type: String, required: true },
+    message: { type: String },
+    images: { type: [String] },
     isRead: { type: Boolean, default: false },
 }, {
     timestamps: true

@@ -62,6 +62,7 @@ const getUsers = catchAsync(async (req: Request, res: Response) => {
     success: true,
     message: 'Users retrieved successfully',
     data: result.data,
+    meta: result.meta,
   })
 })
 

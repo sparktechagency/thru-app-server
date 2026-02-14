@@ -11,11 +11,6 @@ const planSchema = new Schema<IPlan, PlanModel>({
   date: { type: Date },
   endDate: { type: Date },
   address: { type: String },
-  eatAndDrink: { type: [Schema.Types.ObjectId], ref: 'Activity' },
-  stays: { type: [Schema.Types.ObjectId], ref: 'Activity' },
-  transportation: { type: [Schema.Types.ObjectId], ref: 'Activity' },
-  custom: { type: [Schema.Types.ObjectId], ref: 'Activity' },
-  activities: { type: [Schema.Types.ObjectId], ref: 'Activity' },
   collaborators: { type: [Schema.Types.ObjectId], ref: 'User', populate: { path: 'collaborators', select: 'name lastName fullName profile' } }, 
 }, {
   timestamps: true

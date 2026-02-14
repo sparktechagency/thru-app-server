@@ -1,13 +1,11 @@
 import { StatusCodes } from 'http-status-codes';
 import ApiError from '../../../errors/ApiError';
-import { IPlanFilterables, IPlan } from './plan.interface';
+import { IPlan } from './plan.interface';
 import { Plan } from './plan.model';
 import { JwtPayload } from 'jsonwebtoken';
 import { planSearchableFields } from './plan.constants';
 import { Types } from 'mongoose';
 import removeFile from '../../../helpers/image/remove';
-import { Request } from '../request/request.model';
-import { REQUEST_STATUS } from '../request/request.interface';
 import QueryBuilder from '../../builder/QueryBuilder';
 
 
@@ -44,7 +42,6 @@ const createPlan = async (
     throw error;
   }
 };
-
 
 
 const getAllPlans = async (
@@ -84,13 +81,6 @@ const getSinglePlan = async (id: string): Promise<IPlan> => {
   const result = await Plan.findById(id)
     .populate('createdBy', 'name lastName fullName profile')
     .populate('collaborators', 'name lastName fullName profile')
-    .populate([
-      { path: 'eatAndDrink', select: 'title description address date images' },
-      { path: 'stays', select: 'title description address date images' },
-      { path: 'transportation', select: 'title description address date images' },
-      { path: 'custom', select: 'title description address date images' },
-      { path: 'activities', select: 'title description address date images' }
-    ]);
 
   if (!result) {
     throw new ApiError(
@@ -120,13 +110,6 @@ const updatePlan = async (
   )
     .populate('createdBy', 'name lastName fullName profile')
     .populate('collaborators', 'name lastName fullName profile')
-    .populate([
-      { path: 'eatAndDrink', select: 'title description address date images' },
-      { path: 'stays', select: 'title description address date images' },
-      { path: 'transportation', select: 'title description address date images' },
-      { path: 'custom', select: 'title description address date images' },
-      { path: 'activities', select: 'title description address date images' }
-    ]);
 
   if (!result) {
     throw new ApiError(
@@ -169,15 +152,6 @@ const addPlanCollaborator = async (planId: string, userId: string): Promise<IPla
     { $addToSet: { collaborators: userId } },
     { new: true, runValidators: true }
   )
-    .populate('createdBy', 'name lastName fullName profile')
-    .populate('collaborators', 'name lastName fullName profile')
-    .populate([
-      { path: 'eatAndDrink', select: 'title description address date images' },
-      { path: 'stays', select: 'title description address date images' },
-      { path: 'transportation', select: 'title description address date images' },
-      { path: 'custom', select: 'title description address date images' },
-      { path: 'activities', select: 'title description address date images' }
-    ]);
 
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Requested plan not found');
@@ -196,29 +170,10 @@ const removePlanCollaborator = async (planId: string, userId: string): Promise<I
     { $pull: { collaborators: userId } },
     { new: true, runValidators: true }
   )
-    .populate('createdBy', 'name lastName fullName profile')
-    .populate('collaborators', 'name lastName fullName profile')
-    .populate([
-      { path: 'eatAndDrink', select: 'title description address date images' },
-      { path: 'stays', select: 'title description address date images' },
-      { path: 'transportation', select: 'title description address date images' },
-      { path: 'custom', select: 'title description address date images' },
-      { path: 'activities', select: 'title description address date images' }
-    ]);
 
   if (!result) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'Requested plan not found');
   }
-
-  // Update associated request status to REJECTED if it was PENDING
-  await Request.updateOne(
-    {
-      planId: new Types.ObjectId(planId),
-      requestedTo: new Types.ObjectId(userId),
-      status: REQUEST_STATUS.PENDING,
-    },
-    { status: REQUEST_STATUS.REJECTED }
-  );
 
   return result;
 };

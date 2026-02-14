@@ -101,7 +101,7 @@ const sendFriendRequest = async (user: JwtPayload, requestedTo: string) => {
   );
 
   return {
-    message: `Request sent to ${isRequestedPersonExist.name} ${isRequestedPersonExist.lastName}`,
+    message: `Request sent to ${isRequestedPersonExist.name} `,
     requestId: request._id
   };
 };

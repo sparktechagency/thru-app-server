@@ -5,7 +5,8 @@ export const MessageValidations = {
         body: z.object({
             message: z.string({
                 required_error: 'Message content is required',
-            }),
+            }).optional(),
+            images: z.array(z.string()).optional(),
         }).strict(),
     }),
 
@@ -14,6 +15,7 @@ export const MessageValidations = {
             message: z.string({
                 required_error: 'Message content is required',
             }),
+            images: z.array(z.string()).optional(),
         }).strict(),
     }),
 };
