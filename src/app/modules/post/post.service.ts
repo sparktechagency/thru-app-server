@@ -64,6 +64,7 @@ const updatePost = async (id: string, payload: Partial<IPost>, user: JwtPayload)
         throw new ApiError(StatusCodes.FORBIDDEN, 'You are not authorized to update this post');
     }
     const result = await Post.findByIdAndUpdate(id, payload, { new: true });
+    await result?.populate('user', 'name lastName profile email');
     return result;
 };
 

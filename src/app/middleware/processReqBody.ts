@@ -42,6 +42,42 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
     },
   });
 
+  
+  const IMAGE_MIME_TYPES = [
+    'image/jpeg', 
+    'image/jpg', 
+    'image/png', 
+    'image/gif', 
+    'image/webp', 
+    'image/avif', 
+    'image/bmp', 
+    'image/tiff', 
+    'image/svg+xml', 
+    'image/heic', 
+    'image/heif', 
+    'image/ico', 
+    'image/x-icon',
+    'image/vnd.microsoft.icon',
+    'image/vnd.adobe.photoshop',
+    'image/x-ms-bmp',
+    'image/x-tga',
+    'image/x-pcx',
+    'image/x-portable-pixmap',
+    'image/x-portable-graymap',
+    'image/x-portable-bitmap',
+    'image/x-cmu-raster',
+    'image/x-xbitmap',
+    'image/x-xpixmap',
+    'image/x-portable-anymap',
+    'image/x-pict',
+    'image/x-macpaint',
+    'image/x-quicktime',
+    'image/x-sgi',
+    'image/x-rgb',
+    'image/x-xwindowdump',
+    'image/x-xcf'
+  ];
+
   const fileFilter = (
     req: Request,
     file: Express.Multer.File,
@@ -49,9 +85,9 @@ export const fileAndBodyProcessorUsingDiskStorage = () => {
   ) => {
     try {
       const allowedTypes = {
-        image: ['image/jpeg', 'image/png', 'image/jpg'],
-        images: ['image/jpeg', 'image/png', 'image/jpg'],
-        profilePicture: ['image/jpeg', 'image/png', 'image/jpg'],
+        image: IMAGE_MIME_TYPES,
+        images: IMAGE_MIME_TYPES,
+        profilePicture: IMAGE_MIME_TYPES,
       };
 
       const fieldType = file.fieldname as IFolderName;
