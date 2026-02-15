@@ -26,7 +26,7 @@ export interface IUser {
   location: Point
   password: string
   totalDays?: string
-
+ includedPlans?:Types.ObjectId[]
   role: string
   isFriend?: boolean
   appId?: string

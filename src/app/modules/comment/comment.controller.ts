@@ -17,7 +17,7 @@ const addComment = catchAsync(async (req: Request, res: Response) => {
 
 const getCommentsByPostId = catchAsync(async (req: Request, res: Response) => {
     const { postId } = req.params;
-    const result = await CommentService.getCommentsByPostId(postId);
+    const result = await CommentService.getCommentsByPostId(postId, req.query);
 
     sendResponse(res, {
         statusCode: StatusCodes.OK,
@@ -27,7 +27,31 @@ const getCommentsByPostId = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
+const updateComment = catchAsync(async(req:Request, res:Response)=>{
+    const result = await CommentService.updateComment(req.params.id,req.body,req.user!)
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: 'Comment updated successfully',
+        data: result,
+    });
+})
+
+const deleteComment = catchAsync(async(req:Request, res:Response)=>{
+    const result = await CommentService.deleteComment(req.params.id,req.user!)
+
+    sendResponse(res, {
+        statusCode: StatusCodes.OK,
+        success: true,
+        message: 'Comment deleted successfully',
+        data: result,
+    });
+})
+
 export const CommentController = {
     addComment,
     getCommentsByPostId,
+    updateComment,
+    deleteComment
 };

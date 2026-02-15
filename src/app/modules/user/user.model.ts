@@ -48,6 +48,10 @@ const userSchema = new Schema<IUser, UserModel>(
     address: {
       type: String,
     },
+    includedPlans: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Plan',
+    }],
     totalDays: {
       type: String,
       default: "3 days 4 hours"

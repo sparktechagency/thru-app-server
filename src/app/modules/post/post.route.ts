@@ -16,9 +16,11 @@ router.post(
     PostControllers.createPost
 );
 
-router.get('/', PostControllers.getAllPosts);
+router.get('/', auth(USER_ROLES.USER, USER_ROLES.ADMIN), PostControllers.getAllPosts);
 
-router.get('/:id', PostControllers.getPostById);
+router.get('/my-posts', auth(USER_ROLES.USER), PostControllers.getMyPosts);
+
+router.get('/:id', auth(USER_ROLES.USER, USER_ROLES.ADMIN), PostControllers.getPostById);
 
 router.patch(
     '/:id',

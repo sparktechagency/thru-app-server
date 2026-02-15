@@ -16,4 +16,16 @@ router.post(
 
 router.get('/:postId', CommentController.getCommentsByPostId);
 
+router.patch(
+    '/:id',
+    auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+    CommentController.updateComment
+);
+
+router.delete(
+    '/:id',
+    auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+    CommentController.deleteComment
+);
+
 export const CommentRoutes = router;

@@ -8,6 +8,8 @@ import { sendNotification } from '../../../helpers/notificationHelper';
 import { User } from '../user/user.model';
 
 import mongoose, { ClientSession } from 'mongoose';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { USER_ROLES } from '../../../enum/user';
 
 const addComment = async (user: JwtPayload, payload: Partial<IComment>): Promise<IComment> => {
     const session: ClientSession = await mongoose.startSession();
@@ -66,15 +68,45 @@ const addComment = async (user: JwtPayload, payload: Partial<IComment>): Promise
     }
 };
 
-const getCommentsByPostId = async (postId: string): Promise<IComment[]> => {
-    const result = await Comment.find({ postId })
-        .populate('commentedBy', 'name lastName profile email')
-        .sort({ createdAt: -1 });
+const getCommentsByPostId = async (postId: string, query: Record<string, unknown>) => {
+    const commentQuery = new QueryBuilder(Comment.find({ postId }),query)
+                        .filter()
+                        .paginate()
+      
+        
+    const result = await commentQuery.modelQuery.populate('commentedBy', 'name lastName profile email')
+    const meta = await commentQuery.getPaginationInfo();
 
+    return {meta,data:result};
+};
+
+const updateComment = async (id: string, payload: Partial<IComment>, user: JwtPayload): Promise<IComment | null> => {
+    const comment = await Comment.findById(id);
+    if (!comment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Comment not found');
+    }
+    if (comment.commentedBy.toString() !== user.authId && user.role !== USER_ROLES.ADMIN) {
+        throw new ApiError(StatusCodes.FORBIDDEN, 'You are not authorized to update this comment');
+    }
+    const result = await Comment.findByIdAndUpdate(id, payload, { new: true });
+    return result;
+};
+
+const deleteComment = async (id: string, user: JwtPayload): Promise<IComment | null> => {
+    const comment = await Comment.findById(id);
+    if (!comment) {
+        throw new ApiError(StatusCodes.NOT_FOUND, 'Comment not found');
+    }
+    if (comment.commentedBy.toString() !== user.authId && user.role !== USER_ROLES.ADMIN) {
+        throw new ApiError(StatusCodes.FORBIDDEN, 'You are not authorized to delete this comment');
+    }
+    const result = await Comment.findByIdAndDelete(id);
     return result;
 };
 
 export const CommentService = {
     addComment,
     getCommentsByPostId,
+    updateComment,
+    deleteComment
 };

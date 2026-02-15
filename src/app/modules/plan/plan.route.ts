@@ -15,6 +15,12 @@ router.get(
 );
 
 router.get(
+  '/my-created',
+  auth(USER_ROLES.USER),
+  PlanController.getMyCreatedPlans
+);
+
+router.get(
   '/:id',
   auth(USER_ROLES.USER, USER_ROLES.ADMIN),
   PlanController.getSinglePlan

@@ -3,9 +3,7 @@ import { PlanServices } from './plan.service';
 import catchAsync from '../../../shared/catchAsync';
 import sendResponse from '../../../shared/sendResponse';
 import { StatusCodes } from 'http-status-codes';
-import pick from '../../../shared/pick';
-import { planFilterables } from './plan.constants';
-import { paginationFields } from '../../../interfaces/pagination';
+import { JwtPayload } from 'jsonwebtoken';
 
 const createPlan = catchAsync(async (req: Request, res: Response) => {
   const result = await PlanServices.createPlan(req.user!, req.body);
@@ -54,6 +52,18 @@ const getAllPlans = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyCreatedPlans = catchAsync(async (req: Request, res: Response) => {
+  const result = await PlanServices.getMyCreatedPlans(req.user!, req.query);    
+
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'My created plans retrieved successfully',
+    meta: result.meta,
+    data: result.data,
+  });
+});
+
 const deletePlan = catchAsync(async (req: Request, res: Response) => {
   const { id } = req.params;
   const result = await PlanServices.deletePlan(id);
@@ -68,7 +78,7 @@ const deletePlan = catchAsync(async (req: Request, res: Response) => {
 
 const addPlanCollaborator = catchAsync(async (req: Request, res: Response) => {
   const { planId, userId } = req.body;
-  const result = await PlanServices.addPlanCollaborator(planId, userId);
+  const result = await PlanServices.addPlanCollaborator(planId, userId, (req.user as JwtPayload).authId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -80,7 +90,7 @@ const addPlanCollaborator = catchAsync(async (req: Request, res: Response) => {
 
 const removePlanCollaborator = catchAsync(async (req: Request, res: Response) => {
   const { planId, userId } = req.body;
-  const result = await PlanServices.removePlanCollaborator(planId, userId);
+  const result = await PlanServices.removePlanCollaborator(planId, userId, (req.user as JwtPayload).authId);
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -98,4 +108,5 @@ export const PlanController = {
   deletePlan,
   addPlanCollaborator,
   removePlanCollaborator,
+  getMyCreatedPlans
 };
