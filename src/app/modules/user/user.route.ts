@@ -17,7 +17,7 @@ router.patch(
     USER_ROLES.USER,
     USER_ROLES.ADMIN,
   ),
-
+  fileAndBodyProcessorUsingDiskStorage(),
   validateRequest(UserValidations.updateUserZodSchema),
   UserController.updateProfile,
 )

@@ -74,13 +74,23 @@ const getAllPlans = async (
   };
 };
 
-const getMyCreatedPlans = async (
+const getHistoryPlans = async (
   user: JwtPayload,
   query: Record<string, unknown>  ) => {
 
+  const currentDate = new Date();
 
   const planQuery = new QueryBuilder(
-    Plan.find({ createdBy: user.authId }),
+   Plan.find({
+    $and: [
+      {
+        $or: [{ createdBy: user.authId }, { collaborators: user.authId }]
+      },
+      {
+        endDate: { $lt: currentDate }
+      }
+    ]
+  }),
     query
   ) .search(planSearchableFields)
     .filter()
@@ -181,9 +191,6 @@ const addPlanCollaborator = async (planId: string, userId: string, requesterId: 
       throw new ApiError(StatusCodes.NOT_FOUND, 'Requested plan not found');
     }
 
-    if (plan.createdBy.toString() !== requesterId) {
-      throw new ApiError(StatusCodes.FORBIDDEN, 'Only the plan author can add collaborators');
-    }
 
     const result = await Plan.findByIdAndUpdate(
       planId,
@@ -231,10 +238,6 @@ const removePlanCollaborator = async (planId: string, userId: string, requesterI
       throw new ApiError(StatusCodes.NOT_FOUND, 'Requested plan not found');
     }
 
-    if (plan.createdBy.toString() !== requesterId) {
-      throw new ApiError(StatusCodes.FORBIDDEN, 'Only the plan author can remove collaborators');
-    }
-
     const result = await Plan.findByIdAndUpdate(
       planId,
       { $pull: { collaborators: userId } },
@@ -274,5 +277,5 @@ export const PlanServices = {
   deletePlan,
   addPlanCollaborator,
   removePlanCollaborator,
-  getMyCreatedPlans
+  getHistoryPlans
 };

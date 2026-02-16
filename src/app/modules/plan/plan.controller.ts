@@ -52,8 +52,8 @@ const getAllPlans = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-const getMyCreatedPlans = catchAsync(async (req: Request, res: Response) => {
-  const result = await PlanServices.getMyCreatedPlans(req.user!, req.query);    
+const getHistoryPlans = catchAsync(async (req: Request, res: Response) => {
+  const result = await PlanServices.getHistoryPlans(req.user!, req.query);    
 
   sendResponse(res, {
     statusCode: StatusCodes.OK,
@@ -108,5 +108,5 @@ export const PlanController = {
   deletePlan,
   addPlanCollaborator,
   removePlanCollaborator,
-  getMyCreatedPlans
+  getHistoryPlans
 };

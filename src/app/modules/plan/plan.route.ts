@@ -15,9 +15,9 @@ router.get(
 );
 
 router.get(
-  '/my-created',
+  '/history',
   auth(USER_ROLES.USER),
-  PlanController.getMyCreatedPlans
+  PlanController.getHistoryPlans
 );
 
 router.get(
