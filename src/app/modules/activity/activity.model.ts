@@ -8,7 +8,8 @@ const activitySchema = new Schema<IActivity, ActivityModel>({
   description: { type: String },
   createdBy: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   address: { type: String },
-  date: { type: Date },
+  beginningDate: { type: Date },
+  endDate: { type: Date },
   link: { type: String },
   images: { type: [String] },
 }, {

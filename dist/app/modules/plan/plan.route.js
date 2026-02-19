@@ -1,0 +1,23 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PlanRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const plan_controller_1 = require("./plan.controller");
+const plan_validation_1 = require("./plan.validation");
+const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const user_1 = require("../../../enum/user");
+const processReqBody_1 = require("../../middleware/processReqBody");
+const router = express_1.default.Router();
+router.get('/', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), plan_controller_1.PlanController.getAllPlans);
+router.get('/history', (0, auth_1.default)(user_1.USER_ROLES.USER), plan_controller_1.PlanController.getHistoryPlans);
+router.get('/:id', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), plan_controller_1.PlanController.getSinglePlan);
+router.post('/', (0, auth_1.default)(user_1.USER_ROLES.USER), (0, processReqBody_1.fileAndBodyProcessorUsingDiskStorage)(), (0, validateRequest_1.default)(plan_validation_1.PlanValidations.create), plan_controller_1.PlanController.createPlan);
+router.patch('/:id', (0, auth_1.default)(user_1.USER_ROLES.USER), (0, processReqBody_1.fileAndBodyProcessorUsingDiskStorage)(), (0, validateRequest_1.default)(plan_validation_1.PlanValidations.update), plan_controller_1.PlanController.updatePlan);
+router.delete('/:id', (0, auth_1.default)(user_1.USER_ROLES.USER), plan_controller_1.PlanController.deletePlan);
+router.post('/add-collaborator', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), (0, validateRequest_1.default)(plan_validation_1.PlanValidations.addCollaborator), plan_controller_1.PlanController.addPlanCollaborator);
+router.post('/remove-collaborator', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), (0, validateRequest_1.default)(plan_validation_1.PlanValidations.removeCollaborator), plan_controller_1.PlanController.removePlanCollaborator);
+exports.PlanRoutes = router;

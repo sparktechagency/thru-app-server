@@ -1,0 +1,21 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.PostRoutes = void 0;
+const express_1 = __importDefault(require("express"));
+const validateRequest_1 = __importDefault(require("../../middleware/validateRequest"));
+const post_controller_1 = require("./post.controller");
+const post_validation_1 = require("./post.validation");
+const auth_1 = __importDefault(require("../../middleware/auth"));
+const user_1 = require("../../../enum/user");
+const processReqBody_1 = require("../../middleware/processReqBody");
+const router = express_1.default.Router();
+router.post('/', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), (0, processReqBody_1.fileAndBodyProcessorUsingDiskStorage)(), (0, validateRequest_1.default)(post_validation_1.PostValidations.create), post_controller_1.PostControllers.createPost);
+router.get('/', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), post_controller_1.PostControllers.getAllPosts);
+router.get('/my-posts', (0, auth_1.default)(user_1.USER_ROLES.USER), post_controller_1.PostControllers.getMyPosts);
+router.get('/:id', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), post_controller_1.PostControllers.getPostById);
+router.patch('/:id', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), (0, processReqBody_1.fileAndBodyProcessorUsingDiskStorage)(), (0, validateRequest_1.default)(post_validation_1.PostValidations.update), post_controller_1.PostControllers.updatePost);
+router.delete('/:id', (0, auth_1.default)(user_1.USER_ROLES.USER, user_1.USER_ROLES.ADMIN), post_controller_1.PostControllers.deletePost);
+exports.PostRoutes = router;
