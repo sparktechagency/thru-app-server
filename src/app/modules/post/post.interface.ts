@@ -4,7 +4,7 @@ import { IUser } from '../user/user.interface';
 export interface IPost {
     _id: Types.ObjectId;
     title: string;
-    image?: string;
+    images?: string[];
     user: Types.ObjectId | IUser;
     commentCount: number;
     createdAt: Date;

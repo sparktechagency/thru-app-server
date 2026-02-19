@@ -4,7 +4,7 @@ import { IPost, PostModel } from './post.interface';
 const postSchema = new Schema<IPost, PostModel>(
     {
         title: { type: String, required: true },
-        image: { type: String },
+        images: { type: [String] },
         user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         commentCount: { type: Number, default: 0 },
     },

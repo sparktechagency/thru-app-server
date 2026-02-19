@@ -6,13 +6,13 @@ export const PostValidations = {
             title: z.string({
                 required_error: 'Title is required',
             }),
-            image: z.string().optional(),
+            images: z.array(z.string()).optional(),
         }),
     }),
     update: z.object({
         body: z.object({
             title: z.string().optional(),
-            image: z.string().optional(),
+            images: z.array(z.string()).optional(),
         }),
     }),
 };

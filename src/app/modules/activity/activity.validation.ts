@@ -6,7 +6,7 @@ export const ActivityValidations = {
       title: z.string({
         required_error: 'Title is required',
       }),
-      planId:z.string(),
+      planId: z.string(),
       category: z.enum(["eatAndDrink", "stays", "transportation", "custom", "activity"], {
         required_error: 'Category is required',
       }),
@@ -15,6 +15,9 @@ export const ActivityValidations = {
         required_error: 'Address is required',
       }),
       date: z.string({
+        required_error: 'Date is required',
+      }).datetime(),
+      endDate: z.string({
         required_error: 'Date is required',
       }).datetime(),
       link: z.string().optional(),
@@ -28,8 +31,8 @@ export const ActivityValidations = {
       category: z.enum(["eatAndDrink", "stays", "transportation", "custom", "activity"]).optional(),
       description: z.string().optional(),
       address: z.string().optional(),
-      beginningDate: z.string().datetime().optional(),
-      endDate: z.string().datetime().optional(),
+      date: z.string().optional(),
+      endDate: z.string().optional(),
       link: z.string().optional(),
       images: z.array(z.string()).optional(),
     }).strict(),

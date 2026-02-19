@@ -17,7 +17,7 @@ export interface IActivity {
   title: string;
   description?: string;
   address: string;
-  beginningDate: Date;
+  date: Date;
   endDate: Date;
   link?: string;
   images: string[];
