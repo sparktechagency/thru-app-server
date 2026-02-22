@@ -7,15 +7,7 @@ const createUserZodSchema = z.object({
     email: z.string({ required_error: 'Email is required' }).email(),
     password: z.string({ required_error: 'Password is required and must be 6 character long.' }).min(6),
     name: z.string({ required_error: 'Name is required' }),
-    lastName: z.string({ required_error: 'Last name is required' }),
-    role: z.enum(
-      [
-        USER_ROLES.USER,
-      ],
-      {
-        message: 'Role must be user',
-      },
-    ),
+    lastName: z.string().optional(),
   }).strict(),
 })
 

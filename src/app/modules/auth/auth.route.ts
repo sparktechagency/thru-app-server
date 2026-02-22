@@ -6,12 +6,13 @@ import validateRequest from '../../middleware/validateRequest'
 import { AuthValidations } from './auth.validation'
 import { USER_ROLES } from '../../../enum/user'
 import auth, { tempAuth } from '../../middleware/auth'
+import { UserValidations } from '../user/user.validation'
 
 const router = express.Router()
 
 router.post(
   '/signup',
-  validateRequest(AuthValidations.createUserZodSchema),
+  validateRequest(UserValidations.createUserZodSchema),
   CustomAuthController.createUser,
 )
 router.post(

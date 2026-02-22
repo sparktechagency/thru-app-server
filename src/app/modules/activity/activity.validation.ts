@@ -17,9 +17,7 @@ export const ActivityValidations = {
       date: z.string({
         required_error: 'Date is required',
       }).datetime(),
-      endDate: z.string({
-        required_error: 'Date is required',
-      }).datetime(),
+      endDate: z.string().optional(),
       link: z.string().optional(),
       images: z.array(z.string()).optional(),
     }).strict(),
