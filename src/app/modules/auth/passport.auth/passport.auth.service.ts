@@ -1,4 +1,4 @@
-import { USER_STATUS } from '../../../../enum/user'
+import { USER_ROLES, USER_STATUS } from '../../../../enum/user'
 import { ILoginData } from '../../../../interfaces/auth'
 import { StatusCodes } from 'http-status-codes'
 import ApiError from '../../../../errors/ApiError'
@@ -43,7 +43,7 @@ const handleGoogleLogin = async (
     password: id,
     status: USER_STATUS.ACTIVE,
     appId: id,
-    role: payload.role,
+    role: USER_ROLES.USER,
   }
 
   try {
