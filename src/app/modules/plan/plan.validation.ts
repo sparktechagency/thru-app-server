@@ -11,9 +11,7 @@ export const PlanValidations = {
       date: z.string({
         required_error: 'Date is required',
       }).datetime(),
-      endDate: z.string().optional().refine(val => !val || !isNaN(Date.parse(val)), {
-        message: 'Invalid endDate'
-      }),
+      endDate: z.string().datetime(),
       address: z.string({
         required_error: 'Address is required',
       }),

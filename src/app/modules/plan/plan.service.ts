@@ -19,6 +19,10 @@ const createPlan = async (
     payload.createdBy = user.authId;
     payload.collaborators = [user.authId];
 
+    if(payload.endDate < payload.date){
+      throw new ApiError(StatusCodes.BAD_REQUEST, 'End date must be greater than or equal to start date');
+    }
+
     const result = await Plan.create(payload);
     if (!result) {
       if (payload.images && payload.images.length > 0) {

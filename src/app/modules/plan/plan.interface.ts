@@ -14,7 +14,7 @@ export interface IPlan {
   description?: string;
   images: string[];
   date: Date;
-  endDate?: Date;
+  endDate: Date;
   address: string;
   collaborators: Types.ObjectId[];
   createdAt: Date;
