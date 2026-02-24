@@ -141,6 +141,9 @@ const getUserProfile = async (user: JwtPayload) => {
           {
             endDate: { $exists: true, $ne: null },
           },
+          {
+            $expr: { $gte: ['$endDate', '$date'] },
+          },
         ],
       },
     },
@@ -157,7 +160,8 @@ const getUserProfile = async (user: JwtPayload) => {
     },
   ])
 
-  const totalDurationMs = aggregationResult.length > 0 ? aggregationResult[0].totalDurationMs : 0
+  const totalDurationMs =
+    aggregationResult.length > 0 ? aggregationResult[0].totalDurationMs : 0
 
   const totalDaysCount = Math.floor(totalDurationMs / (1000 * 60 * 60 * 24))
   const months = Math.floor(totalDaysCount / 30)
@@ -167,7 +171,11 @@ const getUserProfile = async (user: JwtPayload) => {
   if (months > 0) {
     formattedTotalDays += `${months} Month${months > 1 ? 's' : ''} `
   }
-  formattedTotalDays += `${days} Day${days !== 1 ? 's' : ''}`
+
+  // Ensure "0 Days" is returned if there are no durations, or if it's strictly days
+  if (months === 0 || days > 0) {
+    formattedTotalDays += `${days} Day${days !== 1 ? 's' : ''}`
+  }
 
   const updatedUser = await User.findByIdAndUpdate(
     user.authId,
