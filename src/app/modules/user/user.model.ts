@@ -54,7 +54,6 @@ const userSchema = new Schema<IUser, UserModel>(
     }],
     totalDays: {
       type: String,
-      default: "3 days 4 hours"
     },
     location: {
       type: {

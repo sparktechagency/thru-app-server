@@ -3,9 +3,8 @@ import ApiError from '../../../errors/ApiError'
 import { IUser, IUserFilterableFields } from './user.interface'
 import { User } from './user.model'
 import { Plan } from '../plan/plan.model'
-
+import { Types } from 'mongoose'
 import { USER_ROLES, USER_STATUS } from '../../../enum/user'
-
 import { JwtPayload } from 'jsonwebtoken'
 import { logger } from '../../../shared/logger'
 import config from '../../../config'
@@ -121,7 +120,62 @@ const getUserProfile = async (user: JwtPayload) => {
   if (!isUserExist) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'The requested user not found.')
   }
-  return isUserExist
+
+  // Calculate total duration using MongoDB aggregation for better performance
+  const aggregationResult = await Plan.aggregate([
+    {
+      $match: {
+        $and: [
+          {
+            $or: [
+              { createdBy: new Types.ObjectId(user.authId) },
+              { collaborators: new Types.ObjectId(user.authId) },
+            ],
+          },
+          {
+            endDate: { $lt: new Date() },
+          },
+          {
+            date: { $exists: true, $ne: null },
+          },
+          {
+            endDate: { $exists: true, $ne: null },
+          },
+        ],
+      },
+    },
+    {
+      $project: {
+        durationMs: { $subtract: ['$endDate', '$date'] },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalDurationMs: { $sum: '$durationMs' },
+      },
+    },
+  ])
+
+  const totalDurationMs = aggregationResult.length > 0 ? aggregationResult[0].totalDurationMs : 0
+
+  const totalDaysCount = Math.floor(totalDurationMs / (1000 * 60 * 60 * 24))
+  const months = Math.floor(totalDaysCount / 30)
+  const days = totalDaysCount % 30
+
+  let formattedTotalDays = ''
+  if (months > 0) {
+    formattedTotalDays += `${months} Month${months > 1 ? 's' : ''} `
+  }
+  formattedTotalDays += `${days} Day${days !== 1 ? 's' : ''}`
+
+  const updatedUser = await User.findByIdAndUpdate(
+    user.authId,
+    { $set: { totalDays: formattedTotalDays.trim() } },
+    { new: true },
+  )
+
+  return updatedUser
 }
 
 
