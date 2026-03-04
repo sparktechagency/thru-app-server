@@ -26,6 +26,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(cookieParser())
 //file retrieve
 app.use(express.static('uploads'))
+app.use(express.static('public', { extensions: ['html'] }))
 
 //router
 app.use('/api/v1', router)

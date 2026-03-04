@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support Contact - The Duty Hour App</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    :root {
+      --primary-color: #CFE9C3;
+      --accent-color: #2d5a27;
+      --text-color: #1a1a1a;
+      --bg-light: #f4f9f1;
+      --container-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-light);
+      background-image: radial-gradient(circle at top left, var(--primary-color), var(--bg-light));
+      background-attachment: fixed;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      color: var(--text-color);
+    }
+
+    .support-container {
+      background-color: var(--container-bg);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 40px 30px;
+      border-radius: 20px;
+      border: 1px solid rgba(207, 233, 195, 0.5);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+      text-align: center;
+      width: 90%;
+      max-width: 450px;
+      transform: translateY(40px);
+      opacity: 0;
+      animation: fadeInUp 1s ease-out forwards;
+    }
+
+    h1 {
+      margin: 0 0 20px;
+      color: var(--accent-color);
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    p {
+      margin: 12px 0;
+      font-size: 16px;
+      color: var(--text-color);
+      opacity: 0.9;
+    }
+
+    .highlight {
+      font-weight: 600;
+      color: var(--accent-color);
+      transition: all 0.3s ease;
+      display: inline-block;
+    }
+
+    .highlight:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.2);
+    }
+
+    .address {
+      margin-top: 8px;
+      line-height: 1.6;
+    }
+
+    footer {
+      margin-top: 25px;
+      font-size: 14px;
+      color: #777;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .support-container {
+        padding: 25px 20px;
+      }
+
+      h1 {
+        font-size: 24px;
+      }
+
+      p {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="support-container">
+    <h1>Support Contact</h1>
+    <p>Email: <span class="highlight">enos.lws@gmail.com</span></p>
+    <p>Phone: <span class="highlight">(1) 2535617893</span></p>
+    <p>Address:</p>
+    <p class="highlight address">
+      5452 Fieldgreen Dr Stone mountain Ga 30088
+    </p>
+    <footer>&copy; 2026 The Ready: Plan, Together App. All rights reserved.</footer>
+  </div>
+</body>
+
+</html>
