@@ -30,7 +30,25 @@ const createUser = async (payload: IUser) => {
   try {
     session.startTransaction()
 
+    
+
     payload.email = getSanitizeEmail(payload.email)
+
+    const isExistUser = await User.findOne({ email: payload.email }).session(session);
+    if (isExistUser) {
+      if (isExistUser.status === USER_STATUS.DELETED) {
+        await User.findByIdAndUpdate(
+          isExistUser._id,
+          { email: `${isExistUser.email}_deleted_${Date.now()}` },
+          { session }
+        );
+      } else {
+        throw new ApiError(
+          StatusCodes.BAD_REQUEST,
+          'An account with this email already exists. Please try with another email or login using this email.',
+        );
+      }
+    }
 
     const { otp, expiresIn, hashedOtp } = await generateOtp()
 
