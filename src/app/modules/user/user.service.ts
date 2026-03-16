@@ -334,6 +334,9 @@ const deleteAccount = async (user: JwtPayload) => {
   if (!userExist) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'The requested user not found.');
   }
+  if(user.email!== userExist.email && user.role !== USER_ROLES.ADMIN){
+    throw new ApiError(StatusCodes.FORBIDDEN, 'You are not authorized to delete this account.');
+  }
   const updatedUser = await User.findByIdAndUpdate(authId, { $set: { status: USER_STATUS.DELETED } }, { new: true });
   if (!updatedUser) {
     throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to delete account.');
