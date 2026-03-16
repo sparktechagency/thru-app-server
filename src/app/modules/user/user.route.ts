@@ -55,5 +55,11 @@ router.get(
   UserController.getUserActivityLog
 );
 
+router.delete(
+  '/delete-account',
+  auth(USER_ROLES.USER, USER_ROLES.ADMIN),
+  UserController.deleteAccount
+);
+
 router.get("/", auth(USER_ROLES.USER, USER_ROLES.ADMIN), UserController.getUsers)
 export const UserRoutes = router

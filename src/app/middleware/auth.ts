@@ -4,7 +4,8 @@ import { Secret } from 'jsonwebtoken'
 import config from '../../config'
 import { jwtHelper } from '../../helpers/jwtHelper'
 import ApiError from '../../errors/ApiError'
-import { USER_ROLES } from '../../enum/user'
+import { USER_ROLES, USER_STATUS } from '../../enum/user'
+import { User } from '../modules/user/user.model'
 
 const auth =
   (...roles: string[]) =>
@@ -32,6 +33,15 @@ const auth =
               token,
               config.jwt.jwt_secret as Secret,
             )
+
+            const user = await User.findById(verifyUser.authId);
+            if (!user) {
+              throw new ApiError(StatusCodes.NOT_FOUND, 'User not found!');
+            }
+
+            if (user.status === USER_STATUS.DELETED) {
+              throw new ApiError(StatusCodes.FORBIDDEN, 'Your account has been deleted.');
+            }
 
             // Set user to header
             req.user = verifyUser

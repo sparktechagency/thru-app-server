@@ -119,6 +119,10 @@ const getUserProfile = async (user: JwtPayload) => {
   const isUserExist = await User.findById(user.authId)
   if (!isUserExist) {
     throw new ApiError(StatusCodes.NOT_FOUND, 'The requested user not found.')
+  } 
+
+  if (isUserExist.status === USER_STATUS.DELETED) {
+    throw new ApiError(StatusCodes.FORBIDDEN, 'Your account has been deleted.');
   }
 
   // Calculate total duration using MongoDB aggregation for better performance
@@ -187,7 +191,6 @@ const getUserProfile = async (user: JwtPayload) => {
 }
 
 
-
 const getUsers = async (
   user: JwtPayload,
   query: Record<string, unknown>
@@ -197,6 +200,7 @@ const getUsers = async (
   // Base query with mandatory conditions
   let baseQuery = User.find({
     role: USER_ROLES.USER,
+    status: USER_STATUS.ACTIVE,
     verified: true
   });
 
@@ -283,10 +287,6 @@ const getUsers = async (
 };
 
 
-
-
-
-
 const getUserActivityLog = async (
   user: JwtPayload,
   pagination: IPaginationOptions
@@ -327,4 +327,26 @@ const getUserActivityLog = async (
   };
 };
 
-export const UserServices = { updateProfile, createAdmin, uploadImages, getUserProfile, getUsers, getUserActivityLog }
+
+const deleteAccount = async (user: JwtPayload) => {
+  const { authId } = user;
+  const userExist = await User.findById(authId);
+  if (!userExist) {
+    throw new ApiError(StatusCodes.NOT_FOUND, 'The requested user not found.');
+  }
+  const updatedUser = await User.findByIdAndUpdate(authId, { $set: { status: USER_STATUS.DELETED } }, { new: true });
+  if (!updatedUser) {
+    throw new ApiError(StatusCodes.BAD_REQUEST, 'Failed to delete account.');
+  }
+  return 'Account deleted successfully.';
+}
+
+export const UserServices = {
+  updateProfile,
+  createAdmin,
+  uploadImages,
+  getUserProfile,
+  getUsers,
+  getUserActivityLog,
+  deleteAccount
+}

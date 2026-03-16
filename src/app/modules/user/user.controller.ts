@@ -78,10 +78,21 @@ const getUserActivityLog = catchAsync(async (req: Request, res: Response) => {
   })
 })
 
+const deleteAccount = catchAsync(async (req: Request, res: Response) => {
+  const result = await UserServices.deleteAccount(req.user!)
+  sendResponse(res, {
+    statusCode: StatusCodes.OK,
+    success: true,
+    message: 'Account deleted successfully',
+    data: result,
+  })
+})
+
 export const UserController = {
   uploadImages,
   updateProfile,
   getUserProfile,
   getUsers,
-  getUserActivityLog
+  getUserActivityLog,
+  deleteAccount
 }
